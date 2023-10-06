@@ -1,7 +1,24 @@
-package adventofcode
+package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+
+	"adventofcode/example"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+	execExample()
+}
+
+func execExample() {
+	messages, err := example.Hellos([]string{"Give", "Me", "Something"})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, message := range messages {
+		fmt.Println(message)
+		fmt.Println()
+	}
 }
