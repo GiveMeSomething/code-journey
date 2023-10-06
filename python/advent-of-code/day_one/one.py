@@ -1,5 +1,4 @@
 # To read from input file and solve challenges
-from pathlib import Path
 
 
 def read_item_from_file():
@@ -28,3 +27,10 @@ def max_item(items: list) -> int:
         max_val = max(max_val, item)
 
     return max_val
+
+
+def top_three_item(items: list) -> int:
+    # sort the items list in descending order
+    items.sort(reverse=True)
+
+    return items[0] + items[1] + items[2]
