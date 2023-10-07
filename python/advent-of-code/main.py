@@ -1,5 +1,5 @@
 from day_one.one import read_item_from_file, max_item, top_three_item
-from day_two.two import read_inputs_from_file, cal_points
+from day_two.two import read_inputs_from_file, cal_points, cal_point_v2
 
 
 def day_one():
@@ -14,8 +14,9 @@ def day_one():
 def day_two():
     inputs = read_inputs_from_file()
     points = cal_points(inputs)
-
+    points_v2 = cal_point_v2(inputs)
     print(f"Final point after playing rocks, papers, scissors is: {points}")
+    print(f"Final point after changing strategy is: {points_v2}")
 
 
 # day_one()
