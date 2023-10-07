@@ -1,6 +1,3 @@
-# To read from input file and solve challenges
-
-
 def read_item_from_file():
     itemFile = open("day_one/items.txt", "r", encoding="utf-8")
     items = []
