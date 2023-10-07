@@ -4,11 +4,22 @@ import (
 	"fmt"
 	"log"
 
+	"adventofcode/day_one"
 	"adventofcode/example"
 )
 
 func main() {
-	execExample()
+	// execExample()
+	execDayOne()
+}
+
+func execDayOne() {
+	items := day_one.ReadItemFromFile()
+	maxSum := day_one.GetMaxSum(items)
+	topThreeSum := day_one.GetTopThreeSum(items)
+
+	fmt.Printf("The max sum is: %v\n", maxSum)
+	fmt.Printf("The sum of the top three item is: %v\n", topThreeSum)
 }
 
 func execExample() {
