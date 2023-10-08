@@ -1,6 +1,10 @@
 from day_one.one import read_item_from_file, max_item, top_three_item
 from day_two.two import read_inputs_from_file, cal_points, cal_point_v2
-from day_three.three import read_rucksack_from_file, calculate_duplicate_char
+from day_three.three import (
+    read_rucksack_from_file,
+    calculate_duplicate_char,
+    calculate_duplicate_lines,
+)
 
 
 def day_one():
@@ -23,8 +27,10 @@ def day_two():
 def day_three():
     rucksacks = read_rucksack_from_file()
     priority_sum = calculate_duplicate_char(rucksacks)
+    badge_sum = calculate_duplicate_lines(rucksacks)
 
     print(f"Sum of priorities of all rucksacks is: {priority_sum}")
+    print(f"Sum of badge sum of all rucksacks is: {badge_sum}")
 
 
 # day_one()
