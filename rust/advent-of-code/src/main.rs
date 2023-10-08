@@ -1,3 +1,5 @@
+mod example;
+
 fn main() {
-    println!("Hello, world!");
+    example::guess::start_guessing_game();
 }
