@@ -1,10 +1,11 @@
-from day_one.one import read_item_from_file, max_item, top_three_item
-from day_two.two import read_inputs_from_file, cal_points, cal_point_v2
-from day_three.three import (
+from day_1.one import read_item_from_file, max_item, top_three_item
+from day_2.two import read_inputs_from_file, cal_points, cal_point_v2
+from day_3.three import (
     read_rucksack_from_file,
     calculate_duplicate_char,
     calculate_duplicate_lines,
 )
+from day_4.four import read_pairs_from_file, count_overlap_pairs
 
 
 def day_one():
@@ -33,6 +34,14 @@ def day_three():
     print(f"Sum of badge sum of all rucksacks is: {badge_sum}")
 
 
+def day_four():
+    pairs = read_pairs_from_file()
+    overlapped_pairs = count_overlap_pairs(pairs)
+    print(overlapped_pairs)
+
+
 # day_one()
 # day_two()
-day_three()
+# day_three()
+
+day_four()
