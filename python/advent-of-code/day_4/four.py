@@ -32,8 +32,33 @@ def count_overlap_pairs(pairs: List[Tuple[int, int]]) -> int:
     return count
 
 
-# Check if a->b contains c->d, and vice versa
-def is_overlapped(first: Tuple[int, int], second: Tuple[int, int]):
+def count_true_overlap_pairs(pairs: List[Tuple[int, int]]) -> int:
+    count = 0
+    for i in range(0, len(pairs), 2):
+        first_pair = pairs[i]
+        second_pair = pairs[i + 1]
+        true_overlap = is_true_overlapped(first_pair, second_pair)
+        if true_overlap:
+            count += 1
+
+    return count
+
+
+# Two range are totally overlapped (cotain the other)
+def is_overlapped(first: Tuple[int, int], second: Tuple[int, int]) -> bool:
     a, b = first
     c, d = second
     return (a <= c and b >= d) or (c <= a and d >= b)
+
+
+# Two range are partially overlapped when one range contain the other start or end
+def is_true_overlapped(first, second) -> bool:
+    a, b = first
+    c, d = second
+
+    return (
+        (a <= c and b >= c)
+        or (c <= a and d >= b)
+        or (a <= d and b >= d)
+        or (c <= b and d >= b)
+    )

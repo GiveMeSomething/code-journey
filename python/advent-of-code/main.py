@@ -5,7 +5,11 @@ from day_3.three import (
     calculate_duplicate_char,
     calculate_duplicate_lines,
 )
-from day_4.four import read_pairs_from_file, count_overlap_pairs
+from day_4.four import (
+    read_pairs_from_file,
+    count_overlap_pairs,
+    count_true_overlap_pairs,
+)
 
 
 def day_one():
@@ -37,7 +41,9 @@ def day_three():
 def day_four():
     pairs = read_pairs_from_file()
     overlapped_pairs = count_overlap_pairs(pairs)
+    true_overlapped_pairs = count_true_overlap_pairs(pairs)
     print(overlapped_pairs)
+    print(true_overlapped_pairs)
 
 
 # day_one()
