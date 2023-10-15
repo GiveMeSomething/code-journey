@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 
 def read_rucksack_from_file() -> List[Tuple[str, str]]:
-    file = open("day_three/rucksacks.txt", "r", encoding="utf-8")
+    file = open("day_3/rucksacks.txt", "r", encoding="utf-8")
 
     rucksacks = []
     for line in file.readlines():
