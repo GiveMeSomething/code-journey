@@ -1,5 +1,5 @@
 def read_item_from_file():
-    itemFile = open("day_one/items.txt", "r", encoding="utf-8")
+    itemFile = open("day_1/items.txt", "r", encoding="utf-8")
     items = []
 
     sum = 0

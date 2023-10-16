@@ -46,8 +46,7 @@ def day_four():
     print(true_overlapped_pairs)
 
 
-# day_one()
-# day_two()
-# day_three()
-
+day_one()
+day_two()
+day_three()
 day_four()
