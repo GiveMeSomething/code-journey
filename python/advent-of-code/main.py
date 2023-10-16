@@ -11,7 +11,7 @@ from day_4.four import (
     count_true_overlap_pairs,
 )
 from day_5.five import read_cargo_from_file
-from day_6.six import read_message_from_file, get_marker_pos
+from day_6.six import read_message_from_file, get_marker_pos, get_message_pos
 
 
 def day_one():
@@ -55,9 +55,12 @@ def day_five():
 
 def day_six():
     message = read_message_from_file()
-    marker_start = get_marker_pos(message)
 
+    marker_start = get_marker_pos(message)
     print(marker_start)
+
+    message_start = get_message_pos(message)
+    print(message_start)
 
 
 # day_one()
