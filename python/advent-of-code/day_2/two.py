@@ -2,7 +2,7 @@ from typing import Tuple, List
 
 
 def read_inputs_from_file() -> Tuple[List[str], List[str]]:
-    inputFile = open("day_two/inputs.txt", "r", encoding="utf-8")
+    inputFile = open("day_2/inputs.txt", "r", encoding="utf-8")
 
     opponent_inputs = []
     user_inputs = []
