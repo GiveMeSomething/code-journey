@@ -10,6 +10,7 @@ from day_4.four import (
     count_overlap_pairs,
     count_true_overlap_pairs,
 )
+from day_5.five import read_cargo_from_file
 
 
 def day_one():
@@ -46,7 +47,14 @@ def day_four():
     print(f"Number of partially overlapped pairs are: {true_overlapped_pairs}\n")
 
 
-day_one()
-day_two()
-day_three()
-day_four()
+def day_five():
+    last_cargos = read_cargo_from_file()
+    print(last_cargos)
+
+
+# day_one()
+# day_two()
+# day_three()
+# day_four()
+
+day_five()
