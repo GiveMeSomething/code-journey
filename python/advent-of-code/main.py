@@ -10,6 +10,7 @@ from day_4.four import (
     count_overlap_pairs,
     count_true_overlap_pairs,
 )
+from day_5.five import read_cargo_from_file
 
 
 def day_one():
@@ -18,7 +19,7 @@ def day_one():
     top_three = top_three_item(items)
 
     print(f"The max item is: {max_val}")
-    print(f"The top three item sum is: {top_three}")
+    print(f"The top three item sum is: {top_three}\n")
 
 
 def day_two():
@@ -26,7 +27,7 @@ def day_two():
     points = cal_points(inputs)
     points_v2 = cal_point_v2(inputs)
     print(f"Final point after playing rocks, papers, scissors is: {points}")
-    print(f"Final point after changing strategy is: {points_v2}")
+    print(f"Final point after changing strategy is: {points_v2}\n")
 
 
 def day_three():
@@ -35,19 +36,25 @@ def day_three():
     badge_sum = calculate_duplicate_lines(rucksacks)
 
     print(f"Sum of priorities of all rucksacks is: {priority_sum}")
-    print(f"Sum of badge sum of all rucksacks is: {badge_sum}")
+    print(f"Sum of badge sum of all rucksacks is: {badge_sum}\n")
 
 
 def day_four():
     pairs = read_pairs_from_file()
     overlapped_pairs = count_overlap_pairs(pairs)
     true_overlapped_pairs = count_true_overlap_pairs(pairs)
-    print(overlapped_pairs)
-    print(true_overlapped_pairs)
+    print(f"Number of totally overlapped pairs are: {overlapped_pairs}")
+    print(f"Number of partially overlapped pairs are: {true_overlapped_pairs}\n")
+
+
+def day_five():
+    last_cargos = read_cargo_from_file()
+    print(last_cargos)
 
 
 # day_one()
 # day_two()
 # day_three()
+# day_four()
 
-day_four()
+day_five()
