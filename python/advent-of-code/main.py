@@ -57,10 +57,12 @@ def day_six():
     message = read_message_from_file()
 
     marker_start = get_marker_pos(message)
-    print(marker_start)
+    print(f"Marker start (first 4 consecutive distinct char) is at {marker_start} char")
 
     message_start = get_message_pos(message)
-    print(message_start)
+    print(
+        f"Message start (first 14 consecutive distinct char) is at {message_start} char"
+    )
 
 
 # day_one()
