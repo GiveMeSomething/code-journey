@@ -11,6 +11,7 @@ from day_4.four import (
     count_true_overlap_pairs,
 )
 from day_5.five import read_cargo_from_file
+from day_6.six import read_message_from_file, get_marker_pos, get_message_pos
 
 
 def day_one():
@@ -52,9 +53,21 @@ def day_five():
     print(last_cargos)
 
 
+def day_six():
+    message = read_message_from_file()
+
+    marker_start = get_marker_pos(message)
+    print(f"Marker start (first 4 consecutive distinct char) is at {marker_start} char")
+
+    message_start = get_message_pos(message)
+    print(
+        f"Message start (first 14 consecutive distinct char) is at {message_start} char"
+    )
+
+
 # day_one()
 # day_two()
 # day_three()
 # day_four()
-
-day_five()
+# day_five()
+day_six()
