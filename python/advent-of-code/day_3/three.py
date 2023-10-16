@@ -21,9 +21,6 @@ def calculate_duplicate_char(rucksacks: List[Tuple[str, str]]) -> int:
         first_char_map = {}
         second_char_map = {}
 
-        print(first_compartment)
-        print(second_compartment)
-
         dup_char = ""
 
         for i in range(len(first_compartment)):
@@ -38,10 +35,7 @@ def calculate_duplicate_char(rucksacks: List[Tuple[str, str]]) -> int:
             else:
                 dup_char = second_compartment[i]
                 break
-
-        print(f"dup char {dup_char} value {char_value(dup_char)}")
         sum += char_value(dup_char)
-
     return sum
 
 
@@ -52,7 +46,6 @@ def calculate_duplicate_lines(rucksacks: List[Tuple[str, str]]) -> int:
         found = False
         for j in range(3):
             currentRucksack = (rucksacks[i + j][0] + rucksacks[i + j][1]).strip()
-            print(currentRucksack)
             for char in currentRucksack:
                 # Only add new character if it's the first line in three line
                 if char_map.get(char) == None and j == 0:
@@ -64,15 +57,10 @@ def calculate_duplicate_lines(rucksacks: List[Tuple[str, str]]) -> int:
 
                 if char_map.get(char) == 3:
                     sum += char_value(char)
-                    print(char)
                     found = True
                     break
-
             if found:
                 break
-
-        print("\n")
-
     return sum
 
 
