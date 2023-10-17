@@ -14,7 +14,6 @@ def calculate_dir_size():
     # Parse commands based on their token
     for command in commands:
         tokens = command.strip().split()
-        print(tokens)
 
         # $ indicate a command
         if tokens[0] == "$":
@@ -50,7 +49,7 @@ def calculate_dir_size():
                         temp = temp[: temp.rindex("/")]
 
     # Print dir_size_map for debugging
-    print(dir_size_map)
+    # print(dir_size_map)
 
     # Caluate the sum of all directory that their size at most 100.000
     sum = 0
