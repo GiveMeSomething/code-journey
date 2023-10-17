@@ -30,7 +30,7 @@ def parse_command_to_dir() -> Dict[str, int]:
                             # Else, it is command to go to a specific directory
                             current_path = current_path + "/" + tokens[2]
                 case "ls":
-                    # Ignore ls command, only care about their result
+                    # Ignore ls command, only care about their resultx
                     pass
         else:
             # If not begin with $, it indicate that this is a command's result
