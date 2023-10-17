@@ -54,4 +54,4 @@ def calculate_dir_size():
         if value <= 100000:
             sum += value
 
-    return value
+    return sum

@@ -68,7 +68,7 @@ def day_six():
 
 def day_seven():
     valid_dir_size = calculate_dir_size()
-    print(valid_dir_size)
+    print(f"Sum of all dir that size at most 100,000 is {valid_dir_size}")
 
 
 # day_one()
