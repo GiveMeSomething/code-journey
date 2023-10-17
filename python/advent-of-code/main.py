@@ -12,6 +12,7 @@ from day_4.four import (
 )
 from day_5.five import read_cargo_from_file
 from day_6.six import read_message_from_file, get_marker_pos, get_message_pos
+from day_7.seven import calculate_dir_size
 
 
 def day_one():
@@ -65,9 +66,15 @@ def day_six():
     )
 
 
+def day_seven():
+    valid_dir_size = calculate_dir_size()
+    print(valid_dir_size)
+
+
 # day_one()
 # day_two()
 # day_three()
 # day_four()
 # day_five()
-day_six()
+# day_six()
+day_seven()
