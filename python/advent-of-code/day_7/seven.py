@@ -1,8 +1,8 @@
 from utils.utils import read_data_from_file
-from typing import List
+from typing import List, Dict
 
 
-def calculate_dir_size():
+def parse_command_to_dir() -> Dict[str, int]:
     commands = read_data_from_file("day_7/commands.txt")
 
     # Keep track of directory size
@@ -51,10 +51,30 @@ def calculate_dir_size():
     # Print dir_size_map for debugging
     # print(dir_size_map)
 
+    return dir_size_map
+
+
+def calculate_dir_size(dir_map: Dict[str, int]) -> int:
     # Caluate the sum of all directory that their size at most 100.000
     sum = 0
-    for value in dir_size_map.values():
+    for value in dir_map.values():
         if value < 100000:
             sum += value
 
     return sum
+
+
+def calculate_minimum_deletion(dir_map: Dict[str, int]) -> int:
+    # Find all valid directories that can be delete to achieve target unused dir
+
+    # Find out how much we need
+    require_space = dir_map["/"] - 40_000_000
+
+    # print(f"We need {require_space} more")
+
+    valid_dir = []
+    for value in dir_map.values():
+        if value >= require_space:
+            valid_dir.append(value)
+
+    return min(valid_dir)
