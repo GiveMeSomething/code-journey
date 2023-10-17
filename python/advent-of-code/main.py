@@ -12,6 +12,11 @@ from day_4.four import (
 )
 from day_5.five import read_cargo_from_file
 from day_6.six import read_message_from_file, get_marker_pos, get_message_pos
+from day_7.seven import (
+    parse_command_to_dir,
+    calculate_dir_size,
+    calculate_minimum_deletion,
+)
 
 
 def day_one():
@@ -65,9 +70,20 @@ def day_six():
     )
 
 
+def day_seven():
+    dir_tree = parse_command_to_dir()
+
+    valid_dir_size = calculate_dir_size(dir_tree)
+    print(f"Sum of all dir that size at most 100,000 is {valid_dir_size}\n")
+
+    required_deletion = calculate_minimum_deletion(dir_tree)
+    print(f"Need to delete {required_deletion} more achieve target unused space\n")
+
+
 # day_one()
 # day_two()
 # day_three()
 # day_four()
 # day_five()
-day_six()
+# day_six()
+day_seven()
