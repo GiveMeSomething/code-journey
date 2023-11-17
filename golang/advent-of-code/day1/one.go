@@ -1,4 +1,4 @@
-package day_one
+package day1
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 )
 
 func ReadItemFromFile() []int {
-	file, err := os.Open("day_one/items.txt")
+	file, err := os.Open("day_1/items.txt")
 	check(err)
 
 	reader := bufio.NewReader(file)

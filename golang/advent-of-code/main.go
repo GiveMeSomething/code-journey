@@ -4,22 +4,31 @@ import (
 	"fmt"
 	"log"
 
-	"adventofcode/day_one"
+	"adventofcode/day1"
+	"adventofcode/day2"
 	"adventofcode/example"
 )
 
 func main() {
 	// execExample()
-	execDayOne()
+	// execDayOne()
+	execDay2()
 }
 
 func execDayOne() {
-	items := day_one.ReadItemFromFile()
-	maxSum := day_one.GetMaxSum(items)
-	topThreeSum := day_one.GetTopThreeSum(items)
+	items := day1.ReadItemFromFile()
+	maxSum := day1.GetMaxSum(items)
+	topThreeSum := day1.GetTopThreeSum(items)
 
 	fmt.Printf("The max sum is: %v\n", maxSum)
 	fmt.Printf("The sum of the top three item is: %v\n", topThreeSum)
+}
+
+func execDay2() {
+	inputs := day2.ReadEncryptFromFile()
+	winningPoint := day2.CalculatePoint(inputs)
+
+	fmt.Printf("You have win %v points after %v match", winningPoint, len(inputs))
 }
 
 func execExample() {
