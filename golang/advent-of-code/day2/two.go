@@ -50,6 +50,15 @@ func CalculatePoint(inputs []string) int32 {
 	return sum
 }
 
+func CalculatePointPart2(inputs []string) int32 {
+	var sum int32
+	for _, v := range inputs {
+		input := strings.Split(v, " ")
+		sum += calculatePointSingle2(input[0], input[1])
+	}
+	return sum
+}
+
 func calculatePointSingle(opponent string, you string) int32 {
 	opponentPoint, ok := pointMap[opponent]
 	if !ok {
@@ -70,4 +79,27 @@ func calculatePointSingle(opponent string, you string) int32 {
 	}
 
 	return yourPoint
+}
+
+func calculatePointSingle2(opponent string, outcome string) int32 {
+	opponentPoint, ok := pointMap[opponent]
+	if !ok {
+		return 0
+	}
+
+	if outcome == "Z" {
+		if opponentPoint == 3 {
+			return 6 + 1
+		}
+
+		return opponentPoint + 1 + 6
+	} else if outcome == "Y" {
+		return opponentPoint + 3
+	} else {
+		if opponentPoint == 1 {
+			return 3
+		}
+
+		return opponentPoint - 1
+	}
 }

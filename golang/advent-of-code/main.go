@@ -27,8 +27,10 @@ func execDayOne() {
 func execDay2() {
 	inputs := day2.ReadEncryptFromFile()
 	winningPoint := day2.CalculatePoint(inputs)
+	winningPoint2 := day2.CalculatePointPart2(inputs)
 
-	fmt.Printf("You have win %v points after %v match", winningPoint, len(inputs))
+	fmt.Printf("You have win %v points after %v match\n", winningPoint, len(inputs))
+	fmt.Printf("Part II: You have win %v points after %v match\n", winningPoint2, len(inputs))
 }
 
 func execExample() {
