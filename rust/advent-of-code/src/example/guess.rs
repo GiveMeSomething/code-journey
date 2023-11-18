@@ -2,6 +2,7 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
+#[allow(dead_code)]
 pub fn start_guessing_game() {
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
