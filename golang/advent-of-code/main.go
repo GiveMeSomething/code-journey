@@ -6,13 +6,15 @@ import (
 
 	"adventofcode/day1"
 	"adventofcode/day2"
+	"adventofcode/day3"
 	"adventofcode/example"
 )
 
 func main() {
 	// execExample()
 	// execDayOne()
-	execDay2()
+	// execDay2()
+	execDay3()
 }
 
 func execDayOne() {
@@ -31,6 +33,15 @@ func execDay2() {
 
 	fmt.Printf("You have win %v points after %v match\n", winningPoint, len(inputs))
 	fmt.Printf("Part II: You have win %v points after %v match\n", winningPoint2, len(inputs))
+}
+
+func execDay3() {
+	rucksacks := day3.ReadRucksackFromFile()
+	prioritySum := day3.CalculatePrioritySum(rucksacks)
+	groupSum := day3.CalculateGroupPrioritySum(rucksacks)
+
+	fmt.Printf("Priority sum of all rucksacks is %v\n", prioritySum)
+	fmt.Printf("Priority sum of all group is %v\n", groupSum)
 }
 
 func execExample() {
