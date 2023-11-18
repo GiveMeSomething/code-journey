@@ -38,8 +38,10 @@ func execDay2() {
 func execDay3() {
 	rucksacks := day3.ReadRucksackFromFile()
 	prioritySum := day3.CalculatePrioritySum(rucksacks)
+	groupSum := day3.CalculateGroupPrioritySum(rucksacks)
 
 	fmt.Printf("Priority sum of all rucksacks is %v\n", prioritySum)
+	fmt.Printf("Priority sum of all group is %v\n", groupSum)
 }
 
 func execExample() {

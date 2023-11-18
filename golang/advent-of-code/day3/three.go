@@ -39,6 +39,14 @@ func CalculatePrioritySum(inputs []string) int32 {
 	return sum
 }
 
+func CalculateGroupPrioritySum(inputs []string) int32 {
+	var sum int32
+	for i := 0; i < len(inputs); i += 3 {
+		sum += getGroupCharacterValue(inputs[i], inputs[i+1], inputs[i+2])
+	}
+	return sum
+}
+
 func getPriorityCharacterValue(first, second string) int32 {
 	charMap := make(map[rune]bool)
 	for _, char := range first {
@@ -48,6 +56,29 @@ func getPriorityCharacterValue(first, second string) int32 {
 	for _, char := range second {
 		_, ok := charMap[char]
 		if ok {
+			return getCharacterValue(char)
+		}
+	}
+
+	return 0
+}
+
+func getGroupCharacterValue(first, second, third string) int32 {
+	var charMap = make(map[rune]int32)
+	for _, char := range first {
+		charMap[char] = 1
+	}
+
+	for _, char := range second {
+		_, ok := charMap[char]
+		if ok {
+			charMap[char] = 2
+		}
+	}
+
+	for _, char := range third {
+		value, ok := charMap[char]
+		if ok && value == 2 {
 			return getCharacterValue(char)
 		}
 	}
