@@ -20,6 +20,7 @@ fn main() {
     // example::looping::pretty_print(&transposed);
 
     exec_one();
+    exec_two();
 }
 
 fn exec_one() {
@@ -32,4 +33,11 @@ fn exec_one() {
         top_three,
         top_three.0 + top_three.1 + top_three.2
     );
+    println!();
+}
+
+fn exec_two() {
+    let score = two::calculate_score_part_1();
+
+    println!("The score after playing is {}", score);
 }
