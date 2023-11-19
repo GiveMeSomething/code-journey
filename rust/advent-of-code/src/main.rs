@@ -37,7 +37,16 @@ fn exec_one() {
 }
 
 fn exec_two() {
-    let score = two::calculate_score_part_1();
+    let score_part_1 = two::calculate_score_part_1();
+    let score_part_2 = two::calculate_score_part_2();
 
-    println!("The score after playing is {}", score);
+    println!(
+        "The score after playing with your strategy is {}",
+        score_part_1
+    );
+    println!(
+        "The score after playing with real strategy is {}",
+        score_part_2
+    );
+    println!();
 }
