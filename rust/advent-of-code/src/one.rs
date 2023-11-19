@@ -1,4 +1,3 @@
-use core::panic;
 use std::{
     fs::File,
     io::{BufRead, BufReader, Lines},
@@ -11,7 +10,7 @@ pub fn read_calorie_from_file() -> Lines<BufReader<File>> {
     };
 
     let reader = BufReader::new(file);
-    reader.lines()
+    return reader.lines();
 }
 
 pub fn max_calorie() -> i32 {

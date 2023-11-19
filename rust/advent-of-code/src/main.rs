@@ -1,5 +1,6 @@
 mod example;
 mod one;
+mod two;
 
 fn main() {
     // example::guess::start_guessing_game();
@@ -19,6 +20,7 @@ fn main() {
     // example::looping::pretty_print(&transposed);
 
     exec_one();
+    exec_two();
 }
 
 fn exec_one() {
@@ -31,4 +33,20 @@ fn exec_one() {
         top_three,
         top_three.0 + top_three.1 + top_three.2
     );
+    println!();
+}
+
+fn exec_two() {
+    let score_part_1 = two::calculate_score_part_1();
+    let score_part_2 = two::calculate_score_part_2();
+
+    println!(
+        "The score after playing with your strategy is {}",
+        score_part_1
+    );
+    println!(
+        "The score after playing with real strategy is {}",
+        score_part_2
+    );
+    println!();
 }
