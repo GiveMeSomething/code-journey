@@ -23,7 +23,8 @@ fn main() {
 
     // exec_one();
     // exec_two();
-    exec_three();
+    // exec_three();
+    exec_four();
 }
 
 #[allow(dead_code)]
@@ -56,10 +57,20 @@ fn exec_two() {
     println!();
 }
 
+#[allow(dead_code)]
 fn exec_three() {
     let single_priority_sum = three::calculate_rucksack_priority();
     let group_priority_sum = three::calculate_rucksack_group_priority();
 
     println!("Total single priority sum is {}", single_priority_sum);
     println!("Total group priority sum is {}", group_priority_sum);
+    println!();
+}
+
+#[allow(dead_code)]
+fn exec_four() {
+    let overlapping_pair = four::count_overlap_pair();
+
+    println!("The number of overlapping pair is {}", overlapping_pair);
+    println!();
 }
