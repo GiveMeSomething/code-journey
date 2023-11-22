@@ -57,6 +57,8 @@ fn exec_two() {
 
 fn exec_three() {
     let single_priority_sum = three::calculate_rucksack_priority();
+    let group_priority_sum = three::calculate_rucksack_group_priority();
 
     println!("Total single priority sum is {}", single_priority_sum);
+    println!("Total group priority sum is {}", group_priority_sum);
 }
