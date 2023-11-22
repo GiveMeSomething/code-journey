@@ -70,7 +70,12 @@ fn exec_three() {
 #[allow(dead_code)]
 fn exec_four() {
     let overlapping_pair = four::count_overlap_pair();
+    let partial_overlapping_pair = four::count_partial_overlap_pair();
 
     println!("The number of overlapping pair is {}", overlapping_pair);
+    println!(
+        "The number of partially overlapping pair is {}",
+        partial_overlapping_pair
+    );
     println!();
 }
