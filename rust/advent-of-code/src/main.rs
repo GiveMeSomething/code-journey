@@ -1,5 +1,6 @@
 mod example;
 mod one;
+mod three;
 mod two;
 
 fn main() {
@@ -19,10 +20,12 @@ fn main() {
     // println!("transposed:");
     // example::looping::pretty_print(&transposed);
 
-    exec_one();
-    exec_two();
+    // exec_one();
+    // exec_two();
+    exec_three();
 }
 
+#[allow(dead_code)]
 fn exec_one() {
     let max_calorie = one::max_calorie();
     let top_three = one::top_three_calorie();
@@ -36,6 +39,7 @@ fn exec_one() {
     println!();
 }
 
+#[allow(dead_code)]
 fn exec_two() {
     let score_part_1 = two::calculate_score_part_1();
     let score_part_2 = two::calculate_score_part_2();
@@ -49,4 +53,12 @@ fn exec_two() {
         score_part_2
     );
     println!();
+}
+
+fn exec_three() {
+    let single_priority_sum = three::calculate_rucksack_priority();
+    let group_priority_sum = three::calculate_rucksack_group_priority();
+
+    println!("Total single priority sum is {}", single_priority_sum);
+    println!("Total group priority sum is {}", group_priority_sum);
 }
