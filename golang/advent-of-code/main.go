@@ -7,6 +7,7 @@ import (
 	"adventofcode/day1"
 	"adventofcode/day2"
 	"adventofcode/day3"
+	"adventofcode/day4"
 	"adventofcode/example"
 )
 
@@ -14,7 +15,8 @@ func main() {
 	// execExample()
 	// execDayOne()
 	// execDay2()
-	execDay3()
+	// execDay3()
+	execDay4()
 }
 
 func execDayOne() {
@@ -42,6 +44,15 @@ func execDay3() {
 
 	fmt.Printf("Priority sum of all rucksacks is %v\n", prioritySum)
 	fmt.Printf("Priority sum of all group is %v\n", groupSum)
+}
+
+func execDay4() {
+	assignments := day4.ReadAssignmentFromFile()
+	fullOverlapPair := day4.CounOverlapPair(assignments)
+	partialOverlapPair := day4.CountPartialOverlapPair(assignments)
+
+	fmt.Printf("Number of fully overlapping pair is %v\n", fullOverlapPair)
+	fmt.Printf("Number of partially overlapping pair is %v\n", partialOverlapPair)
 }
 
 func execExample() {
