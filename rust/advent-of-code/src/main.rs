@@ -1,4 +1,5 @@
 mod example;
+mod five;
 mod four;
 mod one;
 mod three;
@@ -24,7 +25,8 @@ fn main() {
     // exec_one();
     // exec_two();
     // exec_three();
-    exec_four();
+    // exec_four();
+    exec_five();
 }
 
 #[allow(dead_code)]
@@ -78,4 +80,13 @@ fn exec_four() {
         partial_overlapping_pair
     );
     println!();
+}
+
+#[allow(dead_code)]
+fn exec_five() {
+    let message_part_1 = five::peek_top_crates();
+    let message_part_2 = five::peek_top_crates_9001();
+
+    println!("Part 1 message is {}", message_part_1);
+    println!("Part 2 message is {}", message_part_2);
 }
