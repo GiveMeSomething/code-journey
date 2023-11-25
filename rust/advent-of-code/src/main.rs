@@ -85,6 +85,8 @@ fn exec_four() {
 #[allow(dead_code)]
 fn exec_five() {
     let message_part_1 = five::peek_top_crates();
+    let message_part_2 = five::peek_top_crates_9001();
 
     println!("Part 1 message is {}", message_part_1);
+    println!("Part 2 message is {}", message_part_2);
 }
