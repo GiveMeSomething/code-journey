@@ -58,7 +58,7 @@ func ReadInputFromFile() ([][]string, []Instruction) {
 		case 0:
 			// Read cargos
 			for _, cargo := range extractCargoLine(currentLine) {
-				cargos[cargo.position] = append([]string{string(cargo.value)}, cargos[cargo.position]...)
+				cargos[cargo.position] = prependString(cargos[cargo.position], string(cargo.value))
 			}
 		case 1:
 			// Read instructions
