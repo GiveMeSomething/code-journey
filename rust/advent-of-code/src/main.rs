@@ -25,7 +25,8 @@ fn main() {
     // exec_one();
     // exec_two();
     // exec_three();
-    exec_four();
+    // exec_four();
+    exec_five();
 }
 
 #[allow(dead_code)]
@@ -79,4 +80,9 @@ fn exec_four() {
         partial_overlapping_pair
     );
     println!();
+}
+
+#[allow(dead_code)]
+fn exec_five() {
+    five::extract_instruction(String::from("move 1 from 2 to 1"));
 }
