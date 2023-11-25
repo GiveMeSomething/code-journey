@@ -75,7 +75,6 @@ func PeekTopCrate(cargos [][]string, instructions []Instruction) string {
 			// Pop from, append to
 			stackFrom := cargos[instruction.from]
 			stackTo := cargos[instruction.to]
-
 			value := stackFrom[len(stackFrom)-1]
 
 			cargos[instruction.from] = stackFrom[:len(stackFrom)-1]
@@ -91,7 +90,19 @@ func PeekTopCrate(cargos [][]string, instructions []Instruction) string {
 }
 
 func PeekTopCrate9001(cargos [][]string, instructions []Instruction) string {
-	return ""
+	for _, instruction := range instructions {
+		stackFrom := cargos[instruction.from]
+
+		values := stackFrom[len(stackFrom)-instruction.move:]
+		cargos[instruction.from] = stackFrom[:len(stackFrom)-instruction.move]
+		cargos[instruction.to] = append(cargos[instruction.to], values...)
+	}
+
+	result := ""
+	for _, stack := range cargos {
+		result += string(stack[len(stack)-1])
+	}
+	return result
 }
 
 // This is to avoid reference error when using the same 2D array
