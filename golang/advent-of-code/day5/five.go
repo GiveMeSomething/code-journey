@@ -1,10 +1,11 @@
-package five
+package day5
 
 import (
 	"bufio"
 	"os"
 	"regexp"
 	"strconv"
+	"unicode"
 )
 
 type Cargo struct {
@@ -40,7 +41,7 @@ func ReadInputFromFile() ([][]string, []Instruction) {
 		}
 
 		if !init {
-			for i := 0; i < len(input)/4; i++ {
+			for i := 0; i <= len(input)/4; i++ {
 				cargos = append(cargos, []string{})
 			}
 			init = true
@@ -68,11 +69,29 @@ func ReadInputFromFile() ([][]string, []Instruction) {
 	return cargos, instructions
 }
 
+func PeekTopCrate(cargos [][]string, instructions []Instruction) string {
+	return ""
+}
+
+func PeekTopCrate9001(cargos [][]string, instructions []Instruction) string {
+	return ""
+}
+
+// This is to avoid reference error when using the same 2D array
+func MakeCargosCopy(cargos [][]string) [][]string {
+	duplicate := make([][]string, len(cargos))
+	for i := range duplicate {
+		duplicate[i] = make([]string, len(cargos[i]))
+		copy(duplicate[i], cargos[i])
+	}
+	return duplicate
+}
+
 // Return cargo's value and stack position
 func extractCargoLine(input string) []Cargo {
 	var result []Cargo = []Cargo{}
 	for i, char := range input {
-		if char == ' ' || char == '[' || char == ']' {
+		if char == ' ' || char == '[' || char == ']' || unicode.IsDigit(char) {
 			continue
 		}
 		position := (i - 1) / 4

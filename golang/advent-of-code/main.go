@@ -8,6 +8,7 @@ import (
 	"adventofcode/day2"
 	"adventofcode/day3"
 	"adventofcode/day4"
+	"adventofcode/day5"
 	"adventofcode/example"
 )
 
@@ -16,7 +17,9 @@ func main() {
 	// execDayOne()
 	// execDay2()
 	// execDay3()
-	execDay4()
+	// execDay4()
+
+	execDay5()
 }
 
 func execDayOne() {
@@ -53,6 +56,13 @@ func execDay4() {
 
 	fmt.Printf("Number of fully overlapping pair is %v\n", fullOverlapPair)
 	fmt.Printf("Number of partially overlapping pair is %v\n", partialOverlapPair)
+}
+
+func execDay5() {
+	cargos, instructions := day5.ReadInputFromFile()
+
+	fmt.Println(cargos)
+	fmt.Println(instructions)
 }
 
 func execExample() {
