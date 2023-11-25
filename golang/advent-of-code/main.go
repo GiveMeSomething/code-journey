@@ -22,6 +22,7 @@ func main() {
 	execDay5()
 }
 
+//lint:ignore U1000 Ignore unused function temporarily for debugging
 func execDayOne() {
 	items := day1.ReadItemFromFile()
 	maxSum := day1.GetMaxSum(items)
@@ -31,6 +32,7 @@ func execDayOne() {
 	fmt.Printf("The sum of the top three item is: %v\n", topThreeSum)
 }
 
+//lint:ignore U1000 Ignore unused function temporarily for debugging
 func execDay2() {
 	inputs := day2.ReadEncryptFromFile()
 	winningPoint := day2.CalculatePoint(inputs)
@@ -40,6 +42,7 @@ func execDay2() {
 	fmt.Printf("Part II: You have win %v points after %v match\n", winningPoint2, len(inputs))
 }
 
+//lint:ignore U1000 Ignore unused function temporarily for debugging
 func execDay3() {
 	rucksacks := day3.ReadRucksackFromFile()
 	prioritySum := day3.CalculatePrioritySum(rucksacks)
@@ -49,6 +52,7 @@ func execDay3() {
 	fmt.Printf("Priority sum of all group is %v\n", groupSum)
 }
 
+//lint:ignore U1000 Ignore unused function temporarily for debugging
 func execDay4() {
 	assignments := day4.ReadAssignmentFromFile()
 	fullOverlapPair := day4.CounOverlapPair(assignments)
@@ -58,6 +62,7 @@ func execDay4() {
 	fmt.Printf("Number of partially overlapping pair is %v\n", partialOverlapPair)
 }
 
+//lint:ignore U1000 Ignore unused function temporarily for debugging
 func execDay5() {
 	cargos, instructions := day5.ReadInputFromFile()
 
@@ -72,6 +77,7 @@ func execDay5() {
 	fmt.Println()
 }
 
+//lint:ignore U1000 Ignore unused function temporarily for debugging
 func execExample() {
 	messages, err := example.Hellos([]string{"Give", "Me", "Something"})
 	if err != nil {
