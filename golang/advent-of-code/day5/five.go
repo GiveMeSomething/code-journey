@@ -58,7 +58,7 @@ func ReadInputFromFile() ([][]string, []Instruction) {
 		case 0:
 			// Read cargos
 			for _, cargo := range extractCargoLine(currentLine) {
-				cargos[cargo.position] = append(cargos[cargo.position], string(currentLine))
+				cargos[cargo.position] = append([]string{string(cargo.value)}, cargos[cargo.position]...)
 			}
 		case 1:
 			// Read instructions
@@ -70,7 +70,24 @@ func ReadInputFromFile() ([][]string, []Instruction) {
 }
 
 func PeekTopCrate(cargos [][]string, instructions []Instruction) string {
-	return ""
+	for _, instruction := range instructions {
+		for i := 0; i < instruction.move; i++ {
+			// Pop from, append to
+			stackFrom := cargos[instruction.from]
+			stackTo := cargos[instruction.to]
+
+			value := stackFrom[len(stackFrom)-1]
+
+			cargos[instruction.from] = stackFrom[:len(stackFrom)-1]
+			cargos[instruction.to] = append(stackTo, value)
+		}
+	}
+
+	result := ""
+	for _, stack := range cargos {
+		result += string(stack[len(stack)-1])
+	}
+	return result
 }
 
 func PeekTopCrate9001(cargos [][]string, instructions []Instruction) string {
@@ -118,8 +135,8 @@ func extractInstructionLine(input string) Instruction {
 
 	return Instruction{
 		move: moveValue,
-		from: fromValue,
-		to:   toValue,
+		from: fromValue - 1,
+		to:   toValue - 1,
 	}
 }
 
@@ -127,4 +144,11 @@ func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func prependString(arr []string, input string) []string {
+	arr = append(arr, "")
+	copy(arr[1:], arr)
+	arr[0] = input
+	return arr
 }

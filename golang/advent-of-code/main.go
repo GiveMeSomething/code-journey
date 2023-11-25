@@ -61,8 +61,15 @@ func execDay4() {
 func execDay5() {
 	cargos, instructions := day5.ReadInputFromFile()
 
+	message1 := day5.PeekTopCrate(day5.MakeCargosCopy(cargos), instructions)
+	message2 := day5.PeekTopCrate9001(day5.MakeCargosCopy(cargos), instructions)
+
 	fmt.Println(cargos)
 	fmt.Println(instructions)
+
+	fmt.Printf("Part 1 message: %v\n", message1)
+	fmt.Printf("Part 2 message: %v\n", message2)
+	fmt.Println()
 }
 
 func execExample() {
