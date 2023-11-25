@@ -43,20 +43,19 @@ pub fn peek_top_crates() -> String {
                 // Read cargo from file
                 if current_step == 0 {
                     // Read cargo inputs
-                    for (position, value) in extract_cargo(input) {
+                    for (position, value) in extract_cargo(&input) {
                         let stack = cargos.get_mut(position).unwrap();
-                        stack.push(value);
+                        stack.insert(0, value);
                     }
                 }
 
                 // Read instructions and execute from file
                 if current_step == 1 {
-                    let (value, from, to) = extract_instruction(input);
-                    let from = cargos.get_mut(from).unwrap();
-                    let to = cargos.get_mut(to).unwrap();
+                    let (value, from, to) = extract_instruction(&input);
                     for _ in 0..value {
-                        let cargo = from.pop().unwrap();
-                        to.push(cargo);
+                        let cargo: String = { cargos.get_mut(from).unwrap().pop().unwrap() };
+                        let target_stack = cargos.get_mut(to).unwrap();
+                        target_stack.push(cargo);
                     }
                 }
             }
@@ -76,11 +75,11 @@ pub fn peek_top_crates() -> String {
     return result;
 }
 
-fn extract_cargo(input: String) -> Vec<(usize, String)> {
+fn extract_cargo(input: &String) -> Vec<(usize, String)> {
     let mut result: Vec<(usize, String)> = vec![];
     for (i, char) in input.char_indices() {
         // Ignore whitespace and char wrapper
-        if char == ' ' || char == '[' || char == ']' {
+        if char == ' ' || char == '[' || char == ']' || char.is_numeric() {
             continue;
         }
         let position = (i - 1) / 4;
@@ -90,7 +89,7 @@ fn extract_cargo(input: String) -> Vec<(usize, String)> {
     return result;
 }
 
-fn extract_instruction(input: String) -> (usize, usize, usize) {
+fn extract_instruction(input: &String) -> (usize, usize, usize) {
     let instruction_regex: Regex =
         match Regex::new("move (?<value>.+) from (?<from>.+) to (?<to>.+)") {
             Ok(regex) => regex,
@@ -105,5 +104,5 @@ fn extract_instruction(input: String) -> (usize, usize, usize) {
     let from: usize = groups["from"].parse().unwrap();
     let to: usize = groups["to"].parse().unwrap();
 
-    return (value, from, to);
+    return (value, from - 1, to - 1);
 }

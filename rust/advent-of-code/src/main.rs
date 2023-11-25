@@ -84,5 +84,7 @@ fn exec_four() {
 
 #[allow(dead_code)]
 fn exec_five() {
-    five::extract_instruction(String::from("move 1 from 2 to 1"));
+    let message_part_1 = five::peek_top_crates();
+
+    println!("Part 1 message is {}", message_part_1);
 }
