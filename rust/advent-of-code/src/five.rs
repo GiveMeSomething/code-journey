@@ -57,7 +57,9 @@ fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
                 }
 
                 // Read instructions
-                if current_step == 2 {}
+                if current_step == 2 {
+                    instructions.push(extract_instruction(&input));
+                }
             }
             Err(error) => panic!("Cannot read line with error {:?}", error),
         };
@@ -66,52 +68,22 @@ fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
     return (cargos, instructions);
 }
 
-pub fn peek_top_crates() -> String {
-    let inputs = read_cargo_from_file();
+pub fn peek_top_crates(cargos: &Vec<Vec<String>>, instructions: &Vec<Instruction>) -> String {
+    for instruction in instructions {
+        for _ in 0..instruction.move_number {
+            let move_value: String = {
+                let from = cargos.get_mut(instruction.from_stack).unwrap_or_else(|| {
+                    panic!("Cannot get from stack at index {}", instruction.from_stack)
+                });
+                from.pop().unwrap_or_else(|| {
+                    panic!("Encounter empty stack at {}", instruction.from_stack)
+                })
+            };
 
-    let mut cargos: Vec<Vec<String>> = vec![];
-    let mut init: bool = false;
-
-    // Step = 0 => Read cargo inputs
-    // Step = 1 => Read cargo moving instructions
-    let mut current_step = 0;
-
-    for input in inputs {
-        match input {
-            Ok(input) => {
-                // Init cargo stacks
-                if !init {
-                    for _ in 0..input.len() / 3 {
-                        cargos.push(vec![]);
-                    }
-                    init = true;
-                }
-                // Move to next step when encounter a empty line
-                if current_step == 0 && input.trim().eq("") {
-                    current_step = 1;
-                    continue;
-                }
-
-                // Read cargo from file
-                if current_step == 0 {
-                    // Read cargo inputs
-                    for (position, value) in extract_cargo(&input) {
-                        let stack = cargos.get_mut(position).unwrap();
-                        stack.insert(0, value);
-                    }
-                }
-
-                // Read instructions and execute from file
-                if current_step == 1 {
-                    let (value, from, to) = extract_instruction(&input);
-                    for _ in 0..value {
-                        let cargo: String = { cargos.get_mut(from).unwrap().pop().unwrap() };
-                        let target_stack = cargos.get_mut(to).unwrap();
-                        target_stack.push(cargo);
-                    }
-                }
-            }
-            Err(_) => break,
+            let to = cargos
+                .get_mut(instruction.to_stack)
+                .unwrap_or_else(|| panic!("Cannot get to stack at index {}", instruction.to_stack));
+            to.push(move_value);
         }
     }
 
@@ -127,54 +99,28 @@ pub fn peek_top_crates() -> String {
     return result;
 }
 
-pub fn peek_top_crates_9001() -> String {
-    let inputs = read_cargo_from_file();
+pub fn peek_top_crates_9001(cargos: &Vec<Vec<String>>, instructions: &Vec<Instruction>) -> String {
+    for instruction in instructions {
+        let mut move_values: Vec<String> = {
+            let from = cargos.get_mut(instruction.from_stack).unwrap_or_else(|| {
+                panic!("Cannot get from stack at index {}", instruction.from_stack)
+            });
 
-    let mut cargos: Vec<Vec<String>> = vec![];
-    let mut init: bool = false;
+            let result = &from[from.len() - instruction.move_number..from.len()];
 
-    // Step = 0 => Read cargo inputs
-    // Step = 1 => Read cargo moving instructions
-    let mut current_step = 0;
-
-    for input in inputs {
-        match input {
-            Ok(input) => {
-                // Init cargo stacks
-                if !init {
-                    for _ in 0..input.len() / 3 {
-                        cargos.push(vec![]);
-                    }
-                    init = true;
-                }
-                // Move to next step when encounter a empty line
-                if current_step == 0 && input.trim().eq("") {
-                    current_step = 1;
-                    continue;
-                }
-
-                // Read cargo from file
-                if current_step == 0 {
-                    // Read cargo inputs
-                    for (position, value) in extract_cargo(&input) {
-                        let stack = cargos.get_mut(position).unwrap();
-                        stack.insert(0, value);
-                    }
-                }
-
-                // Read instructions and execute from file
-                if current_step == 1 {
-                    let (value, from, to) = extract_instruction(&input);
-                    let insert_position = { cargos.get(to).unwrap().len() };
-                    for _ in 0..value {
-                        let cargo: String = { cargos.get_mut(from).unwrap().pop().unwrap() };
-                        let target_stack = cargos.get_mut(to).unwrap();
-                        target_stack.insert(insert_position, cargo);
-                    }
-                }
+            for _ in 0..instruction.move_number {
+                from.pop().unwrap_or_else(|| {
+                    panic!("Encounter empty stack at {}", instruction.from_stack)
+                });
             }
-            Err(_) => break,
-        }
+
+            result.to_vec()
+        };
+
+        let to = cargos
+            .get_mut(instruction.to_stack)
+            .unwrap_or_else(|| panic!("Cannot get to stack at index {}", instruction.to_stack));
+        to.append(&mut move_values);
     }
 
     let mut result: String = String::from("");
