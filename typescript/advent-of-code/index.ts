@@ -4,10 +4,16 @@ import {
   calculatePoint,
   calculatePointPartTwo,
 } from "./day2/two";
+import {
+  calculateGroupSum,
+  calculateLineSum,
+  readRucksackFromFile,
+} from "./day3/three";
 
 function main() {
-  execOne();
-  execTwo();
+  // execOne();
+  // execTwo();
+  execThree();
 }
 
 main();
@@ -38,4 +44,14 @@ async function execTwo() {
     "Point after playing rounds of rock, paper, scissor after changing strategy is:",
     rpcPointsPartTwo,
   );
+}
+
+async function execThree() {
+  const lineReader = readRucksackFromFile();
+
+  const singleSum = await calculateLineSum(lineReader);
+  const groupSum = await calculateGroupSum(lineReader);
+
+  console.log("Priority sum of all line is", singleSum);
+  console.log("Priority sum of all group is", groupSum);
 }
