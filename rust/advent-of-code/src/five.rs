@@ -4,14 +4,66 @@ use std::{
     io::{BufRead, BufReader, Lines},
 };
 
-fn read_cargo_from_file() -> Lines<BufReader<File>> {
+struct Instruction {
+    move_number: usize,
+    from_stack: usize,
+    to_stack: usize,
+}
+
+fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
     let file = match File::open("src/inputs/five.txt") {
         Ok(file) => file,
         Err(error) => panic!("Cannot open day 5 inputs with error {:?}", error),
     };
 
     let reader = BufReader::new(file);
-    return reader.lines();
+
+    let mut cargos: Vec<Vec<String>> = vec![];
+    let mut instructions: Vec<Instruction> = vec![];
+
+    let mut init = false;
+
+    // Step = 1 => Read cargos inputs
+    // Step = 2 => Read instructions
+    let mut current_step = 1;
+
+    for line in reader.lines() {
+        match line {
+            Ok(line) => {
+                // Switch to next step when encounter an empty line
+                if line.trim().eq("") {
+                    current_step = 2;
+                    continue;
+                }
+
+                // Init all empty stack
+                if !init {
+                    let stack_number = line.len() / 4;
+                    for _ in 0..=stack_number {
+                        cargos.push(vec![]);
+                    }
+                    init = true;
+                }
+
+                // Read cargos
+                if current_step == 1 {
+                    let line_cargos = extract_cargo(&line);
+                    for (position, value) in line_cargos {
+                        let stack = cargos
+                            .get_mut(position)
+                            .unwrap_or_else(|| panic!("Cannot read index {}", position));
+                        stack.insert(0, value);
+                    }
+                }
+
+                // Read instructions
+                if current_step == 2 {}
+            }
+            Err(error) => panic!("Cannot read line with error {:?}", error),
+        };
+    }
+
+    return (cargos, instructions);
 }
 
 pub fn peek_top_crates() -> String {
@@ -151,7 +203,7 @@ fn extract_cargo(input: &String) -> Vec<(usize, String)> {
     return result;
 }
 
-fn extract_instruction(input: &String) -> (usize, usize, usize) {
+fn extract_instruction(input: &String) -> Instruction {
     let instruction_regex: Regex =
         match Regex::new("move (?<value>.+) from (?<from>.+) to (?<to>.+)") {
             Ok(regex) => regex,
@@ -159,12 +211,27 @@ fn extract_instruction(input: &String) -> (usize, usize, usize) {
         };
 
     let Some(groups) = instruction_regex.captures(&input) else {
-        return (0, 0, 0);
+        return Instruction {
+            move_number: 0,
+            from_stack: 0,
+            to_stack: 0,
+        };
     };
 
-    let value: usize = groups["value"].parse().unwrap();
-    let from: usize = groups["from"].parse().unwrap();
-    let to: usize = groups["to"].parse().unwrap();
+    let value: usize = parse_int(&groups["value"]);
+    let from: usize = parse_int(&groups["from"]);
+    let to: usize = parse_int(&groups["to"]);
 
-    return (value, from - 1, to - 1);
+    return Instruction {
+        move_number: value,
+        from_stack: from,
+        to_stack: to,
+    };
+}
+
+fn parse_int(input: &str) -> usize {
+    let value: usize = input
+        .parse()
+        .unwrap_or_else(|| panic!("Cannot parse {} to integer", input));
+    return value;
 }
