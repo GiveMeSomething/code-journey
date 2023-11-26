@@ -173,8 +173,8 @@ fn extract_instruction(input: &String) -> Instruction {
 
     return Instruction {
         move_number: value,
-        from_stack: from,
-        to_stack: to,
+        from_stack: from - 1,
+        to_stack: to - 1,
     };
 }
 
