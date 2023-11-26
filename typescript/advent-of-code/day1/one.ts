@@ -8,7 +8,7 @@ export const readItemsFromFile = async (): Promise<Array<number>> => {
   let reader = null;
 
   try {
-    const filePath = process.cwd() + "/dayOne/items.txt";
+    const filePath = process.cwd() + "/day1/items.txt";
     reader = createInterface({
       input: createReadStream(filePath, { encoding: "utf-8" }),
     });

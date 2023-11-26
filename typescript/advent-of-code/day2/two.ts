@@ -8,7 +8,7 @@ export const readInputsFromFile = async (): Promise<string[][]> => {
 
   let reader = null;
   try {
-    const filePath = process.cwd() + "/dayTwo/items.txt";
+    const filePath = process.cwd() + "/day2/items.txt";
     reader = createInterface({
       input: createReadStream(filePath, { encoding: "utf-8" }),
     });
@@ -42,9 +42,6 @@ export const calculatePoint = (inputs: string[][]): number => {
 
   let i = 0;
   let point = 0;
-
-  console.log(opponentInput.length);
-  console.log(userInput.length);
 
   while (i < opponentInput.length) {
     const opponentValue = inputToPoint[opponentInput[i]];
