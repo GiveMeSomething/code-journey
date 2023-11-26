@@ -14,7 +14,9 @@ export const readRucksackFromFile = (): Interface => {
   return createInterface(fileStream);
 };
 
-export const calculateLineSum = async (reader: Interface): Promise<number> => {
+export const calculateLineSum = async (): Promise<number> => {
+  const reader = readRucksackFromFile();
+
   let sum = 0;
 
   for await (const line of reader) {
@@ -43,10 +45,50 @@ export const calculateLineSum = async (reader: Interface): Promise<number> => {
   return sum;
 };
 
-export const calculateGroupSum = async (reader: Interface): Promise<number> => {
+export const calculateGroupSum = async (): Promise<number> => {
+  const reader = readRucksackFromFile();
+
+  let buffer: string[] = [];
+  let sum = 0;
+
   for await (const line of reader) {
+    buffer.push(line);
+
+    if (buffer.length < 3) {
+      continue;
+    }
+
+    const charMap = new Map<string, number>();
+    for (let char of buffer[0]) {
+      charMap.set(char, 1);
+    }
+    console.log(charMap);
+
+    for (let char of buffer[1]) {
+      if (charMap.get(char) == null) {
+        continue;
+      }
+      charMap.set(char, 2);
+    }
+    console.log(charMap);
+
+    for (let char of buffer[2]) {
+      const value = charMap.get(char);
+      if (value == null) {
+        continue;
+      }
+      if (value === 2) {
+        sum += getCharacterValue(char);
+        break;
+      }
+    }
+    console.log(charMap);
+
+    // Clear buffer
+    buffer = [];
   }
-  return 0;
+
+  return sum;
 };
 
 const getCharacterValue = (char: string): number => {

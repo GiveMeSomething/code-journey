@@ -47,10 +47,8 @@ async function execTwo() {
 }
 
 async function execThree() {
-  const lineReader = readRucksackFromFile();
-
-  const singleSum = await calculateLineSum(lineReader);
-  const groupSum = await calculateGroupSum(lineReader);
+  const singleSum = await calculateLineSum();
+  const groupSum = await calculateGroupSum();
 
   console.log("Priority sum of all line is", singleSum);
   console.log("Priority sum of all group is", groupSum);
