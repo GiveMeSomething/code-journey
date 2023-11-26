@@ -62,7 +62,6 @@ export const calculateGroupSum = async (): Promise<number> => {
     for (let char of buffer[0]) {
       charMap.set(char, 1);
     }
-    console.log(charMap);
 
     for (let char of buffer[1]) {
       if (charMap.get(char) == null) {
@@ -70,7 +69,6 @@ export const calculateGroupSum = async (): Promise<number> => {
       }
       charMap.set(char, 2);
     }
-    console.log(charMap);
 
     for (let char of buffer[2]) {
       const value = charMap.get(char);
@@ -82,7 +80,6 @@ export const calculateGroupSum = async (): Promise<number> => {
         break;
       }
     }
-    console.log(charMap);
 
     // Clear buffer
     buffer = [];
