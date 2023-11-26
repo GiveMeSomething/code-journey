@@ -84,8 +84,10 @@ fn exec_four() {
 
 #[allow(dead_code)]
 fn exec_five() {
-    let message_part_1 = five::peek_top_crates();
-    let message_part_2 = five::peek_top_crates_9001();
+    let (cargos, instructions) = five::read_cargo_from_file();
+
+    let message_part_1 = five::peek_top_crates(&mut five::clone_vec(&cargos), &instructions);
+    let message_part_2 = five::peek_top_crates_9001(&mut five::clone_vec(&cargos), &instructions);
 
     println!("Part 1 message is {}", message_part_1);
     println!("Part 2 message is {}", message_part_2);

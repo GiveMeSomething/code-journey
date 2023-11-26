@@ -1,16 +1,16 @@
 use regex::Regex;
 use std::{
     fs::File,
-    io::{BufRead, BufReader, Lines},
+    io::{BufRead, BufReader},
 };
 
-struct Instruction {
+pub struct Instruction {
     move_number: usize,
     from_stack: usize,
     to_stack: usize,
 }
 
-fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
+pub fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
     let file = match File::open("src/inputs/five.txt") {
         Ok(file) => file,
         Err(error) => panic!("Cannot open day 5 inputs with error {:?}", error),
@@ -58,7 +58,7 @@ fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
 
                 // Read instructions
                 if current_step == 2 {
-                    instructions.push(extract_instruction(&input));
+                    instructions.push(extract_instruction(&line));
                 }
             }
             Err(error) => panic!("Cannot read line with error {:?}", error),
@@ -68,7 +68,7 @@ fn read_cargo_from_file() -> (Vec<Vec<String>>, Vec<Instruction>) {
     return (cargos, instructions);
 }
 
-pub fn peek_top_crates(cargos: &Vec<Vec<String>>, instructions: &Vec<Instruction>) -> String {
+pub fn peek_top_crates(cargos: &mut Vec<Vec<String>>, instructions: &Vec<Instruction>) -> String {
     for instruction in instructions {
         for _ in 0..instruction.move_number {
             let move_value: String = {
@@ -89,7 +89,7 @@ pub fn peek_top_crates(cargos: &Vec<Vec<String>>, instructions: &Vec<Instruction
 
     let mut result: String = String::from("");
     // Extract final message
-    for mut stack in cargos {
+    for stack in cargos {
         match stack.pop() {
             Some(value) => result.push_str(value.as_str()),
             None => continue,
@@ -99,14 +99,17 @@ pub fn peek_top_crates(cargos: &Vec<Vec<String>>, instructions: &Vec<Instruction
     return result;
 }
 
-pub fn peek_top_crates_9001(cargos: &Vec<Vec<String>>, instructions: &Vec<Instruction>) -> String {
+pub fn peek_top_crates_9001(
+    cargos: &mut Vec<Vec<String>>,
+    instructions: &Vec<Instruction>,
+) -> String {
     for instruction in instructions {
         let mut move_values: Vec<String> = {
             let from = cargos.get_mut(instruction.from_stack).unwrap_or_else(|| {
                 panic!("Cannot get from stack at index {}", instruction.from_stack)
             });
 
-            let result = &from[from.len() - instruction.move_number..from.len()];
+            let result = from[from.len() - instruction.move_number..from.len()].to_vec();
 
             for _ in 0..instruction.move_number {
                 from.pop().unwrap_or_else(|| {
@@ -114,7 +117,7 @@ pub fn peek_top_crates_9001(cargos: &Vec<Vec<String>>, instructions: &Vec<Instru
                 });
             }
 
-            result.to_vec()
+            result
         };
 
         let to = cargos
@@ -125,7 +128,7 @@ pub fn peek_top_crates_9001(cargos: &Vec<Vec<String>>, instructions: &Vec<Instru
 
     let mut result: String = String::from("");
     // Extract final message
-    for mut stack in cargos {
+    for stack in cargos {
         match stack.pop() {
             Some(value) => result.push_str(value.as_str()),
             None => continue,
@@ -175,9 +178,20 @@ fn extract_instruction(input: &String) -> Instruction {
     };
 }
 
+pub fn clone_vec(input: &Vec<Vec<String>>) -> Vec<Vec<String>> {
+    let mut result: Vec<Vec<String>> = vec![];
+    for i in 0..input.len() {
+        result.push(vec![]);
+        for value in input.get(i).unwrap() {
+            result[i].push(value.clone());
+        }
+    }
+    return result;
+}
+
 fn parse_int(input: &str) -> usize {
-    let value: usize = input
-        .parse()
-        .unwrap_or_else(|| panic!("Cannot parse {} to integer", input));
+    let value: usize = input.parse().unwrap_or_else(|error| {
+        panic!("Cannot parse {} to integer with error {:?}", input, error);
+    });
     return value;
 }
