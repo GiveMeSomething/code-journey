@@ -43,9 +43,6 @@ export const calculatePoint = (inputs: string[][]): number => {
   let i = 0;
   let point = 0;
 
-  console.log(opponentInput.length);
-  console.log(userInput.length);
-
   while (i < opponentInput.length) {
     const opponentValue = inputToPoint[opponentInput[i]];
     const userValue = inputToPoint[userInput[i]];

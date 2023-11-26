@@ -1,17 +1,18 @@
-import { getMaxSum, getTopThreeSum, readItemsFromFile } from "./dayOne/dayOne";
+import { readItemsFromFile, getMaxSum, getTopThreeSum } from "./day1/one";
 import {
+  readInputsFromFile,
   calculatePoint,
   calculatePointPartTwo,
-  readInputsFromFile,
-} from "./dayTwo/dayTwo";
+} from "./day2/two";
 
 function main() {
-  execDayTwo();
+  execOne();
+  execTwo();
 }
 
 main();
 
-async function execDayOne() {
+async function execOne() {
   const itemSums = await readItemsFromFile();
 
   const max = getMaxSum(itemSums);
@@ -21,7 +22,7 @@ async function execDayOne() {
   console.log("Top three sum", topThree);
 }
 
-async function execDayTwo() {
+async function execTwo() {
   const inputs = await readInputsFromFile();
 
   const rpcPoints = calculatePoint(inputs);
