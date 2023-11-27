@@ -18,41 +18,37 @@ pub fn read_signal_from_file() -> String {
     return signal;
 }
 
-pub fn get_start_of_packet(signal: &String) -> usize {
-    // let mut char_set: HashSet<char> = HashSet::new();
-    // for i in 4..signal.len() - 4 {
-    //     for char in signal[i - 4..i].chars() {
-    //         char_set.insert(char);
-    //     }
-    //     if char_set.len() == 4 {
-    //         return i;
-    //     }
-    //     char_set.clear();
-    // }
+pub fn get_start_of_packet_set(signal: &String) -> usize {
+    let mut char_set: HashSet<char> = HashSet::new();
+    for i in 4..signal.len() - 4 {
+        for char in signal[i - 4..i].chars() {
+            char_set.insert(char);
+        }
+        if char_set.len() == 4 {
+            return i;
+        }
+        char_set.clear();
+    }
 
-    // return 0;
-
-    return find_unique_seq(signal, 4);
+    return 0;
 }
 
-pub fn get_start_of_message(signal: &String) -> usize {
-    // let mut char_set: HashSet<char> = HashSet::new();
-    // for i in 14..signal.len() - 4 {
-    //     for char in signal[i - 14..i].chars() {
-    //         char_set.insert(char);
-    //     }
-    //     if char_set.len() == 14 {
-    //         return i;
-    //     }
-    //     char_set.clear();
-    // }
+pub fn get_start_of_message_set(signal: &String) -> usize {
+    let mut char_set: HashSet<char> = HashSet::new();
+    for i in 14..signal.len() - 4 {
+        for char in signal[i - 14..i].chars() {
+            char_set.insert(char);
+        }
+        if char_set.len() == 14 {
+            return i;
+        }
+        char_set.clear();
+    }
 
-    // return 0;
-
-    return find_unique_seq(signal, 14);
+    return 0;
 }
 
-fn find_unique_seq(input: &String, seq_len: usize) -> usize {
+pub fn find_unique_seq(input: &String, seq_len: usize) -> usize {
     let mut char_map: HashMap<char, usize> = HashMap::new();
     let mut input_chars: Vec<char> = vec![];
 

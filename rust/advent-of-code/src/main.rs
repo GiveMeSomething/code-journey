@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 mod example;
 mod five;
 mod four;
@@ -98,9 +100,33 @@ fn exec_five() {
 #[allow(dead_code)]
 fn exec_six() {
     let signal = six::read_signal_from_file();
-    let packet_start = six::get_start_of_packet(&signal);
-    let message_start = six::get_start_of_message(&signal);
 
-    println!("Start-of-packet at {}", packet_start);
-    println!("Start-of-message at {}", message_start);
+    with_benchmark(&|| {
+        println!("Using HashSet");
+        let packet_start = six::get_start_of_packet_set(&signal);
+        let message_start = six::get_start_of_message_set(&signal);
+
+        println!("Start-of-packet at {}", packet_start);
+        println!("Start-of-message at {}", message_start);
+    });
+
+    with_benchmark(&|| {
+        println!("Using HashMap");
+        let packet_start = six::find_unique_seq(&signal, 4);
+        let message_start = six::find_unique_seq(&signal, 14);
+
+        println!("Start-of-packet at {}", packet_start);
+        println!("Start-of-message at {}", message_start);
+    })
+}
+
+fn with_benchmark(f: &dyn Fn() -> ()) {
+    let start_time = Instant::now();
+
+    f();
+
+    let elapsed_time = Instant::now() - start_time;
+
+    println!("Running time {:?}", elapsed_time);
+    println!();
 }
