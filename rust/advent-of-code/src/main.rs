@@ -2,6 +2,7 @@ mod example;
 mod five;
 mod four;
 mod one;
+mod six;
 mod three;
 mod two;
 
@@ -26,7 +27,8 @@ fn main() {
     // exec_two();
     // exec_three();
     // exec_four();
-    exec_five();
+    // exec_five();
+    exec_six();
 }
 
 #[allow(dead_code)]
@@ -91,4 +93,12 @@ fn exec_five() {
 
     println!("Part 1 message is {}", message_part_1);
     println!("Part 2 message is {}", message_part_2);
+}
+
+#[allow(dead_code)]
+fn exec_six() {
+    let signal = six::read_signal_from_file();
+    let signal_start = six::get_signal_start(&signal);
+
+    println!("Start-of-packet at {}", signal_start);
 }
