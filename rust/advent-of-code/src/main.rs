@@ -4,6 +4,7 @@ mod example;
 mod five;
 mod four;
 mod one;
+mod seven;
 mod six;
 mod three;
 mod two;
@@ -30,7 +31,9 @@ fn main() {
     // exec_three();
     // exec_four();
     // exec_five();
-    exec_six();
+    // exec_six();
+
+    exec_seven();
 }
 
 #[allow(dead_code)]
@@ -118,6 +121,17 @@ fn exec_six() {
         println!("Start-of-packet at {}", packet_start);
         println!("Start-of-message at {}", message_start);
     })
+}
+
+fn exec_seven() {
+    let (total_file_size, deleted_file) = seven::day_7_solution();
+
+    println!(
+        "Total file size of all files that at most 100_000 is {}",
+        total_file_size
+    );
+
+    println!("Deleted size is {}", deleted_file);
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
