@@ -52,12 +52,23 @@ pub fn day_7_solution() -> (usize, usize) {
 
             let file_size: usize = tokens[0].parse().unwrap();
 
-            for dir in current_directory.iter() {
-                let previous_dir_size = match dir_size_map.get(dir) {
+            for i in 0..current_directory.len() {
+                if i == 0 {
+                    let dir = current_directory.get(i).unwrap();
+                    let previous_dir_size = match dir_size_map.get(dir) {
+                        Some(dir_size) => *dir_size,
+                        None => 0,
+                    };
+                    dir_size_map.insert(String::from(dir), file_size + previous_dir_size);
+                    continue;
+                }
+
+                let dir_path = current_directory[0..i + 1].join("/");
+                let previous_dir_size = match dir_size_map.get(&dir_path) {
                     Some(dir_size) => *dir_size,
                     None => 0,
                 };
-                dir_size_map.insert(String::from(dir), file_size + previous_dir_size);
+                dir_size_map.insert(String::from(dir_path), file_size + previous_dir_size);
             }
         }
     }
