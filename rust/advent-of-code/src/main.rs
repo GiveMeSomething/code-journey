@@ -98,7 +98,9 @@ fn exec_five() {
 #[allow(dead_code)]
 fn exec_six() {
     let signal = six::read_signal_from_file();
-    let signal_start = six::get_signal_start(&signal);
+    let packet_start = six::get_start_of_packet(&signal);
+    let message_start = six::get_start_of_message(&signal);
 
-    println!("Start-of-packet at {}", signal_start);
+    println!("Start-of-packet at {}", packet_start);
+    println!("Start-of-message at {}", message_start);
 }

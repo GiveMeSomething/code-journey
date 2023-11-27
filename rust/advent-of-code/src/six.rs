@@ -18,13 +18,28 @@ pub fn read_signal_from_file() -> String {
     return signal;
 }
 
-pub fn get_signal_start(signal: &String) -> usize {
-    let mut char_set: HashSet<char> = HashSet::new();
+pub fn get_start_of_packet(signal: &String) -> usize {
+    // let mut char_set: HashSet<char> = HashSet::new();
     for i in 4..signal.len() - 4 {
         for char in signal[i - 4..i].chars() {
             char_set.insert(char);
         }
         if char_set.len() == 4 {
+            return i;
+        }
+        char_set.clear();
+    }
+
+    return 0;
+}
+
+pub fn get_start_of_message(signal: &String) -> usize {
+    let mut char_set: HashSet<char> = HashSet::new();
+    for i in 14..signal.len() - 4 {
+        for char in signal[i - 14..i].chars() {
+            char_set.insert(char);
+        }
+        if char_set.len() == 14 {
             return i;
         }
         char_set.clear();
