@@ -54,12 +54,12 @@ pub fn day_7_solution() -> (usize, usize) {
 
             for i in 0..current_directory.len() {
                 if i == 0 {
-                    let dir = current_directory.get(i).unwrap();
-                    let previous_dir_size = match dir_size_map.get(dir) {
+                    let root = String::from("/");
+                    let previous_dir_size = match dir_size_map.get(&root) {
                         Some(dir_size) => *dir_size,
                         None => 0,
                     };
-                    dir_size_map.insert(String::from(dir), file_size + previous_dir_size);
+                    dir_size_map.insert(root, file_size + previous_dir_size);
                     continue;
                 }
 
@@ -81,8 +81,11 @@ pub fn day_7_solution() -> (usize, usize) {
     }
 
     let mut valid_file_size: Vec<usize> = vec![];
+    let occupied_space = dir_size_map.get(&String::from("/")).unwrap();
+    let required_at_least = occupied_space - 40_000_000;
+
     for value in dir_size_map.values() {
-        if *value >= 7_000_000 - 3_000_000 {
+        if *value >= required_at_least {
             valid_file_size.push(*value);
         }
     }
