@@ -4,7 +4,7 @@ use std::{
     io::{BufRead, BufReader},
 };
 
-pub fn total_big_file_size() -> usize {
+pub fn day_7_solution() -> (usize, usize) {
     let file = File::open("src/inputs/seven.txt")
         .unwrap_or_else(|err| panic!("Cannot read file with error {:?}", err));
     let reader = BufReader::new(file);
@@ -69,5 +69,13 @@ pub fn total_big_file_size() -> usize {
         }
     }
 
-    return size_sum;
+    let mut valid_file_size: Vec<usize> = vec![];
+    for value in dir_size_map.values() {
+        if *value >= 7_000_000 - 3_000_000 {
+            valid_file_size.push(*value);
+        }
+    }
+    valid_file_size.sort();
+
+    return (size_sum, valid_file_size[0]);
 }

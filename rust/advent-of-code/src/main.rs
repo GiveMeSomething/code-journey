@@ -124,12 +124,14 @@ fn exec_six() {
 }
 
 fn exec_seven() {
-    let total_file_size = seven::total_big_file_size();
+    let (total_file_size, deleted_file) = seven::day_7_solution();
 
     println!(
         "Total file size of all files that at most 100_000 is {}",
         total_file_size
     );
+
+    println!("Deleted size is {}", deleted_file);
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
