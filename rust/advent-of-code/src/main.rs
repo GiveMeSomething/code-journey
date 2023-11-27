@@ -31,7 +31,9 @@ fn main() {
     // exec_three();
     // exec_four();
     // exec_five();
-    exec_six();
+    // exec_six();
+
+    exec_seven();
 }
 
 #[allow(dead_code)]
@@ -119,6 +121,15 @@ fn exec_six() {
         println!("Start-of-packet at {}", packet_start);
         println!("Start-of-message at {}", message_start);
     })
+}
+
+fn exec_seven() {
+    let total_file_size = seven::total_big_file_size();
+
+    println!(
+        "Total file size of all files that at most 100_000 is {}",
+        total_file_size
+    );
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
