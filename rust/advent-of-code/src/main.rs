@@ -147,10 +147,15 @@ fn exec_eight() {
     let forest = eight::read_forest_from_file();
 
     let visible_trees = eight::count_visible_trees(&forest);
+    let max_scenic_point = eight::max_scenic_point(&forest);
 
     println!(
         "The number of visible trees in the forest is {}",
         visible_trees
+    );
+    println!(
+        "The best tree in the forest have {} scenic point",
+        max_scenic_point
     );
 }
 
