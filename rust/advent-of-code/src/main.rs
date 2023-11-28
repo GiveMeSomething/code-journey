@@ -1,5 +1,6 @@
 use std::time::Instant;
 
+mod eight;
 mod example;
 mod five;
 mod four;
@@ -32,8 +33,9 @@ fn main() {
     // exec_four();
     // exec_five();
     // exec_six();
+    // exec_seven();
 
-    exec_seven();
+    exec_eight();
 }
 
 #[allow(dead_code)]
@@ -123,6 +125,7 @@ fn exec_six() {
     })
 }
 
+#[allow(dead_code)]
 fn exec_seven() {
     let directory_map = seven::generate_directory_map();
 
@@ -138,6 +141,12 @@ fn exec_seven() {
         "Need to delete {} more before system update",
         deletable_size
     );
+}
+
+fn exec_eight() {
+    let forest = eight::read_forest_from_file();
+
+    println!("{:?}", forest);
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
