@@ -134,7 +134,10 @@ fn exec_seven() {
         small_files_size
     );
 
-    println!("Deleted size is {}", deletable_size);
+    println!(
+        "Need to delete {} more before system update",
+        deletable_size
+    );
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {

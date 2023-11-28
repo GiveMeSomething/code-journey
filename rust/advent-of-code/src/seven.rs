@@ -60,7 +60,7 @@ pub fn generate_directory_map() -> HashMap<String, usize> {
                     Some(dir_size) => *dir_size,
                     None => 0,
                 };
-                dir_size_map.insert(String::from(dir_path), file_size + previous_dir_size);
+                dir_size_map.insert(dir_path, file_size + previous_dir_size);
             }
         }
     }
