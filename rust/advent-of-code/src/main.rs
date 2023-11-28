@@ -146,7 +146,12 @@ fn exec_seven() {
 fn exec_eight() {
     let forest = eight::read_forest_from_file();
 
-    println!("{:?}", forest);
+    let visible_trees = eight::count_visible_trees(&forest);
+
+    println!(
+        "The number of visible trees in the forest is {}",
+        visible_trees
+    );
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
