@@ -1,14 +1,9 @@
 use std::time::Instant;
 
-mod eight;
+use crate::solutions::{eight, five, four, one, seven, six, three, two};
+
 mod example;
-mod five;
-mod four;
-mod one;
-mod seven;
-mod six;
-mod three;
-mod two;
+mod solutions;
 
 fn main() {
     // example::guess::start_guessing_game();
@@ -27,14 +22,13 @@ fn main() {
     // println!("transposed:");
     // example::looping::pretty_print(&transposed);
 
-    // exec_one();
-    // exec_two();
-    // exec_three();
-    // exec_four();
-    // exec_five();
-    // exec_six();
-    // exec_seven();
-
+    exec_one();
+    exec_two();
+    exec_three();
+    exec_four();
+    exec_five();
+    exec_six();
+    exec_seven();
     exec_eight();
 }
 
@@ -136,11 +130,11 @@ fn exec_seven() {
         "Total file size of all files that at most 100_000 is {}",
         small_files_size
     );
-
     println!(
         "Need to delete {} more before system update",
         deletable_size
     );
+    println!();
 }
 
 fn exec_eight() {
