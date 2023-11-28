@@ -124,14 +124,17 @@ fn exec_six() {
 }
 
 fn exec_seven() {
-    let (total_file_size, deleted_file) = seven::day_7_solution();
+    let directory_map = seven::generate_directory_map();
+
+    let small_files_size = seven::sum_small_files(&directory_map);
+    let deletable_size = seven::deletable_size(&directory_map);
 
     println!(
         "Total file size of all files that at most 100_000 is {}",
-        total_file_size
+        small_files_size
     );
 
-    println!("Deleted size is {}", deleted_file);
+    println!("Deleted size is {}", deletable_size);
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
