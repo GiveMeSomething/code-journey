@@ -1,5 +1,7 @@
 use std::time::Instant;
 
+use solutions::nine;
+
 use crate::solutions::{eight, five, four, one, seven, six, three, two};
 
 mod example;
@@ -22,14 +24,15 @@ fn main() {
     // println!("transposed:");
     // example::looping::pretty_print(&transposed);
 
-    exec_one();
-    exec_two();
-    exec_three();
-    exec_four();
-    exec_five();
-    exec_six();
-    exec_seven();
-    exec_eight();
+    // exec_one();
+    // exec_two();
+    // exec_three();
+    // exec_four();
+    // exec_five();
+    // exec_six();
+    // exec_seven();
+    // exec_eight();
+    exec_nine();
 }
 
 #[allow(dead_code)]
@@ -137,6 +140,7 @@ fn exec_seven() {
     println!();
 }
 
+#[allow(dead_code)]
 fn exec_eight() {
     let forest = eight::read_forest_from_file();
 
@@ -151,6 +155,14 @@ fn exec_eight() {
         "The best tree in the forest have {} scenic point",
         max_scenic_point
     );
+}
+
+fn exec_nine() {
+    let moves = nine::read_moves_from_file();
+
+    let covered_tiles = nine::count_covered_tile(&moves);
+
+    println!("Tail have covered {} tiles", covered_tiles);
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {
