@@ -161,8 +161,10 @@ fn exec_nine() {
     let moves = nine::read_moves_from_file();
 
     let covered_tiles = nine::count_covered_tile(&moves);
+    let covered_tiles_10 = nine::count_covered_tile_10(&moves);
 
     println!("Tail have covered {} tiles", covered_tiles);
+    println!("10th knot have covered {} tiles", covered_tiles_10);
 }
 
 fn with_benchmark(f: &dyn Fn() -> ()) {

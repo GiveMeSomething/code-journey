@@ -131,3 +131,49 @@ pub fn count_covered_tile(moves: &Vec<MoveDirection>) -> usize {
 
     return tile_set.len();
 }
+
+pub fn count_covered_tile_10(moves: &Vec<MoveDirection>) -> usize {
+    // Init Vec<Point>
+    let mut points: Vec<Point> = vec![];
+    for _ in 0..10 {
+        points.push(Point::new(0, 0));
+    }
+
+    let mut tile_set: HashSet<String> = HashSet::new();
+    tile_set.insert(String::from("0-0"));
+
+    for movement in moves {
+        for _ in 0..movement.move_value {
+            {
+                let head = points
+                    .get_mut(0)
+                    .expect("There should be a point at index 0");
+                match movement.direction.as_str() {
+                    "L" => head.x -= 1,
+                    "R" => head.x += 1,
+                    "U" => head.y += 1,
+                    "D" => head.y -= 1,
+                    _ => {}
+                };
+            }
+
+            for i in 1..10 {
+                let last_point = {
+                    let point = points.get(i - 1).unwrap();
+                    Point::new(point.x, point.y)
+                };
+                let current_point = points.get_mut(i).unwrap();
+                let moved = current_point.follow(&last_point);
+                if !moved {
+                    break;
+                }
+
+                if i == 9 {
+                    tile_set.insert(format!("{}-{}", current_point.x, current_point.y));
+                }
+            }
+        }
+    }
+
+    return tile_set.len();
+}
