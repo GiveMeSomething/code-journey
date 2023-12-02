@@ -10,6 +10,7 @@ import (
 	"adventofcode/day4"
 	"adventofcode/day5"
 	"adventofcode/day6"
+	"adventofcode/day7"
 	"adventofcode/example"
 )
 
@@ -20,7 +21,8 @@ func main() {
 	// execDay3()
 	// execDay4()
 	// execDay5()
-	execDay6()
+	// execDay6()
+	execDay7()
 }
 
 //lint:ignore U1000 Ignore unused function temporarily for debugging
@@ -87,6 +89,15 @@ func execDay6() {
 
 	fmt.Printf("Start of packet at index %v\n", startOfPacket)
 	fmt.Printf("Start of message at index %v\n", startOfMessage)
+}
+
+//lint:ignore U1000 Ignore unused function temporarily for debugging
+func execDay7() {
+	fileMap := day7.ParseDirTree()
+
+	smallFileSize := day7.SumSmallFiles(fileMap)
+
+	fmt.Printf("Sum of all small files are %v\n", smallFileSize)
 }
 
 //lint:ignore U1000 Ignore unused function temporarily for debugging

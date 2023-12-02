@@ -39,17 +39,43 @@ func ParseDirTree() map[string]int {
 			}
 		} else {
 			// Parse commands' result
-			if tokens[1] == "dir" {
+			if tokens[0] == "dir" {
 				continue
 			}
 
-			fileSize, err := strconv.Atoi(tokens[1])
+			currentFileSize, err := strconv.Atoi(tokens[0])
 			if err != nil {
 				continue
 			}
 
-			filePath := strings.Join(directoryStack, "/")
-			fileMap[filePath] = fileSize
+			// Update directory tree
+			for i := range directoryStack {
+				var filePath string
+				if i == 0 {
+					filePath = "/"
+				} else {
+					filePath = strings.Join(directoryStack[:i+1], "/")
+				}
+
+				fileSize, found := fileMap[filePath]
+				if !found {
+					fileMap[filePath] = currentFileSize
+				} else {
+					fileMap[filePath] = fileSize + currentFileSize
+				}
+			}
 		}
 	}
+
+	return fileMap
+}
+
+func SumSmallFiles(fileMap map[string]int) int {
+	sum := 0
+	for _, fileSize := range fileMap {
+		if fileSize <= 100000 {
+			sum += fileSize
+		}
+	}
+	return sum
 }
