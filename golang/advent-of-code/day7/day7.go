@@ -3,6 +3,7 @@ package day7
 import (
 	"bufio"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -78,4 +79,18 @@ func SumSmallFiles(fileMap map[string]int) int {
 		}
 	}
 	return sum
+}
+
+func CalculateDeleteSize(fileMap map[string]int) int {
+	currentSystemSize := fileMap["/"]
+	deletableFiles := []int{}
+
+	for _, fileSize := range fileMap {
+		if fileSize >= currentSystemSize-40_000_000 {
+			deletableFiles = append(deletableFiles, fileSize)
+		}
+	}
+
+	sort.Ints(deletableFiles)
+	return deletableFiles[0]
 }

@@ -96,8 +96,10 @@ func execDay7() {
 	fileMap := day7.ParseDirTree()
 
 	smallFileSize := day7.SumSmallFiles(fileMap)
+	needToDeleteFileSize := day7.CalculateDeleteSize(fileMap)
 
 	fmt.Printf("Sum of all small files are %v\n", smallFileSize)
+	fmt.Printf("Need to delete %v to update system\n", needToDeleteFileSize)
 }
 
 //lint:ignore U1000 Ignore unused function temporarily for debugging
