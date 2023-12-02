@@ -92,5 +92,10 @@ func CalculateDeleteSize(fileMap map[string]int) int {
 	}
 
 	sort.Ints(deletableFiles)
+
+	// Equivalent sort function using more generic method
+	// sort.Slice(deletableFiles, func(i, j int) bool {
+	// 	return deletableFiles[i] < deletableFiles[j]
+	// })
 	return deletableFiles[0]
 }
