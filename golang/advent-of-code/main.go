@@ -9,6 +9,7 @@ import (
 	"adventofcode/day3"
 	"adventofcode/day4"
 	"adventofcode/day5"
+	"adventofcode/day6"
 	"adventofcode/example"
 )
 
@@ -18,8 +19,8 @@ func main() {
 	// execDay2()
 	// execDay3()
 	// execDay4()
-
-	execDay5()
+	// execDay5()
+	execDay6()
 }
 
 //lint:ignore U1000 Ignore unused function temporarily for debugging
@@ -75,6 +76,17 @@ func execDay5() {
 	fmt.Printf("Part 1 message: %v\n", message1)
 	fmt.Printf("Part 2 message: %v\n", message2)
 	fmt.Println()
+}
+
+//lint:ignore U1000 Ignore unused function temporarily for debugging
+func execDay6() {
+	message := day6.ReadMessageFromFile()
+
+	fmt.Println(message)
+
+	startOfPacket := day6.FindStartOfPacket(message)
+
+	fmt.Printf("Start of packet at index %v\n", startOfPacket)
 }
 
 //lint:ignore U1000 Ignore unused function temporarily for debugging
