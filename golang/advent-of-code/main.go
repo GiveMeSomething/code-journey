@@ -82,11 +82,11 @@ func execDay5() {
 func execDay6() {
 	message := day6.ReadMessageFromFile()
 
-	fmt.Println(message)
-
 	startOfPacket := day6.FindStartOfPacket(message)
+	startOfMessage := day6.FindStartOfMessage(message)
 
 	fmt.Printf("Start of packet at index %v\n", startOfPacket)
+	fmt.Printf("Start of message at index %v\n", startOfMessage)
 }
 
 //lint:ignore U1000 Ignore unused function temporarily for debugging

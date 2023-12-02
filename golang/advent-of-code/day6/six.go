@@ -63,7 +63,8 @@ func findUniqueSequence(input string, sequenceLength int) int {
 		}
 
 		if len(char_map) == sequenceLength {
-			return i
+			// +1 to display the number of characters
+			return i + 1
 		}
 	}
 
