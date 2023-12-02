@@ -26,6 +26,10 @@ func FindStartOfPacket(input string) int {
 	return findUniqueSequence(input, 4)
 }
 
+func FindStartOfMessage(input string) int {
+	return findUniqueSequence(input, 14)
+}
+
 func findUniqueSequence(input string, sequenceLength int) int {
 	char_map := make(map[rune]int)
 
