@@ -24,7 +24,7 @@ pub fn calculate_calibration_sum(values: &Vec<String>) -> usize {
 }
 
 fn extract_calibration_value(input: &String) -> usize {
-    let digit_regex = match Regex::new(r"/\d/g") {
+    let digit_regex = match Regex::new(r"\d") {
         Ok(regex) => regex,
         Err(_) => panic!("Invalid regular expression"),
     };
@@ -34,5 +34,5 @@ fn extract_calibration_value(input: &String) -> usize {
         .filter_map(|digits| digits.as_str().parse().ok())
         .collect();
 
-    return digits[0] + digits[digits.len() - 1];
+    return digits[0] * 10 + digits[digits.len() - 1];
 }
