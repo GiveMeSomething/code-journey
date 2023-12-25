@@ -89,6 +89,26 @@ pub fn count_possible_game(games: &Vec<Vec<GameMetadata>>) -> usize {
     return game_id_sum;
 }
 
+pub fn calculate_minimum_possible_game(games: &Vec<Vec<GameMetadata>>) -> usize {
+    let mut sum = 0;
+
+    for game in games {
+        let mut max_red: usize = 0;
+        let mut max_green: usize = 0;
+        let mut max_blue: usize = 0;
+
+        for set in game {
+            max_red = usize::max(max_red, set.red);
+            max_green = usize::max(max_green, set.green);
+            max_blue = usize::max(max_blue, set.blue);
+        }
+
+        sum += max_red * max_green * max_blue;
+    }
+
+    return sum;
+}
+
 fn is_game_possible(game_metadata: &GameMetadata) -> bool {
     let red_limit = 12;
     let green_limit = 13;

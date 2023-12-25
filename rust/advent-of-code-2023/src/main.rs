@@ -25,6 +25,8 @@ fn exec_two() {
     let games = two::read_games_from_file();
 
     let possible_game_sum = two::count_possible_game(&games);
+    let minimum_power_sum = two::calculate_minimum_possible_game(&games);
 
-    println!("{}", possible_game_sum);
+    println!("Index sum of all possible games is {}", possible_game_sum);
+    println!("Sum of power of all games {}", minimum_power_sum);
 }
