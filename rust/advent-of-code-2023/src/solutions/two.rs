@@ -72,3 +72,34 @@ pub fn read_games_from_file() -> Vec<Vec<GameMetadata>> {
     }
     return result;
 }
+
+pub fn count_possible_game(games: &Vec<Vec<GameMetadata>>) -> usize {
+    let mut game_id_sum = 0;
+
+    'game_iter: for (i, game) in games.iter().enumerate() {
+        for set in game {
+            if !is_game_possible(set) {
+                continue 'game_iter;
+            }
+        }
+
+        game_id_sum += i + 1;
+    }
+
+    return game_id_sum;
+}
+
+fn is_game_possible(game_metadata: &GameMetadata) -> bool {
+    let red_limit = 12;
+    let green_limit = 13;
+    let blue_limit = 14;
+
+    if game_metadata.red > red_limit
+        || game_metadata.green > green_limit
+        || game_metadata.blue > blue_limit
+    {
+        return false;
+    }
+
+    return true;
+}

@@ -22,7 +22,9 @@ fn exec_one() {
 }
 
 fn exec_two() {
-    let input_games = two::read_games_from_file();
+    let games = two::read_games_from_file();
 
-    println!("{:?}", input_games);
+    let possible_game_sum = two::count_possible_game(&games);
+
+    println!("{}", possible_game_sum);
 }
