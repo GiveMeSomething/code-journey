@@ -1,10 +1,11 @@
-use solutions::{one, two};
+use solutions::{one, three, two};
 
 mod solutions;
 
 fn main() {
     // exec_one();
-    exec_two();
+    // exec_two();
+    exec_three();
 }
 
 #[allow(dead_code)]
@@ -21,6 +22,7 @@ fn exec_one() {
     );
 }
 
+#[allow(dead_code)]
 fn exec_two() {
     let games = two::read_games_from_file();
 
@@ -29,4 +31,15 @@ fn exec_two() {
 
     println!("Index sum of all possible games is {}", possible_game_sum);
     println!("Sum of power of all games {}", minimum_power_sum);
+}
+
+#[allow(dead_code)]
+fn exec_three() {
+    let inputs = three::read_part_from_file();
+
+    let part_sum = three::cal_engine_parts_sum(&inputs);
+    let gear_ratio_sum = three::cal_gear_ratio(&inputs);
+
+    println!("Sum of all available parts is {}", part_sum);
+    println!("Sum of all gear ratios is {}", gear_ratio_sum);
 }
