@@ -26,10 +26,14 @@ pub fn cal_engine_parts_sum(parts: &Vec<Vec<char>>) -> usize {
         let mut is_part = false;
         let mut current_part_value = 0;
         for (j, character) in line.iter().enumerate() {
-            if *character == '.' {
-                // Calculate if current value is a part then reset variables
+            // If encounter ".", or special characters, or at the of current line
+            // Calculate if current value is a part then reset variables
+            if *character == '.' || is_special_char(Some(character)) {
                 if is_part {
                     sum += current_part_value;
+                    if current_part_value > 0 {
+                        print!("{} ", current_part_value);
+                    }
                 }
                 current_part_value = 0;
                 is_part = false;
@@ -39,10 +43,18 @@ pub fn cal_engine_parts_sum(parts: &Vec<Vec<char>>) -> usize {
             // Is a number
             if character.is_ascii_digit() {
                 let value: usize = character.to_string().parse().expect("Should be an integer");
-                if current_part_value > 0 {
-                    current_part_value = current_part_value * 10 + value;
-                } else {
-                    current_part_value = value;
+                current_part_value = current_part_value * 10 + value;
+            }
+
+            if j == line.len() - 1 {
+                if is_part {
+                    sum += current_part_value;
+                    continue;
+                }
+
+                if is_special_around(parts, i, j) {
+                    sum += current_part_value;
+                    continue;
                 }
             }
 
