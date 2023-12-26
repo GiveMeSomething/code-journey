@@ -1,6 +1,8 @@
 use std::{
+    collections::HashMap,
     fs::File,
     io::{BufRead, BufReader},
+    usize,
 };
 
 pub fn read_part_from_file() -> Vec<Vec<char>> {
@@ -26,17 +28,59 @@ pub fn cal_engine_parts_sum(parts: &Vec<Vec<char>>) -> usize {
         let mut is_part = false;
         let mut current_part_value = 0;
         for (j, character) in line.iter().enumerate() {
-            // If encounter ".", or special characters, or at the of current line
-            // Calculate if current value is a part then reset variables
-            if *character == '.' || is_special_char(Some(character)) {
+            // If encounter "." or special characters
+            if *character == '.' || is_special_char(character) {
                 if is_part {
                     sum += current_part_value;
-                    if current_part_value > 0 {
-                        print!("{} ", current_part_value);
-                    }
                 }
                 current_part_value = 0;
                 is_part = false;
+                continue;
+            }
+
+            // Is a digit
+            if character.is_ascii_digit() {
+                let value: usize = character.to_string().parse().expect("Should be an integer");
+                current_part_value = current_part_value * 10 + value;
+            }
+
+            if j == line.len() - 1 && (is_part || is_char_around(parts, i, j, is_special_char).0) {
+                sum += current_part_value;
+                continue;
+            }
+
+            // Already a part, no need to check
+            if is_part {
+                continue;
+            }
+
+            is_part = is_char_around(parts, i, j, is_special_char).0;
+        }
+    }
+
+    return sum;
+}
+
+pub fn cal_gear_ratio(parts: &Vec<Vec<char>>) -> usize {
+    let mut gear_map: HashMap<String, Vec<usize>> = HashMap::new();
+
+    for (i, line) in parts.iter().enumerate() {
+        let mut is_gear_value = false;
+        let mut gear_position = String::from("");
+        let mut current_part_value = 0;
+
+        for (j, character) in line.iter().enumerate() {
+            if *character == '.' || is_special_char(character) {
+                if is_gear_value && current_part_value > 0 {
+                    match gear_map.get_mut(&gear_position) {
+                        Some(position_list) => position_list.push(current_part_value),
+                        None => {
+                            gear_map.insert(gear_position.to_string(), vec![current_part_value]);
+                        }
+                    };
+                }
+                current_part_value = 0;
+                is_gear_value = false;
                 continue;
             }
 
@@ -47,95 +91,81 @@ pub fn cal_engine_parts_sum(parts: &Vec<Vec<char>>) -> usize {
             }
 
             if j == line.len() - 1 {
-                if is_part {
-                    sum += current_part_value;
+                if is_gear_value {
+                    match gear_map.get_mut(&gear_position) {
+                        Some(position_list) => position_list.push(current_part_value),
+                        None => {
+                            gear_map.insert(gear_position.to_string(), vec![current_part_value]);
+                        }
+                    };
                     continue;
                 }
 
-                if is_special_around(parts, i, j) {
-                    sum += current_part_value;
-                    continue;
+                let (is_gear_around, position) = is_char_around(parts, i, j, is_gear);
+                if is_gear_around {
+                    match gear_map.get_mut(&position) {
+                        Some(position_list) => position_list.push(current_part_value),
+                        None => {
+                            gear_map.insert(position, vec![current_part_value]);
+                        }
+                    };
                 }
             }
 
             // Already a part, no need to check
-            if is_part {
+            if is_gear_value {
                 continue;
             }
 
-            is_part = is_special_around(parts, i, j);
+            (is_gear_value, gear_position) = is_char_around(parts, i, j, is_gear);
+        }
+    }
+
+    let mut sum = 0;
+    println!("{:?}", gear_map);
+    for (key, list) in gear_map {
+        if key.eq("") {
+            continue;
+        }
+        if list.len() == 2 {
+            println!("{}: {} {}", key, list[0], list[1]);
+            sum += list[0] * list[1];
         }
     }
 
     return sum;
 }
 
-// Check if there speacial character around
-fn is_special_around(parts: &Vec<Vec<char>>, i: usize, j: usize) -> bool {
-    let max_row_len = parts[0].len() - 1;
-    let max_row = parts.len() - 1;
+fn is_char_around(
+    parts: &Vec<Vec<char>>,
+    i: usize,
+    j: usize,
+    matcher: fn(&char) -> bool,
+) -> (bool, String) {
+    let max_i = parts.len();
+    let max_j = parts[0].len();
 
-    if i >= 1 {
-        match parts.get(i - 1) {
-            Some(upper_line) => {
-                if j >= 1 && is_special_char(upper_line.get(j - 1)) {
-                    return true;
-                }
+    let low_i = if i == 0 { 0 } else { i - 1 };
+    let high_i = if i == max_i - 1 { max_i - 1 } else { i + 1 };
 
-                if is_special_char(upper_line.get(j)) {
-                    return true;
-                }
+    let low_j = if j == 0 { 0 } else { j - 1 };
+    let high_j = if j == max_j - 1 { max_j - 1 } else { j + 1 };
 
-                if j + 1 <= max_row_len && is_special_char(upper_line.get(j + 1)) {
-                    return true;
-                }
-            }
-            None => {}
-        };
-    }
-
-    match parts.get(i) {
-        Some(upper_line) => {
-            if j >= 1 && is_special_char(upper_line.get(j - 1)) {
-                return true;
-            }
-
-            if is_special_char(upper_line.get(j)) {
-                return true;
-            }
-
-            if j + 1 <= max_row_len && is_special_char(upper_line.get(j + 1)) {
-                return true;
+    for (a, line) in parts[low_i..=high_i].iter().enumerate() {
+        for (b, character) in line[low_j..=high_j].iter().enumerate() {
+            if matcher(character) {
+                return (true, format!("{}-{}", low_i + a, low_j + b));
             }
         }
-        None => {}
-    };
-
-    if i <= max_row - 1 {
-        match parts.get(i + 1) {
-            Some(upper_line) => {
-                if j >= 1 && is_special_char(upper_line.get(j - 1)) {
-                    return true;
-                }
-
-                if is_special_char(upper_line.get(j)) {
-                    return true;
-                }
-
-                if j + 1 <= max_row_len && is_special_char(upper_line.get(j + 1)) {
-                    return true;
-                }
-            }
-            None => {}
-        };
     }
 
-    return false;
+    return (false, String::from(""));
 }
 
-fn is_special_char(character: Option<&char>) -> bool {
-    match character {
-        Some(character) => return !(*character == '.') && !character.is_alphanumeric(),
-        None => return false,
-    }
+fn is_special_char(character: &char) -> bool {
+    !(*character == '.') && !character.is_alphanumeric()
+}
+
+fn is_gear(character: &char) -> bool {
+    *character == '*'
 }

@@ -38,6 +38,8 @@ fn exec_three() {
     let inputs = three::read_part_from_file();
 
     let part_sum = three::cal_engine_parts_sum(&inputs);
+    let gear_ratio_sum = three::cal_gear_ratio(&inputs);
 
     println!("Sum of all available parts is {}", part_sum);
+    println!("Sum of all gear ratios is {}", gear_ratio_sum);
 }
