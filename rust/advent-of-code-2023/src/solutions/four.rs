@@ -23,13 +23,14 @@ impl Display for Card {
     }
 }
 
-pub fn read_card_from_file() {
+pub fn read_card_from_file() -> Vec<Card> {
     let file = File::open("src/inputs/four.txt").unwrap_or_else(|error| {
         panic!("{:?}", error);
     });
 
     let reader = BufReader::new(file);
 
+    let mut cards: Vec<Card> = vec![];
     for line in reader.lines() {
         let current_line = line.expect("Expect line to be readable");
 
@@ -50,8 +51,10 @@ pub fn read_card_from_file() {
             card_numbers,
         };
 
-        println!("{}", card);
+        cards.push(card);
     }
+
+    return cards;
 }
 
 // Card index will start from 1, so 0 mean invalid parse result
@@ -71,10 +74,35 @@ fn extract_numbers(input: &str) -> Vec<usize> {
     regex
         .find_iter(input)
         .map(|matched| {
-            matched
-                .as_str()
-                .parse()
-                .unwrap_or_else(|error| panic!("Unable to parse {} into usize", matched.as_str()))
+            matched.as_str().parse().unwrap_or_else(|error| {
+                panic!(
+                    "Unable to parse {} into usize with error {:?}",
+                    matched.as_str(),
+                    error
+                )
+            })
         })
         .collect()
+}
+
+pub fn calculate_cards_point(cards: &Vec<Card>) -> usize {
+    let mut sum = 0;
+
+    for card in cards {
+        let mut card_point = 0;
+        for card_number in &card.card_numbers {
+            if !card.winning_numbers.contains(&card_number) {
+                continue;
+            }
+
+            if card_point == 0 {
+                card_point = 1;
+            } else {
+                card_point *= 2;
+            }
+        }
+        sum += card_point;
+    }
+
+    return sum;
 }

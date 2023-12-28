@@ -47,5 +47,9 @@ fn exec_three() {
 
 #[allow(dead_code)]
 fn exec_four() {
-    four::read_card_from_file();
+    let cards = four::read_card_from_file();
+
+    let cards_point_sum = four::calculate_cards_point(&cards);
+
+    println!("The point sum of all cards: {}", cards_point_sum);
 }
