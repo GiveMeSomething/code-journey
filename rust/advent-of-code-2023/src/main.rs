@@ -1,11 +1,12 @@
-use solutions::{one, three, two};
+use solutions::{four, one, three, two};
 
 mod solutions;
 
 fn main() {
     // exec_one();
     // exec_two();
-    exec_three();
+    // exec_three();
+    exec_four();
 }
 
 #[allow(dead_code)]
@@ -42,4 +43,9 @@ fn exec_three() {
 
     println!("Sum of all available parts is {}", part_sum);
     println!("Sum of all gear ratios is {}", gear_ratio_sum);
+}
+
+#[allow(dead_code)]
+fn exec_four() {
+    four::read_card_from_file();
 }

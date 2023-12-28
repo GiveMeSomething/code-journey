@@ -1,0 +1,80 @@
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+};
+
+use std::fmt::{Display, Formatter, Result};
+
+use regex::Regex;
+
+pub struct Card {
+    index: usize,
+    winning_numbers: Vec<usize>,
+    card_numbers: Vec<usize>,
+}
+
+impl Display for Card {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        write!(
+            f,
+            "Card {}:\nwinning_numbers: {:?}\ncard_numbers: {:?}\n",
+            self.index, self.winning_numbers, self.card_numbers
+        )
+    }
+}
+
+pub fn read_card_from_file() {
+    let file = File::open("src/inputs/four.txt").unwrap_or_else(|error| {
+        panic!("{:?}", error);
+    });
+
+    let reader = BufReader::new(file);
+
+    for line in reader.lines() {
+        let current_line = line.expect("Expect line to be readable");
+
+        let mut split_store: Vec<&str> = current_line.split(":").collect();
+
+        let card_index = extract_card_index(split_store[0]);
+        if card_index == 0 {
+            continue;
+        }
+
+        split_store = split_store[1].trim().split("|").collect();
+        let winning_numbers = extract_numbers(split_store[0]);
+        let card_numbers = extract_numbers(split_store[1]);
+
+        let card = Card {
+            index: card_index,
+            winning_numbers,
+            card_numbers,
+        };
+
+        println!("{}", card);
+    }
+}
+
+// Card index will start from 1, so 0 mean invalid parse result
+fn extract_card_index(input: &str) -> usize {
+    let regex = Regex::new(r"\d+").expect("Invalid regex");
+    let card_index: usize = match regex.find(input) {
+        Some(index) => index.as_str().parse().expect("Expect index to be a number"),
+        None => 0,
+    };
+
+    return card_index;
+}
+
+fn extract_numbers(input: &str) -> Vec<usize> {
+    let regex = Regex::new(r"\d+").unwrap_or_else(|error| panic!("{:?}", error));
+
+    regex
+        .find_iter(input)
+        .map(|matched| {
+            matched
+                .as_str()
+                .parse()
+                .unwrap_or_else(|error| panic!("Unable to parse {} into usize", matched.as_str()))
+        })
+        .collect()
+}
