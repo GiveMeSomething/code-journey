@@ -50,6 +50,8 @@ fn exec_four() {
     let cards = four::read_card_from_file();
 
     let cards_point_sum = four::calculate_cards_point(&cards);
+    let card_count = four::count_duplicate_cards(&cards);
 
     println!("The point sum of all cards: {}", cards_point_sum);
+    println!("Total card after scratching is: {}", card_count);
 }

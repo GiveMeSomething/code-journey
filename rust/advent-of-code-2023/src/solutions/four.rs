@@ -106,3 +106,25 @@ pub fn calculate_cards_point(cards: &Vec<Card>) -> usize {
 
     return sum;
 }
+
+pub fn count_duplicate_cards(cards: &Vec<Card>) -> usize {
+    let mut counter = 0;
+    let mut card_counts: Vec<usize> = vec![1; cards.len() + 10];
+
+    for card in cards {
+        let mut match_count = 0;
+        for card_number in &card.card_numbers {
+            if !card.winning_numbers.contains(&card_number) {
+                continue;
+            }
+            match_count += 1;
+        }
+
+        for i in 1..=match_count {
+            card_counts[card.index + i] += card_counts[card.index];
+        }
+        counter += card_counts[card.index]
+    }
+
+    return counter;
+}
