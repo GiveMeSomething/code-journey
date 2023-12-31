@@ -90,3 +90,35 @@ pub fn count_win_ways(races: &Vec<Race>) -> usize {
     }
     return product;
 }
+
+pub fn count_win_ways_single(races: &Vec<Race>) -> usize {
+    let mut time_string = String::new();
+    let mut distance_string = String::new();
+
+    for race in races {
+        time_string.push_str(race.time.to_string().as_str());
+        distance_string.push_str(race.distance.to_string().as_str());
+    }
+
+    let time: usize = time_string.parse().unwrap_or_else(|err| {
+        panic!(
+            "Cannot parse {} to integer with error {:?}",
+            time_string, err
+        )
+    });
+    let distance = distance_string.parse().unwrap_or_else(|err| {
+        panic!(
+            "Cannot parse {} to integer with error {:?}",
+            distance_string, err
+        )
+    });
+
+    let mut counter = 0;
+    for i in 0..time {
+        if (time - i) * i > distance {
+            counter += 1;
+        }
+    }
+
+    return counter;
+}

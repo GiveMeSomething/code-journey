@@ -63,6 +63,8 @@ fn exec_six() {
     let races = six::read_races_from_file();
 
     let win_ways = six::count_win_ways(&races);
+    let win_way_single = six::count_win_ways_single(&races);
 
     println!("Winning way count: {}", win_ways);
+    println!("Winning way of a single race is {}", win_way_single);
 }
