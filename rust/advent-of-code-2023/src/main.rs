@@ -1,4 +1,4 @@
-use solutions::{four, one, three, two};
+use solutions::{four, one, six, three, two};
 
 mod solutions;
 
@@ -6,7 +6,9 @@ fn main() {
     // exec_one();
     // exec_two();
     // exec_three();
-    exec_four();
+    // exec_four();
+
+    exec_six();
 }
 
 #[allow(dead_code)]
@@ -54,4 +56,15 @@ fn exec_four() {
 
     println!("The point sum of all cards: {}", cards_point_sum);
     println!("Total card after scratching is: {}", card_count);
+}
+
+#[allow(dead_code)]
+fn exec_six() {
+    let races = six::read_races_from_file();
+
+    let win_ways = six::count_win_ways(&races);
+    let win_way_single = six::count_win_ways_single(&races);
+
+    println!("Winning way count: {}", win_ways);
+    println!("Winning way of a single race is {}", win_way_single);
 }
