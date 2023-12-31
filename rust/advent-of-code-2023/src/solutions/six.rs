@@ -70,3 +70,23 @@ fn extract_numbers(input: &str) -> Vec<usize> {
         })
         .collect()
 }
+
+pub fn count_win_ways(races: &Vec<Race>) -> usize {
+    let mut result: Vec<usize> = vec![];
+    for race in races {
+        let mut count = 0;
+        for i in 0..=race.time {
+            if (race.time - i) * i > race.distance {
+                count += 1;
+            }
+        }
+
+        result.push(count);
+    }
+
+    let mut product = 1;
+    for winning_ways in result {
+        product *= winning_ways;
+    }
+    return product;
+}

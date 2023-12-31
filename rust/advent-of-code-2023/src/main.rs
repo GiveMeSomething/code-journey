@@ -61,5 +61,8 @@ fn exec_four() {
 #[allow(dead_code)]
 fn exec_six() {
     let races = six::read_races_from_file();
-    println!("Input races: {:#?}", races);
+
+    let win_ways = six::count_win_ways(&races);
+
+    println!("Winning way count: {}", win_ways);
 }
