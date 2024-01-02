@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-use solutions::{four, one, six, three, two};
-=======
-use solutions::{five, four, one, three, two};
->>>>>>> 0082b5b (feat: add function to extract seeds and map's values from input file)
+use solutions::{five, four, one, six, three, two};
 
 mod solutions;
 
@@ -11,12 +7,8 @@ fn main() {
     // exec_two();
     // exec_three();
     // exec_four();
-<<<<<<< HEAD
-
-    exec_six();
-=======
     exec_five();
->>>>>>> 0082b5b (feat: add function to extract seeds and map's values from input file)
+    // exec_six();
 }
 
 #[allow(dead_code)]
