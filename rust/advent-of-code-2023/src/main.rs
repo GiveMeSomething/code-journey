@@ -60,7 +60,18 @@ fn exec_four() {
 
 #[allow(dead_code)]
 fn exec_five() {
-    let maps = five::read_maps_from_file();
+    let (seeds, maps) = five::read_maps_from_file();
+
+    let min_location = five::min_location_number(&seeds, &maps);
+
+    for map in maps {
+        for range in map {
+            println!("{}", range);
+        }
+        println!();
+    }
+
+    println!("Minimum location of a seed is {}", min_location);
 }
 
 #[allow(dead_code)]
