@@ -1,6 +1,5 @@
 use std::{
     collections::HashMap,
-    fmt::Display,
     fs::File,
     io::{BufRead, BufReader},
     vec,
@@ -8,31 +7,7 @@ use std::{
 
 use regex::Regex;
 
-pub struct InputRange {
-    src_start: usize,
-    dest_start: usize,
-    range: usize,
-}
-
-impl Display for InputRange {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "Source start {}, Destination start {}, with range {}",
-            self.src_start, self.dest_start, self.range
-        )
-    }
-}
-
-impl Clone for InputRange {
-    fn clone(&self) -> Self {
-        InputRange {
-            src_start: self.src_start,
-            dest_start: self.dest_start,
-            range: self.range,
-        }
-    }
-}
+use super::{input_range::InputRange, seed::SeedRange};
 
 pub fn read_maps_from_file() -> (Vec<usize>, Vec<Vec<InputRange>>) {
     let file = File::open("src/inputs/five.txt")
@@ -107,13 +82,30 @@ fn extract_input_range(input: &str, limit: usize) -> Option<InputRange> {
     })
 }
 
-pub fn min_location_number(seeds: &Vec<usize>, seed_maps: &Vec<Vec<InputRange>>) -> usize {
+fn seed_to_seed_range(seeds: &Vec<usize>) -> Vec<SeedRange> {
+    let mut buffer = 0;
+    let mut result: Vec<SeedRange> = vec![];
+
+    for (i, seed) in seeds.iter().enumerate() {
+        if i % 2 == 0 {
+            result.push(SeedRange {
+                start: buffer,
+                range: *seed,
+            });
+        } else {
+            buffer = *seed;
+        }
+    }
+
+    return result;
+}
+
+pub fn min_location_seed(seeds: &Vec<usize>, seed_maps: &Vec<Vec<InputRange>>) -> usize {
     let mut current_values = seeds.to_vec();
 
     for map in seed_maps {
         let mut changed: HashMap<usize, bool> = HashMap::new();
         for range in map {
-            println!("{:?}", current_values);
             current_values = current_values
                 .iter()
                 .map(|value| {
@@ -131,10 +123,7 @@ pub fn min_location_number(seeds: &Vec<usize>, seed_maps: &Vec<Vec<InputRange>>)
                 })
                 .collect();
         }
-        println!();
     }
-
-    println!("{:?}", current_values);
 
     current_values.sort();
     return current_values[0];
