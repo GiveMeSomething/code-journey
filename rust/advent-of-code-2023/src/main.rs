@@ -1,4 +1,5 @@
-use solutions::{five, four, one, six, three, two};
+use solutions::five;
+use solutions::{four, one, six, three, two};
 
 mod solutions;
 
@@ -60,18 +61,11 @@ fn exec_four() {
 
 #[allow(dead_code)]
 fn exec_five() {
-    let (seeds, maps) = five::read_maps_from_file();
+    let (seeds, maps) = five::solution::read_maps_from_file();
 
-    let min_location = five::min_location_number(&seeds, &maps);
+    let min_location_seed = five::solution::min_location_seed(&seeds, &maps);
 
-    for map in maps {
-        for range in map {
-            println!("{}", range);
-        }
-        println!();
-    }
-
-    println!("Minimum location of a seed is {}", min_location);
+    println!("Minimum location of a seed is {}", min_location_seed);
 }
 
 #[allow(dead_code)]
