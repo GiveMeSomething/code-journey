@@ -59,3 +59,46 @@ func SumCalibrationValue(inputs []string) int {
 
 	return sum
 }
+
+func SumCalibrationTextValue(inputs []string) int {
+	regex, err := regexp.Compile(`one|two|three|four|five|six|seven|eight|nine|[0-9]`)
+	if err != nil {
+		panic("Invalid regex")
+	}
+
+	revRegex, err := regexp.Compile(`eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|[0-9]`)
+	if err != nil {
+		panic("Invalid reverse regex")
+	}
+
+	var sum int = 0
+	for _, input := range inputs {
+		var found bool = false
+		firstMatch := string(regex.Find([]byte(input)))
+		firstMatchValue, err := strconv.Atoi(firstMatch)
+		if err != nil {
+			if firstMatchValue, found = textNumberMap[firstMatch]; !found {
+				panic("Invalid regex match. Please check your regex again")
+			}
+		}
+
+		secondMatch := string(revRegex.Find([]byte(Reverse(input))))
+		secondMatchValue, err := strconv.Atoi(secondMatch)
+		if err != nil {
+			if secondMatchValue, found = textNumberMap[Reverse(secondMatch)]; !found {
+				panic("Invalid regex match. Please check your reverse regex again")
+			}
+		}
+		sum += firstMatchValue*10 + secondMatchValue
+	}
+
+	return sum
+}
+
+func Reverse(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
