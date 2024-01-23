@@ -121,9 +121,10 @@ outer:
 }
 
 func MinimumPossibleGame(games []Game) int {
-	var minRed, minGreen, minBlue int
+	var sum int
 
 	for _, game := range games {
+		var minRed, minGreen, minBlue int
 		for _, gameSet := range game.GameSets {
 			if gameSet.Red > minRed {
 				minRed = gameSet.Red
@@ -137,7 +138,8 @@ func MinimumPossibleGame(games []Game) int {
 				minBlue = gameSet.Blue
 			}
 		}
+		sum += minRed * minGreen * minBlue
 	}
 
-	return minRed * minGreen * minBlue
+	return sum
 }
