@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
     let mut start = 0;
     let mut end = nums.len();

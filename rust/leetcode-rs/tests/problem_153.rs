@@ -1,8 +1,7 @@
-use crate::solutions::problem_153::find_min;
+use leetcode::solutions::problem_153::find_min;
 
-mod solutions;
-
-fn main() {
+#[test]
+fn problem_153() {
     let test_cases: Vec<(Vec<i32>, i32)> = vec![
         (vec![3, 4, 5, 1, 2], 1),
         (vec![4, 5, 6, 7, 0, 1, 2], 0),

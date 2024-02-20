@@ -1,7 +1,7 @@
 use leetcode::solutions::problem_35::search_insert;
 
 #[test]
-fn test() {
+fn problem_35() {
     // nums, target, expected output
     let test_cases: Vec<(Vec<i32>, i32, i32)> = vec![
         (vec![1, 3, 5, 6], 5, 2),
