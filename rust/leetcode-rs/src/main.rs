@@ -1,19 +1,19 @@
-use crate::solutions::problem_153::find_min;
+use crate::solutions::problem_33::search;
 
 mod solutions;
 
 fn main() {
-    let test_cases: Vec<(Vec<i32>, i32)> = vec![
-        (vec![3, 4, 5, 1, 2], 1),
-        (vec![4, 5, 6, 7, 0, 1, 2], 0),
-        (vec![11, 13, 15, 17], 11),
-    ];
+    let test_cases: Vec<(Vec<i32>, i32, i32)> = vec![(vec![3, 4, 5, 6, 7, 8, 1, 2], 2, 7)];
 
     for test_case in test_cases {
         let nums = test_case.0;
-        let expected = test_case.1;
+        let target = test_case.1;
 
-        let output = find_min(nums);
+        let expected = test_case.2;
+        let output = search(nums, target);
+
+        println!("{}", output);
+
         assert_eq!(output, expected);
     }
 }
