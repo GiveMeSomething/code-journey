@@ -2,13 +2,16 @@ package main
 
 import (
 	"aoc23/one"
+	"aoc23/three"
 	"aoc23/two"
 	"fmt"
 )
 
 func main() {
 	// exec_one()
-	exec_two()
+	// exec_two()
+
+	exec_three()
 }
 
 func exec_one() {
@@ -29,4 +32,8 @@ func exec_two() {
 
 	fmt.Printf("Sum of all possible game id is %d\n", gameIdSum)
 	fmt.Printf("Product of minimum possible game is %d\n", minPossibleGame)
+}
+
+func exec_three() {
+	three.ReadPartFromFile()
 }
