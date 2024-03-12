@@ -2,16 +2,16 @@ package three
 
 import (
 	"bufio"
-	"fmt"
 	"math"
 	"os"
 	"strconv"
 )
 
 type NumberRange struct {
-	start int
-	end   int
-	value int
+	start   int
+	end     int
+	value   int
+	checked bool
 }
 
 type Gear struct {
@@ -19,7 +19,7 @@ type Gear struct {
 	col int
 }
 
-func ReadPartFromFile() []string {
+func ReadPartFromFile() (map[int][]*NumberRange, []Gear) {
 	file, err := os.Open("three/three.txt")
 	if err != nil {
 		panic("Cannot find/open day 3 input file")
@@ -27,7 +27,8 @@ func ReadPartFromFile() []string {
 
 	reader := bufio.NewReader(file)
 
-	numberMap := make(map[int][]NumberRange)
+	numberMap := make(map[int][]*NumberRange)
+	gears := make([]Gear, 0)
 
 	row := -1
 	for {
@@ -46,10 +47,11 @@ func ReadPartFromFile() []string {
 
 			if rune(character) == '.' {
 				if currentNumber > 0 {
-					numberMap[row] = append(numberMap[row], NumberRange{
-						start: col - int(math.Log10(float64(currentNumber))),
-						end:   col,
-						value: currentNumber,
+					numberMap[row] = append(numberMap[row], &NumberRange{
+						start:   col - int(math.Log10(float64(currentNumber))) - 1,
+						end:     col,
+						value:   currentNumber,
+						checked: false,
 					})
 				}
 				currentNumber = 0
@@ -60,12 +62,18 @@ func ReadPartFromFile() []string {
 			if err != nil {
 				// Character is a special character
 				if currentNumber > 0 {
-					numberMap[row] = append(numberMap[row], NumberRange{
-						start: col - int(math.Log10(float64(currentNumber))),
-						end:   col,
-						value: currentNumber,
+					numberMap[row] = append(numberMap[row], &NumberRange{
+						start:   col - int(math.Log10(float64(currentNumber))) - 1,
+						end:     col,
+						value:   currentNumber,
+						checked: false,
 					})
 				}
+
+				gears = append(gears, Gear{
+					col: col,
+					row: row,
+				})
 				currentNumber = 0
 				continue
 			}
@@ -75,7 +83,43 @@ func ReadPartFromFile() []string {
 		}
 	}
 
-	fmt.Println(numberMap)
+	return numberMap, gears
+}
 
-	return []string{}
+func CalculateGearSum(numbers map[int][]*NumberRange, gears *[]Gear) int {
+	var sum = 0
+
+	// Iterate through all detected gears
+	for _, gear := range *gears {
+		// Iterate through all possible row arround a single gear
+		for i := gear.row - 1; i <= gear.row+1; i++ {
+			if i < 0 {
+				continue
+			}
+
+			// Only continue if the row have some numbers
+			if ranges, found := numbers[i]; found {
+				// Iterate through all possible col around a single gear
+				for j := gear.col - 1; j <= gear.col+1; j++ {
+					if j < 0 {
+						continue
+					}
+
+					// Check the current col with all matched ranges
+					for _, numberRange := range ranges {
+						if numberRange.checked {
+							continue
+						}
+
+						if j >= numberRange.start && j <= numberRange.end {
+							sum += numberRange.value
+							numberRange.checked = true
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return sum
 }
