@@ -35,13 +35,13 @@ func exec_two() {
 }
 
 func exec_three() {
-	numberRanges, gears := three.ReadPartFromFile()
-
-	for _, number := range numberRanges[0] {
-		fmt.Println(number)
-	}
-
-	gearSum := three.CalculateGearSum(numberRanges, &gears)
-
+	// Part 1
+	numberRanges, parts := three.ReadPartFromFile()
+	gearSum := three.CalculateGearSum(numberRanges, &parts)
 	fmt.Printf("Sum of all gear in the matrix is %d\n", gearSum)
+
+	// Part 2
+	numberRanges, gears := three.ReadGearFromFile()
+	trueGearSum := three.CalculatTrueGearSum(numberRanges, &gears)
+	fmt.Printf("Sum of all true gear in the matrix is %d\n", trueGearSum)
 }
