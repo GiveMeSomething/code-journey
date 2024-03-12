@@ -37,8 +37,9 @@ func exec_two() {
 func exec_three() {
 	numberRanges, gears := three.ReadPartFromFile()
 
-	fmt.Println(numberRanges)
-	fmt.Println(gears)
+	for _, number := range numberRanges[0] {
+		fmt.Println(number)
+	}
 
 	gearSum := three.CalculateGearSum(numberRanges, &gears)
 

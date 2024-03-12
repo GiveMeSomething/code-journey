@@ -2,6 +2,7 @@ package three
 
 import (
 	"bufio"
+	"fmt"
 	"math"
 	"os"
 	"strconv"
@@ -40,16 +41,12 @@ func ReadPartFromFile() (map[int][]*NumberRange, []Gear) {
 		}
 
 		var currentNumber = 0
-
-		col := -1
-		for _, character := range currentLine {
-			col += 1
-
+		for col, character := range currentLine {
 			if rune(character) == '.' {
 				if currentNumber > 0 {
 					numberMap[row] = append(numberMap[row], &NumberRange{
 						start:   col - int(math.Log10(float64(currentNumber))) - 1,
-						end:     col,
+						end:     col - 1,
 						value:   currentNumber,
 						checked: false,
 					})
@@ -64,7 +61,7 @@ func ReadPartFromFile() (map[int][]*NumberRange, []Gear) {
 				if currentNumber > 0 {
 					numberMap[row] = append(numberMap[row], &NumberRange{
 						start:   col - int(math.Log10(float64(currentNumber))) - 1,
-						end:     col,
+						end:     col - 1,
 						value:   currentNumber,
 						checked: false,
 					})
@@ -80,6 +77,18 @@ func ReadPartFromFile() (map[int][]*NumberRange, []Gear) {
 
 			// Character is a number
 			currentNumber = currentNumber*10 + charValue
+
+			if col == len(currentLine)-1 && currentNumber > 0 {
+				if currentNumber > 0 {
+					numberMap[row] = append(numberMap[row], &NumberRange{
+						start:   col - int(math.Log10(float64(currentNumber))),
+						end:     col,
+						value:   currentNumber,
+						checked: false,
+					})
+				}
+				currentNumber = 0
+			}
 		}
 	}
 
@@ -112,6 +121,7 @@ func CalculateGearSum(numbers map[int][]*NumberRange, gears *[]Gear) int {
 						}
 
 						if j >= numberRange.start && j <= numberRange.end {
+							fmt.Println(numberRange.value)
 							sum += numberRange.value
 							numberRange.checked = true
 						}
