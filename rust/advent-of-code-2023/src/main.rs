@@ -64,8 +64,13 @@ fn exec_five() {
     let (seeds, maps) = five::solution::read_maps_from_file();
 
     let min_location_seed = five::solution::min_location_seed(&seeds, &maps);
+    let min_location_seed_range = five::solution::min_location_seeds_range(&seeds, &maps);
 
     println!("Minimum location of a seed is {}", min_location_seed);
+    println!(
+        "Minimum location of all seed ranges is {}",
+        min_location_seed_range
+    );
 }
 
 #[allow(dead_code)]

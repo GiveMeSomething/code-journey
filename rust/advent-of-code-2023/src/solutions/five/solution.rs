@@ -82,22 +82,32 @@ fn extract_input_range(input: &str, limit: usize) -> Option<InputRange> {
     })
 }
 
-fn seed_to_seed_range(seeds: &Vec<usize>) -> Vec<SeedRange> {
-    let mut buffer = 0;
-    let mut result: Vec<SeedRange> = vec![];
+pub fn min_location_seeds_range(seeds: &Vec<usize>, seed_maps: &Vec<Vec<InputRange>>) -> usize {
+    println!("{:?}", seeds);
 
-    for (i, seed) in seeds.iter().enumerate() {
-        if i % 2 == 0 {
-            result.push(SeedRange {
-                start: buffer,
-                range: *seed,
-            });
-        } else {
-            buffer = *seed;
+    let mut min = usize::MAX;
+
+    for i in 0..(seeds.len() / 2) {
+        let start = seeds[i * 2];
+        let range = seeds[i * 2 + 1];
+
+        println!("index {} start {} range {}", i, start, range);
+
+        let mut current_seeds = vec![];
+        for j in start..start + range {
+            current_seeds.push(j);
+        }
+
+        let current_min = min_location_seed(&current_seeds, seed_maps);
+
+        println!("Current min {} -> Next min {} ", min, current_min);
+
+        if current_min < min {
+            min = current_min;
         }
     }
 
-    return result;
+    return min;
 }
 
 pub fn min_location_seed(seeds: &Vec<usize>, seed_maps: &Vec<Vec<InputRange>>) -> usize {
