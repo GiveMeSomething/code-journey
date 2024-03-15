@@ -33,3 +33,16 @@ pub fn count_increase_sweep(sweeps: &Vec<isize>) -> usize {
 
     return count;
 }
+
+pub fn count_increase_sweep_window(sweeps: &Vec<isize>) -> usize {
+    let mut count: usize = 0;
+    let mut previous_sum = sweeps[0] + sweeps[1] + sweeps[2];
+    for i in 1..sweeps.len() - 2 {
+        if sweeps[i + 2] > sweeps[i - 1] {
+            count += 1;
+        }
+
+        previous_sum = previous_sum + sweeps[i + 2] + sweeps[i - 1];
+    }
+    return count;
+}
