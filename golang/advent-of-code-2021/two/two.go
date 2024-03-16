@@ -55,3 +55,20 @@ func SimulateCommands(commands *[]Command) (int, int) {
 
 	return horizontal, vertical
 }
+
+func SimulateCommandsWithAim(commands *[]Command) (int, int) {
+	horizontal, vertical, aim := 0, 0, 0
+	for _, command := range *commands {
+		switch command.Direction {
+		case "forward":
+			horizontal += command.Step
+			vertical += aim * command.Step
+		case "up":
+			aim -= command.Step
+		case "down":
+			aim += command.Step
+		}
+	}
+
+	return horizontal, vertical
+}

@@ -27,4 +27,6 @@ func execTwo() {
 	horizontal, vertical := two.SimulateCommands(&commands)
 	fmt.Printf("Multiple of horiontal position and vertical position is %d\n", horizontal*vertical)
 
+	horizontalWithAim, verticalWithAim := two.SimulateCommandsWithAim(&commands)
+	fmt.Printf("With aim: Multiple of horiontal position and vertical position is %d\n", horizontalWithAim*verticalWithAim)
 }
