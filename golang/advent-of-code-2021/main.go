@@ -2,11 +2,13 @@ package main
 
 import (
 	"aoc21/one"
+	"aoc21/two"
 	"fmt"
 )
 
 func main() {
-	execOne()
+	// execOne()
+	execTwo()
 }
 
 func execOne() {
@@ -17,4 +19,12 @@ func execOne() {
 
 	increase_sweep_range := one.CountIncreaseSweepRange(&sweeps)
 	fmt.Printf("The number of increase sweep range %d\n", increase_sweep_range)
+}
+
+func execTwo() {
+	commands := two.ReadCommandFromFile()
+
+	horizontal, vertical := two.SimulateCommands(&commands)
+	fmt.Printf("Multiple of horiontal position and vertical position is %d\n", horizontal*vertical)
+
 }
