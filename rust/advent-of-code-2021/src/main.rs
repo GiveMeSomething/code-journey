@@ -1,9 +1,10 @@
-use solutions::one;
+use solutions::{one, two};
 
 mod solutions;
 
 fn main() {
-    exec_one();
+    // exec_one();
+    exec_two();
 }
 
 #[allow(dead_code)]
@@ -17,5 +18,22 @@ fn exec_one() {
     println!(
         "The number of increase sweep window is {}",
         increase_sweep_window_count
+    );
+}
+
+#[allow(dead_code)]
+fn exec_two() {
+    let commands = two::read_commands_from_file();
+
+    let (horizontal, depth) = two::simulate_commands(&commands);
+    println!(
+        "Multiple of horizontal position and depth is {}",
+        horizontal * depth
+    );
+
+    let (final_horizontal, final_depth) = two::simulate_commands_with_aim(&commands);
+    println!(
+        "With aim: Multiple of horizontal position and depth is {}",
+        final_horizontal * final_depth
     );
 }
