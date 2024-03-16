@@ -32,3 +32,20 @@ func ReadSweepFromFile() []int {
 
 	return result
 }
+
+func CountIncreaseSweep(sweeps *[]int) int {
+	count := 0
+	previousSweep := (*sweeps)[0]
+
+	for i, sweep := range *sweeps {
+		if i == 0 {
+			continue
+		}
+
+		if sweep > previousSweep {
+			count++
+		}
+		previousSweep = sweep
+	}
+	return count
+}

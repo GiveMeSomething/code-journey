@@ -12,5 +12,7 @@ func main() {
 func execOne() {
 	sweeps := one.ReadSweepFromFile()
 
-	fmt.Println(sweeps)
+	increase_sweep := one.CountIncreaseSweep(&sweeps)
+
+	fmt.Printf("The number of increase sweep %d\n", increase_sweep)
 }
