@@ -55,3 +55,22 @@ pub fn simulate_commands(commands: &Vec<Command>) -> (isize, isize) {
 
     (x, y)
 }
+
+pub fn simulate_commands_with_aim(commands: &Vec<Command>) -> (isize, isize) {
+    let mut x: isize = 0;
+    let mut y: isize = 0;
+    let mut aim: isize = 0;
+    for command in commands {
+        let value: isize = isize::try_from(command.steps).unwrap();
+        match command.direction {
+            Direction::Forward => {
+                x += value;
+                y += value * aim;
+            }
+            Direction::Down => aim += value,
+            Direction::Up => aim -= value,
+        };
+    }
+
+    (x, y)
+}

@@ -30,4 +30,10 @@ fn exec_two() {
         "Multiple of horizontal position and depth is {}",
         horizontal * depth
     );
+
+    let (final_horizontal, final_depth) = two::simulate_commands_with_aim(&commands);
+    println!(
+        "With aim: Multiple of horizontal position and depth is {}",
+        final_horizontal * final_depth
+    );
 }
