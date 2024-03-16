@@ -49,3 +49,18 @@ func CountIncreaseSweep(sweeps *[]int) int {
 	}
 	return count
 }
+
+func CountIncreaseSweepRange(sweeps *[]int) int {
+	count := 0
+	previousSweepRange := (*sweeps)[0] + (*sweeps)[1] + (*sweeps)[2]
+
+	for i := 1; i < len(*sweeps)-2; i++ {
+		if (*sweeps)[i-1] < (*sweeps)[i+2] {
+			count++
+		}
+
+		previousSweepRange = previousSweepRange - (*sweeps)[i-1] + (*sweeps)[i+2]
+	}
+
+	return count
+}
