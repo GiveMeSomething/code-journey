@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"aoc21/one"
+	"fmt"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	execOne()
+}
+
+func execOne() {
+	sweeps := one.ReadSweepFromFile()
+
+	fmt.Println(sweeps)
 }
