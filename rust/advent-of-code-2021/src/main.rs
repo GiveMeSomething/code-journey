@@ -1,10 +1,11 @@
-use solutions::{one, two};
+use solutions::{one, three, two};
 
 mod solutions;
 
 fn main() {
     // exec_one();
-    exec_two();
+    // exec_two();
+    exec_three();
 }
 
 #[allow(dead_code)]
@@ -36,4 +37,12 @@ fn exec_two() {
         "With aim: Multiple of horizontal position and depth is {}",
         final_horizontal * final_depth
     );
+}
+
+#[allow(dead_code)]
+fn exec_three() {
+    let bits = three::read_bits_from_file();
+
+    let power_consumption = three::process_bits(&bits);
+    println!("The power consumption is {}", power_consumption);
 }
