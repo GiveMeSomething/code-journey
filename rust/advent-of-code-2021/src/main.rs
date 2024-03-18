@@ -45,4 +45,8 @@ fn exec_three() {
 
     let power_consumption = three::process_bits(&bits);
     println!("The power consumption is {}", power_consumption);
+
+    let oxygen_rating = three::find_oxygen_rating(&bits);
+    let co2_rating = three::find_co2_rating(&bits);
+    println!("{}", oxygen_rating * co2_rating);
 }
