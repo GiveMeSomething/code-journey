@@ -19,8 +19,7 @@ pub fn process_bits(bits: &Vec<String>) -> isize {
     let mut bit_counter: Vec<isize> = vec![0; bits[0].len()];
     for bit_line in bits {
         let mut index = 0;
-        let parts = bit_line.split("");
-        for part in parts {
+        for part in bit_line.split("") {
             if part == "" {
                 continue;
             }
@@ -56,17 +55,14 @@ pub fn find_oxygen_rating(bits: &Vec<String>) -> isize {
         let mut counter = 0;
 
         for bit_line in &result {
-            if bit_line.chars().nth(i).unwrap() == '1' {
-                counter += 1;
+            counter += if bit_line.chars().nth(i).unwrap() == '1' {
+                1
             } else {
-                counter -= 1;
-            }
+                -1
+            };
         }
 
-        let mut filter = '1';
-        if counter < 0 {
-            filter = '0';
-        }
+        let filter = if counter < 0 { '1' } else { '0' };
 
         result = result
             .iter()
@@ -87,17 +83,14 @@ pub fn find_co2_rating(bits: &Vec<String>) -> isize {
         let mut counter = 0;
 
         for bit_line in &result {
-            if bit_line.chars().nth(i).unwrap() == '1' {
-                counter += 1;
+            counter += if bit_line.chars().nth(i).unwrap() == '1' {
+                1
             } else {
-                counter -= 1;
-            }
+                -1
+            };
         }
 
-        let mut filter = '1';
-        if counter >= 0 {
-            filter = '0';
-        }
+        let filter = if counter < 0 { '0' } else { '1' };
 
         result = result
             .iter()
