@@ -18,20 +18,22 @@ pub fn read_bits_from_file() -> Vec<String> {
 pub fn process_bits(bits: &Vec<String>) -> isize {
     let mut bit_counter: Vec<isize> = vec![0; bits[0].len()];
     for bit_line in bits {
-        let parts: Vec<&str> = bit_line.split("").filter(|part| *part != "").collect();
-        for i in 0..parts.len() {
-            if parts[i] == "0" {
-                bit_counter[i] -= 1;
-            } else {
-                bit_counter[i] += 1;
+        let mut index = 0;
+        let parts = bit_line.split("");
+        for part in parts {
+            if part == "" {
+                continue;
             }
+
+            bit_counter[index] += if part == "0" { -1 } else { 1 };
+            index += 1;
         }
     }
 
     let mut gamma = String::from("");
     let mut epsilon = String::from("");
-    for i in 0..bit_counter.len() {
-        if bit_counter[i] > 0 {
+    for bit_count in bit_counter {
+        if bit_count > 0 {
             gamma.push_str("1");
             epsilon.push_str("0");
         } else {
