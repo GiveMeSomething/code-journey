@@ -18,20 +18,21 @@ pub fn read_bits_from_file() -> Vec<String> {
 pub fn process_bits(bits: &Vec<String>) -> isize {
     let mut bit_counter: Vec<isize> = vec![0; bits[0].len()];
     for bit_line in bits {
-        let parts: Vec<&str> = bit_line.split("").filter(|part| *part != "").collect();
-        for i in 0..parts.len() {
-            if parts[i] == "0" {
-                bit_counter[i] -= 1;
-            } else {
-                bit_counter[i] += 1;
+        let mut index = 0;
+        for part in bit_line.split("") {
+            if part == "" {
+                continue;
             }
+
+            bit_counter[index] += if part == "0" { -1 } else { 1 };
+            index += 1;
         }
     }
 
     let mut gamma = String::from("");
     let mut epsilon = String::from("");
-    for i in 0..bit_counter.len() {
-        if bit_counter[i] > 0 {
+    for bit_count in bit_counter {
+        if bit_count > 0 {
             gamma.push_str("1");
             epsilon.push_str("0");
         } else {
@@ -54,17 +55,14 @@ pub fn find_oxygen_rating(bits: &Vec<String>) -> isize {
         let mut counter = 0;
 
         for bit_line in &result {
-            if bit_line.chars().nth(i).unwrap() == '1' {
-                counter += 1;
+            counter += if bit_line.chars().nth(i).unwrap() == '1' {
+                1
             } else {
-                counter -= 1;
-            }
+                -1
+            };
         }
 
-        let mut filter = '1';
-        if counter < 0 {
-            filter = '0';
-        }
+        let filter = if counter < 0 { '1' } else { '0' };
 
         result = result
             .iter()
@@ -85,17 +83,14 @@ pub fn find_co2_rating(bits: &Vec<String>) -> isize {
         let mut counter = 0;
 
         for bit_line in &result {
-            if bit_line.chars().nth(i).unwrap() == '1' {
-                counter += 1;
+            counter += if bit_line.chars().nth(i).unwrap() == '1' {
+                1
             } else {
-                counter -= 1;
-            }
+                -1
+            };
         }
 
-        let mut filter = '1';
-        if counter >= 0 {
-            filter = '0';
-        }
+        let filter = if counter < 0 { '0' } else { '1' };
 
         result = result
             .iter()
