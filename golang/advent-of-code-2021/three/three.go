@@ -61,3 +61,82 @@ func CalculatePowerConsumption(bits []string) int {
 
 	return int(gammaValue) * int(epsilonValue)
 }
+
+func CalculateOxygenRating(bits []string) int {
+	index := 0
+
+	for {
+		if len(bits) <= 1 {
+			break
+		}
+
+		count := 0
+		for _, bitLine := range bits {
+			if rune(bitLine[index]) == '0' {
+				count--
+			} else {
+				count++
+			}
+		}
+
+		if count >= 0 {
+			bits = filterBits(bits, '1', index)
+		} else {
+			bits = filterBits(bits, '0', index)
+		}
+
+		index++
+	}
+
+	rating, err := strconv.ParseInt(bits[0], 2, 0)
+	if err != nil {
+		panic(fmt.Sprintf("Cannot parse %s into int with err %v", bits[0], err))
+	}
+
+	return int(rating)
+}
+
+func CalculateCO2Rating(bits []string) int {
+	index := 0
+
+	for {
+		if len(bits) <= 1 {
+			break
+		}
+
+		count := 0
+		for _, bitLine := range bits {
+			if rune(bitLine[index]) == '0' {
+				count--
+			} else {
+				count++
+			}
+		}
+
+		if count >= 0 {
+			bits = filterBits(bits, '0', index)
+		} else {
+			bits = filterBits(bits, '1', index)
+		}
+
+		index++
+	}
+
+	rating, err := strconv.ParseInt(bits[0], 2, 0)
+	if err != nil {
+		panic(fmt.Sprintf("Cannot parse %s into int with err %v", bits[0], err))
+	}
+
+	return int(rating)
+}
+
+func filterBits(bits []string, filter rune, filterIndex int) []string {
+	result := make([]string, 0)
+	for _, bitLine := range bits {
+		if bitLine[filterIndex] == byte(filter) {
+			result = append(result, bitLine)
+		}
+	}
+
+	return result
+}

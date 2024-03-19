@@ -38,4 +38,8 @@ func execThree() {
 
 	powerConsumption := three.CalculatePowerConsumption(bits)
 	fmt.Printf("Power consumption %d\n", powerConsumption)
+
+	oxygenRating := three.CalculateOxygenRating(bits)
+	co2Rating := three.CalculateCO2Rating(bits)
+	fmt.Printf("Life rating %d\n", oxygenRating*co2Rating)
 }
