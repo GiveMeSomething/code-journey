@@ -2,13 +2,15 @@ package main
 
 import (
 	"aoc21/one"
+	"aoc21/three"
 	"aoc21/two"
 	"fmt"
 )
 
 func main() {
 	// execOne()
-	execTwo()
+	// execTwo()
+	execThree()
 }
 
 func execOne() {
@@ -29,4 +31,15 @@ func execTwo() {
 
 	horizontalWithAim, verticalWithAim := two.SimulateCommandsWithAim(&commands)
 	fmt.Printf("With aim: Multiple of horiontal position and vertical position is %d\n", horizontalWithAim*verticalWithAim)
+}
+
+func execThree() {
+	bits := three.ReadBitsFromFile()
+
+	powerConsumption := three.CalculatePowerConsumption(bits)
+	fmt.Printf("Power consumption %d\n", powerConsumption)
+
+	oxygenRating := three.CalculateOxygenRating(bits)
+	co2Rating := three.CalculateCO2Rating(bits)
+	fmt.Printf("Life rating %d\n", oxygenRating*co2Rating)
 }
