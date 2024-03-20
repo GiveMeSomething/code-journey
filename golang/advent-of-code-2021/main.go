@@ -1,6 +1,7 @@
 package main
 
 import (
+	"aoc21/four"
 	"aoc21/one"
 	"aoc21/three"
 	"aoc21/two"
@@ -10,7 +11,8 @@ import (
 func main() {
 	// execOne()
 	// execTwo()
-	execThree()
+	// execThree()
+	execFour()
 }
 
 func execOne() {
@@ -42,4 +44,10 @@ func execThree() {
 	oxygenRating := three.CalculateOxygenRating(bits)
 	co2Rating := three.CalculateCO2Rating(bits)
 	fmt.Printf("Life rating %d\n", oxygenRating*co2Rating)
+}
+
+func execFour() {
+	bingoNumbers, bingos := four.ReadBingoFromFile()
+	fmt.Println(bingoNumbers)
+	fmt.Printf("%+v\n", bingos)
 }
