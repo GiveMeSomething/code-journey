@@ -60,6 +60,16 @@ func execFour() {
 			point = bingoPoint
 		}
 	}
+	fmt.Println("Fatest win at", minWinStep, "with point", point)
 
-	fmt.Println("Fatest with at", minWinStep, "with point", point)
+	// Part 2
+	maxWinStep := 0
+	for _, bingo := range bingos {
+		bingoWinStep, bingoPoint := four.CheckBingo(bingoNumbers, bingo)
+		if bingoWinStep > minWinStep {
+			minWinStep = bingoWinStep
+			point = bingoPoint
+		}
+	}
+	fmt.Println("Slowest win at", maxWinStep, "with point", point)
 }
