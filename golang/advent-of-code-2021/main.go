@@ -1,16 +1,19 @@
 package main
 
 import (
+	"aoc21/four"
 	"aoc21/one"
 	"aoc21/three"
 	"aoc21/two"
 	"fmt"
+	"math"
 )
 
 func main() {
 	// execOne()
 	// execTwo()
-	execThree()
+	// execThree()
+	execFour()
 }
 
 func execOne() {
@@ -42,4 +45,31 @@ func execThree() {
 	oxygenRating := three.CalculateOxygenRating(bits)
 	co2Rating := three.CalculateCO2Rating(bits)
 	fmt.Printf("Life rating %d\n", oxygenRating*co2Rating)
+}
+
+func execFour() {
+	bingoNumbers, bingos := four.ReadBingoFromFile()
+
+	// Part 1
+	minWinStep := math.MaxInt
+	point := 0
+	for _, bingo := range bingos {
+		bingoWinStep, bingoPoint := four.CheckBingo(bingoNumbers, bingo)
+		if bingoWinStep < minWinStep {
+			minWinStep = bingoWinStep
+			point = bingoPoint
+		}
+	}
+	fmt.Println("Fatest win at", minWinStep, "with point", point)
+
+	// Part 2
+	maxWinStep := 0
+	for _, bingo := range bingos {
+		bingoWinStep, bingoPoint := four.CheckBingo(bingoNumbers, bingo)
+		if bingoWinStep > minWinStep {
+			minWinStep = bingoWinStep
+			point = bingoPoint
+		}
+	}
+	fmt.Println("Slowest win at", maxWinStep, "with point", point)
 }
