@@ -1,11 +1,12 @@
-use solutions::{one, three, two};
+use solutions::{four, one, three, two};
 
 mod solutions;
 
 fn main() {
     // exec_one();
     // exec_two();
-    exec_three();
+    // exec_three();
+    exec_four();
 }
 
 #[allow(dead_code)]
@@ -49,4 +50,14 @@ fn exec_three() {
     let oxygen_rating = three::find_oxygen_rating(&bits);
     let co2_rating = three::find_co2_rating(&bits);
     println!("{}", oxygen_rating * co2_rating);
+}
+
+fn exec_four() {
+    let (numbers, mut bingos) = four::read_bingo_from_file();
+
+    let (step, point) = four::calculate_fastest_win(&numbers, &mut bingos);
+    println!("Fastest win with {} step and {} points", step, point);
+
+    let (step, point) = four::calculate_slowest_win(&numbers, &mut bingos);
+    println!("Slowest win with {} step and {} points", step, point);
 }
