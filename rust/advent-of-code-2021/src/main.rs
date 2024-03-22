@@ -57,4 +57,7 @@ fn exec_four() {
 
     let (step, point) = four::calculate_fastest_win(&numbers, &mut bingos);
     println!("Fastest win with {} step and {} points", step, point);
+
+    let (step, point) = four::calculate_slowest_win(&numbers, &mut bingos);
+    println!("Slowest win with {} step and {} points", step, point);
 }

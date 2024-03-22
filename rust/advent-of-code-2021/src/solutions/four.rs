@@ -65,6 +65,10 @@ impl Bingo {
         }
         return sum.into();
     }
+
+    fn reset(&mut self) {
+        self.checker = [[false; 5]; 5];
+    }
 }
 
 pub fn read_bingo_from_file() -> (Vec<isize>, Vec<Bingo>) {
@@ -123,6 +127,7 @@ pub fn calculate_fastest_win(numbers: &Vec<isize>, bingos: &mut Vec<Bingo>) -> (
     let mut fastest_step = usize::MAX;
     let mut fastest_point = 0;
     for bingo in bingos {
+        bingo.reset();
         let (step, point) = bingo.simulate_bingo(numbers);
         if step < fastest_step {
             fastest_step = step;
@@ -130,6 +135,20 @@ pub fn calculate_fastest_win(numbers: &Vec<isize>, bingos: &mut Vec<Bingo>) -> (
         }
     }
     return (fastest_step, fastest_point);
+}
+
+pub fn calculate_slowest_win(numbers: &Vec<isize>, bingos: &mut Vec<Bingo>) -> (usize, isize) {
+    let mut slowest_step = 0;
+    let mut slowest_point = 0;
+    for bingo in bingos {
+        bingo.reset();
+        let (step, point) = bingo.simulate_bingo(numbers);
+        if step > slowest_step {
+            slowest_step = step;
+            slowest_point = point;
+        }
+    }
+    return (slowest_step, slowest_point);
 }
 
 fn extract_numbers(s: &str, sep: &str) -> Vec<isize> {
