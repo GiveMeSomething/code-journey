@@ -6,6 +6,7 @@ import (
 	"aoc21/three"
 	"aoc21/two"
 	"fmt"
+	"math"
 )
 
 func main() {
@@ -48,6 +49,17 @@ func execThree() {
 
 func execFour() {
 	bingoNumbers, bingos := four.ReadBingoFromFile()
-	fmt.Println(bingoNumbers)
-	fmt.Printf("%+v\n", bingos)
+
+	// Part 1
+	minWinStep := math.MaxInt
+	point := 0
+	for _, bingo := range bingos {
+		bingoWinStep, bingoPoint := four.CheckBingo(bingoNumbers, bingo)
+		if bingoWinStep < minWinStep {
+			minWinStep = bingoWinStep
+			point = bingoPoint
+		}
+	}
+
+	fmt.Println("Fatest with at", minWinStep, "with point", point)
 }

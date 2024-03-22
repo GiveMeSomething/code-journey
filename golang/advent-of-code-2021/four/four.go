@@ -23,6 +23,7 @@ func ReadBingoFromFile() ([]int, [][][]int) {
 	for {
 		currentLine, _, err := reader.ReadLine()
 		if err != nil {
+			bingos = append(bingos, currentBingo)
 			break
 		}
 
@@ -59,4 +60,58 @@ func extractNumberLine(s string, separator string) []int {
 		result = append(result, value)
 	}
 	return result
+}
+
+func CheckBingo(numbers []int, bingo [][]int) (int, int) {
+	// Init checker
+	checker := make([][]int, 5)
+	for i := range checker {
+		checker[i] = make([]int, 5)
+	}
+
+	for count, number := range numbers {
+		for i, line := range bingo {
+			for j, value := range line {
+				if value == number {
+					checker[i][j] = 1
+					if checkRow(checker, i) || checkCol(checker, j) {
+						return count, sumUncheckedNumber(bingo, checker) * value
+					}
+				}
+			}
+		}
+	}
+
+	return -1, -1
+}
+
+func checkRow(bingo [][]int, row int) bool {
+	for i := 0; i < 5; i++ {
+		if bingo[row][i] == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func checkCol(bingo [][]int, col int) bool {
+	for i := 0; i < 5; i++ {
+		if bingo[i][col] == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func sumUncheckedNumber(bingo [][]int, checker [][]int) int {
+	sum := 0
+	for i, line := range bingo {
+		for j, value := range line {
+			if checker[i][j] == 1 {
+				continue
+			}
+			sum += value
+		}
+	}
+	return sum
 }
