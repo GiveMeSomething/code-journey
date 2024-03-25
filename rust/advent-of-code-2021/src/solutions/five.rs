@@ -78,6 +78,59 @@ pub fn count_intersection(vent_lines: &Vec<VentLine>) -> usize {
     return count;
 }
 
+pub fn count_intersection_with_diagonal(vent_lines: &Vec<VentLine>) -> usize {
+    let mut count = 0;
+
+    let mut point_map: HashMap<String, usize> = HashMap::new();
+    for vent_line in vent_lines {
+        // Add condition to check if the diagonal line is at 45 degree diagonal
+        if vent_line.is_diagonal {
+            let x_pos = vent_line.from.x < vent_line.to.x;
+            let y_pos = vent_line.from.y < vent_line.to.y;
+
+            for i in 0..=(vent_line.from.x - vent_line.to.x).abs() {
+                let x = if x_pos {
+                    vent_line.from.x + i
+                } else {
+                    vent_line.from.x - i
+                };
+                let y = if y_pos {
+                    vent_line.from.y + i
+                } else {
+                    vent_line.from.y - i
+                };
+                let key = x.to_string() + "," + y.to_string().as_str();
+                let value = point_map.entry(key).or_insert(0);
+                *value += 1;
+            }
+            continue;
+        }
+
+        // Vertical line
+        if vent_line.from.x == vent_line.to.x {
+            for i in min(vent_line.from.y, vent_line.to.y)..=max(vent_line.from.y, vent_line.to.y) {
+                let key = vent_line.from.x.to_string() + "," + i.to_string().as_str();
+                let value = point_map.entry(key).or_insert(0);
+                *value += 1;
+            }
+        } else {
+            for i in min(vent_line.from.x, vent_line.to.x)..=max(vent_line.from.x, vent_line.to.x) {
+                let key = i.to_string() + "," + vent_line.from.y.to_string().as_str();
+                let value = point_map.entry(key).or_insert(0);
+                *value += 1;
+            }
+        }
+    }
+
+    for (_, intersect) in point_map {
+        if intersect >= 2 {
+            count += 1;
+        }
+    }
+
+    return count;
+}
+
 fn extract_vent_line(s: String) -> VentLine {
     let vent_line_regex =
         Regex::new(r"([0-9]*),([0-9]*) -> ([0-9]*),([0-9]*)").expect("Should be a valid regex");

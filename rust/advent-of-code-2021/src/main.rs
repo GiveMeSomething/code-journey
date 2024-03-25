@@ -67,8 +67,12 @@ fn exec_four() {
 #[allow(dead_code)]
 fn exec_five() {
     let vent_lines = five::read_vents_from_file();
-    println!("{:?}", vent_lines);
-
     let intersections = five::count_intersection(&vent_lines);
     println!("Number of line intersections: {}", intersections);
+
+    let intersections_with_diagonal = five::count_intersection_with_diagonal(&vent_lines);
+    println!(
+        "Number of line intersections, include diagonal line: {}",
+        intersections_with_diagonal
+    );
 }
