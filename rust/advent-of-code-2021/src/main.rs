@@ -1,4 +1,4 @@
-use solutions::{four, one, three, two};
+use solutions::{five, four, one, three, two};
 
 mod solutions;
 
@@ -6,7 +6,8 @@ fn main() {
     // exec_one();
     // exec_two();
     // exec_three();
-    exec_four();
+    // exec_four();
+    exec_five();
 }
 
 #[allow(dead_code)]
@@ -52,6 +53,7 @@ fn exec_three() {
     println!("{}", oxygen_rating * co2_rating);
 }
 
+#[allow(dead_code)]
 fn exec_four() {
     let (numbers, mut bingos) = four::read_bingo_from_file();
 
@@ -60,4 +62,17 @@ fn exec_four() {
 
     let (step, point) = four::calculate_slowest_win(&numbers, &mut bingos);
     println!("Slowest win with {} step and {} points", step, point);
+}
+
+#[allow(dead_code)]
+fn exec_five() {
+    let vent_lines = five::read_vents_from_file();
+    let intersections = five::count_intersection(&vent_lines);
+    println!("Number of line intersections: {}", intersections);
+
+    let intersections_with_diagonal = five::count_intersection_with_diagonal(&vent_lines);
+    println!(
+        "Number of line intersections, include diagonal line: {}",
+        intersections_with_diagonal
+    );
 }
