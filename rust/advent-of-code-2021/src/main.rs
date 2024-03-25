@@ -68,4 +68,7 @@ fn exec_four() {
 fn exec_five() {
     let vent_lines = five::read_vents_from_file();
     println!("{:?}", vent_lines);
+
+    let intersections = five::count_intersection(&vent_lines);
+    println!("Number of line intersections: {}", intersections);
 }
