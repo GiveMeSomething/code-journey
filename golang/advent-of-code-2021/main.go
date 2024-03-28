@@ -78,5 +78,7 @@ func execFour() {
 
 func execFive() {
 	ventLines := five.ReadVentFromFile()
-	fmt.Println(ventLines)
+	intersections := five.CountIntersections(&ventLines)
+
+	fmt.Printf("Number of intersections %d\n", intersections)
 }
