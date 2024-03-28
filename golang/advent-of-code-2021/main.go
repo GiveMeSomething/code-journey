@@ -1,6 +1,7 @@
 package main
 
 import (
+	"aoc21/five"
 	"aoc21/four"
 	"aoc21/one"
 	"aoc21/three"
@@ -13,7 +14,8 @@ func main() {
 	// execOne()
 	// execTwo()
 	// execThree()
-	execFour()
+	// execFour()
+	execFive()
 }
 
 func execOne() {
@@ -72,4 +74,13 @@ func execFour() {
 		}
 	}
 	fmt.Println("Slowest win at", maxWinStep, "with point", point)
+}
+
+func execFive() {
+	ventLines := five.ReadVentFromFile()
+	intersections := five.CountIntersections(&ventLines)
+	fmt.Printf("Number of intersections %d\n", intersections)
+
+	intersectionDiagonal := five.CountIntersectionsWithDiagonal(&ventLines)
+	fmt.Printf("Number of intersections with diagonal %d\n", intersectionDiagonal)
 }
