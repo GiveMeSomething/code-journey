@@ -72,23 +72,73 @@ func CountIntersections(ventLines *[]VentLine) int {
 	return intersections
 }
 
+func CountIntersectionsWithDiagonal(ventLines *[]VentLine) int {
+	intersections := 0
+	pointMap := make(map[string]int)
+
+	for _, ventLine := range *ventLines {
+		if ventLine.IsDiagonal {
+			xInc := ventLine.From.X < ventLine.To.X
+			yInc := ventLine.From.Y < ventLine.To.Y
+			for i := 0; i <= abs(ventLine.From.X-ventLine.To.X); i++ {
+				keyX := ventLine.From.X + i
+				if !xInc {
+					keyX = ventLine.From.X - i
+				}
+
+				keyY := ventLine.From.Y + i
+				if !yInc {
+					keyY = ventLine.From.Y - i
+				}
+
+				key := fmt.Sprint(keyX) + "," + fmt.Sprint(keyY)
+				if _, ok := pointMap[key]; ok {
+					pointMap[key] += 1
+					continue
+				}
+
+				pointMap[key] = 1
+			}
+			continue
+		}
+
+		if ventLine.From.X == ventLine.To.X {
+			for i := min(ventLine.From.Y, ventLine.To.Y); i <= max(ventLine.From.Y, ventLine.To.Y); i++ {
+				key := fmt.Sprint(ventLine.From.X) + "," + fmt.Sprint(i)
+				if _, ok := pointMap[key]; ok {
+					pointMap[key] += 1
+					continue
+				}
+
+				pointMap[key] = 1
+			}
+			continue
+		}
+
+		// For vertical vent line
+		for i := min(ventLine.From.X, ventLine.To.X); i <= max(ventLine.From.X, ventLine.To.X); i++ {
+			key := fmt.Sprint(i) + "," + fmt.Sprint(ventLine.From.Y)
+			if _, ok := pointMap[key]; ok {
+				pointMap[key] += 1
+				continue
+			}
+
+			pointMap[key] = 1
+		}
+	}
+
+	for _, value := range pointMap {
+		if value >= 2 {
+			intersections += 1
+		}
+	}
+
+	return intersections
+}
+
 func extractVentLine(s string, regex *regexp.Regexp) VentLine {
 	groups := regex.FindStringSubmatch(s)
 	// ventLine := new(VentLine).Init(MustParseInt(groups[1]), MustParseInt(groups[2]), MustParseInt(groups[3]), MustParseInt(groups[4]))
 	ventLine := NewVentLine(MustParseInt(groups[1]), MustParseInt(groups[2]), MustParseInt(groups[3]), MustParseInt(groups[4]))
 	return *ventLine
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }
