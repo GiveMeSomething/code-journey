@@ -80,7 +80,7 @@ fn exec_five() {
 
 #[allow(dead_code)]
 fn exec_six() {
-    let remaining_days = 2;
+    let remaining_days = 256;
     let intervals = six::read_interval_from_file();
 
     let lanternfish_count = six::count_lanternfish_optimize(&intervals, remaining_days);

@@ -19,6 +19,8 @@ pub fn read_interval_from_file() -> Vec<isize> {
     return intervals;
 }
 
+// Brute force way - Keep for reference
+#[allow(dead_code)]
 pub fn count_lanternfish(intervals: &Vec<isize>, remain: isize) -> isize {
     let mut sum = 0;
 
