@@ -2,6 +2,7 @@ package six
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -35,14 +36,20 @@ func ReadFishIntervalsFromFile() []int {
 
 func CountFish(intervals *[]int, remainingDays int) int {
 	sum := 0
+	resultMap := make(map[string]int)
 	for _, interval := range *intervals {
-		sum += countFishRecur(interval, remainingDays)
+		sum += countFishRecur(interval, remainingDays, &resultMap)
 	}
 
 	return sum
 }
 
-func countFishRecur(interval int, remainingDays int) int {
+func countFishRecur(interval int, remainingDays int, resultMap *map[string]int) int {
+	key := fmt.Sprintf("%d", interval) + "-" + fmt.Sprintf("%d", remainingDays)
+	if value, ok := (*resultMap)[key]; ok {
+		return value
+	}
+
 	sum := 1
 
 	if remainingDays < interval+1 {
@@ -51,8 +58,10 @@ func countFishRecur(interval int, remainingDays int) int {
 
 	n := (remainingDays-interval-1)/7 + 1
 	for i := 0; i < n; i++ {
-		sum += countFishRecur(8, remainingDays-interval-1-i*7)
+		sum += countFishRecur(8, remainingDays-interval-1-i*7, resultMap)
 	}
+
+	(*resultMap)[key] = sum
 
 	return sum
 }

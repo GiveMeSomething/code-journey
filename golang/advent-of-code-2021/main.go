@@ -20,6 +20,7 @@ func main() {
 	execSix()
 }
 
+//lint:ignore U1000 Old solutions
 func execOne() {
 	sweeps := one.ReadSweepFromFile()
 
@@ -30,6 +31,7 @@ func execOne() {
 	fmt.Printf("The number of increase sweep range %d\n", increase_sweep_range)
 }
 
+//lint:ignore U1000 Old solutions
 func execTwo() {
 	commands := two.ReadCommandFromFile()
 
@@ -40,6 +42,7 @@ func execTwo() {
 	fmt.Printf("With aim: Multiple of horiontal position and vertical position is %d\n", horizontalWithAim*verticalWithAim)
 }
 
+//lint:ignore U1000 Old solutions
 func execThree() {
 	bits := three.ReadBitsFromFile()
 
@@ -51,6 +54,7 @@ func execThree() {
 	fmt.Printf("Life rating %d\n", oxygenRating*co2Rating)
 }
 
+//lint:ignore U1000 Old solutions
 func execFour() {
 	bingoNumbers, bingos := four.ReadBingoFromFile()
 
@@ -78,6 +82,7 @@ func execFour() {
 	fmt.Println("Slowest win at", maxWinStep, "with point", point)
 }
 
+//lint:ignore U1000 Old solutions
 func execFive() {
 	ventLines := five.ReadVentFromFile()
 	intersections := five.CountIntersections(&ventLines)
@@ -87,6 +92,7 @@ func execFive() {
 	fmt.Printf("Number of intersections with diagonal %d\n", intersectionDiagonal)
 }
 
+//lint:ignore U1000 Old solutions
 func execSix() {
 	intervals := six.ReadFishIntervalsFromFile()
 
