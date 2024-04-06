@@ -1,22 +1,24 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
-	"server/app"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	initServer()
+	router := gin.Default()
 
-	err := http.ListenAndServe(":8000", nil)
-	if err != nil {
-		panic(fmt.Errorf("cannot start server at port 8000 with error %s", err))
+	server := http.Server{
+		Addr:    "127.0.0.1:8080",
+		Handler: router,
 	}
 
-	fmt.Println("Server listening at http://localhost:8000/")
-}
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "hello world",
+		})
+	})
 
-func initServer() {
-	app.InitApp()
+	server.ListenAndServe()
 }
