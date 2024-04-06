@@ -1,4 +1,4 @@
-use solutions::{five, four, one, three, two};
+use solutions::{five, four, one, six, three, two};
 
 mod solutions;
 
@@ -7,7 +7,8 @@ fn main() {
     // exec_two();
     // exec_three();
     // exec_four();
-    exec_five();
+    // exec_five();
+    exec_six();
 }
 
 #[allow(dead_code)]
@@ -75,4 +76,14 @@ fn exec_five() {
         "Number of line intersections, include diagonal line: {}",
         intersections_with_diagonal
     );
+}
+
+#[allow(dead_code)]
+fn exec_six() {
+    let remaining_days = 256;
+    let intervals = six::read_interval_from_file();
+
+    let lanternfish_count = six::count_lanternfish_optimize(&intervals, remaining_days);
+
+    println!("#fish after {} days: {}", remaining_days, lanternfish_count);
 }
