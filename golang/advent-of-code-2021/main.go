@@ -4,6 +4,7 @@ import (
 	"aoc21/five"
 	"aoc21/four"
 	"aoc21/one"
+	"aoc21/six"
 	"aoc21/three"
 	"aoc21/two"
 	"fmt"
@@ -15,7 +16,8 @@ func main() {
 	// execTwo()
 	// execThree()
 	// execFour()
-	execFive()
+	// execFive()
+	execSix()
 }
 
 func execOne() {
@@ -83,4 +85,13 @@ func execFive() {
 
 	intersectionDiagonal := five.CountIntersectionsWithDiagonal(&ventLines)
 	fmt.Printf("Number of intersections with diagonal %d\n", intersectionDiagonal)
+}
+
+func execSix() {
+	intervals := six.ReadFishIntervalsFromFile()
+
+	days := 2
+	count := six.CountFish(&intervals, days)
+
+	fmt.Printf("Fishes after %d day(s): %d\n", days, count)
 }
