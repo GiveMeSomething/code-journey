@@ -44,6 +44,32 @@ pub fn count_lanternfish(intervals: &Vec<isize>, remain: isize) -> isize {
     return sum;
 }
 
+pub fn count_lanternfish_optimize(intervals: &Vec<isize>, remain: isize) -> isize {
+    let mut sum = 0;
+
+    for interval in intervals {
+        sum += recur_count(*interval, remain);
+    }
+
+    return sum;
+}
+
+pub fn recur_count(interval: isize, remain: isize) -> isize {
+    let mut sum = 1;
+
+    if remain < interval + 1 {
+        return 1;
+    }
+
+    let n = (remain - interval - 1) / 7 + 1;
+
+    for i in 0..n {
+        sum += recur_count(8, remain - interval - 1 - i * 7);
+    }
+
+    return sum;
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -57,6 +83,19 @@ mod test {
         for i in 0..test_days.len() {
             println!("Test case: {} days", test_days[i]);
             let result = count_lanternfish(&test_intervals, test_days[i]);
+            assert_eq!(result, test_days_result[i]);
+        }
+    }
+
+    #[test]
+    fn test_count_lanternfish_optimize() {
+        let test_intervals = vec![3, 4, 3, 1, 2];
+        let test_days = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 80, 256];
+        let test_days_result = [5, 6, 7, 9, 10, 10, 10, 10, 11, 12, 26, 5934, 26984457539];
+
+        for i in 0..test_days.len() {
+            println!("Test case: {} days", test_days[i]);
+            let result = count_lanternfish_optimize(&test_intervals, test_days[i]);
             assert_eq!(result, test_days_result[i]);
         }
     }
