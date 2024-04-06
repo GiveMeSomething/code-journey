@@ -1,5 +1,5 @@
 use std::{
-    collections::VecDeque,
+    collections::{HashMap, VecDeque},
     fs::File,
     io::{BufRead, BufReader},
 };
@@ -47,25 +47,38 @@ pub fn count_lanternfish(intervals: &Vec<isize>, remain: isize) -> isize {
 pub fn count_lanternfish_optimize(intervals: &Vec<isize>, remain: isize) -> isize {
     let mut sum = 0;
 
+    let mut result_map: HashMap<String, isize> = HashMap::new();
+
     for interval in intervals {
-        sum += recur_count(*interval, remain);
+        sum += recur_count(*interval, remain, &mut result_map);
     }
 
     return sum;
 }
 
-pub fn recur_count(interval: isize, remain: isize) -> isize {
+pub fn recur_count(
+    interval: isize,
+    remain: isize,
+    result_map: &mut HashMap<String, isize>,
+) -> isize {
     let mut sum = 1;
 
     if remain < interval + 1 {
         return 1;
     }
 
+    let key = format!("{}-{}", interval, remain);
+    if let Some(result) = result_map.get(&key) {
+        return *result;
+    }
+
     let n = (remain - interval - 1) / 7 + 1;
 
     for i in 0..n {
-        sum += recur_count(8, remain - interval - 1 - i * 7);
+        sum += recur_count(8, remain - interval - 1 - i * 7, result_map);
     }
+
+    result_map.insert(key, sum);
 
     return sum;
 }
