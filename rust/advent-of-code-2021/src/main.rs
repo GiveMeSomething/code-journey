@@ -94,5 +94,8 @@ fn exec_seven() {
     let positions = seven::read_position_from_file();
 
     let min_medium = seven::min_horizontal_medium(&positions);
-    println!("{:?}", min_medium);
+    println!("{}", min_medium);
+
+    let min_increment_medium = seven::min_horizontal_medium_increment(&positions);
+    println!("{}", min_increment_medium);
 }
