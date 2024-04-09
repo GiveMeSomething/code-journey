@@ -1,4 +1,4 @@
-use solutions::{five, four, one, six, three, two};
+use solutions::{five, four, one, seven, six, three, two};
 
 mod solutions;
 
@@ -8,7 +8,8 @@ fn main() {
     // exec_three();
     // exec_four();
     // exec_five();
-    exec_six();
+    // exec_six();
+    exec_seven();
 }
 
 #[allow(dead_code)]
@@ -86,4 +87,15 @@ fn exec_six() {
     let lanternfish_count = six::count_lanternfish_optimize(&intervals, remaining_days);
 
     println!("#fish after {} days: {}", remaining_days, lanternfish_count);
+}
+
+#[allow(dead_code)]
+fn exec_seven() {
+    let positions = seven::read_position_from_file();
+
+    let min_medium = seven::min_horizontal_medium(&positions);
+    println!("{}", min_medium);
+
+    let min_increment_medium = seven::min_horizontal_medium_increment(&positions);
+    println!("{}", min_increment_medium);
 }
