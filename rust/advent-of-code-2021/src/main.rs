@@ -1,4 +1,4 @@
-use solutions::{five, four, one, seven, six, three, two};
+use solutions::{eight, five, four, one, seven, six, three, two};
 
 mod solutions;
 
@@ -9,7 +9,8 @@ fn main() {
     // exec_four();
     // exec_five();
     // exec_six();
-    exec_seven();
+    // exec_seven();
+    exec_eight();
 }
 
 #[allow(dead_code)]
@@ -98,4 +99,12 @@ fn exec_seven() {
 
     let min_increment_medium = seven::min_horizontal_medium_increment(&positions);
     println!("{}", min_increment_medium);
+}
+
+#[allow(dead_code)]
+fn exec_eight() {
+    let signals = eight::read_signal_from_file();
+
+    let unique_signal_count = eight::count_unique_signals(&signals);
+    println!("Number of unique signal {}", unique_signal_count);
 }
