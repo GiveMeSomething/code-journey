@@ -107,4 +107,7 @@ fn exec_eight() {
 
     let unique_signal_count = eight::count_unique_signals(&signals);
     println!("Number of unique signal {}", unique_signal_count);
+
+    let decode_signal_sum = eight::sum_decode_signal(&signals);
+    println!("Decode sum {}", decode_signal_sum);
 }
