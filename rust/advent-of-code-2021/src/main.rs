@@ -119,4 +119,7 @@ fn exec_nine() {
 
     let risk_sum = nine::sum_risk_level(&locations);
     println!("Risk index {}", risk_sum);
+
+    let mul_basin = nine::mul_top_three_basins(&locations);
+    println!("Multiple of top 3 basins {}", mul_basin);
 }
