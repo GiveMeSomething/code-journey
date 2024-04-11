@@ -1,4 +1,4 @@
-use solutions::{eight, five, four, one, seven, six, three, two};
+use solutions::{eight, five, four, nine, one, seven, six, three, two};
 
 mod solutions;
 
@@ -10,7 +10,8 @@ fn main() {
     // exec_five();
     // exec_six();
     // exec_seven();
-    exec_eight();
+    // exec_eight();
+    exec_nine();
 }
 
 #[allow(dead_code)]
@@ -110,4 +111,15 @@ fn exec_eight() {
 
     let decode_signal_sum = eight::sum_decode_signal(&signals);
     println!("Decode sum {}", decode_signal_sum);
+}
+
+#[allow(dead_code)]
+fn exec_nine() {
+    let locations = nine::read_location_from_file();
+
+    let risk_sum = nine::sum_risk_level(&locations);
+    println!("Risk index {}", risk_sum);
+
+    let mul_basin = nine::mul_top_three_basins(&locations);
+    println!("Multiple of top 3 basins {}", mul_basin);
 }
