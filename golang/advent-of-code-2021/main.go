@@ -4,6 +4,7 @@ import (
 	"aoc21/five"
 	"aoc21/four"
 	"aoc21/one"
+	"aoc21/seven"
 	"aoc21/six"
 	"aoc21/three"
 	"aoc21/two"
@@ -17,7 +18,8 @@ func main() {
 	// execThree()
 	// execFour()
 	// execFive()
-	execSix()
+	// execSix()
+	execSeven()
 }
 
 //lint:ignore U1000 Old solutions
@@ -100,4 +102,18 @@ func execSix() {
 	count := six.CountFish(&intervals, days)
 
 	fmt.Printf("Fishes after %d day(s): %d\n", days, count)
+}
+
+//lint:ignore U1000 Old solutions
+func execSeven() {
+	crabs, err := seven.ReadCrabFromFile()
+	if err != nil {
+		panic(err)
+	}
+
+	crabMoves := seven.MinCrabMove(crabs)
+	println("Minimum crab move", crabMoves)
+
+	crabExtraMoves := seven.MinCrabExtraMove(crabs)
+	println("Minimum crab extra move", crabExtraMoves)
 }
