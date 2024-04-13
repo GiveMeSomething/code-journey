@@ -24,7 +24,6 @@ func ReadCrabFromFile() ([]int, error) {
 
 	result := make([]int, 0)
 	for _, value := range strings.Split(string(line), ",") {
-		fmt.Println(value)
 		if value == "" {
 			continue
 		}
@@ -42,17 +41,13 @@ func ReadCrabFromFile() ([]int, error) {
 
 func MinCrabMove(crabPositions []int) int {
 	sort.Slice(crabPositions, func(i, j int) bool {
-		return i < j
+		return crabPositions[i] < crabPositions[j]
 	})
 
-	median := 0
-	if len(crabPositions)%2 == 0 {
-		median = crabPositions[len(crabPositions)/2]
-	} else {
-		median = (crabPositions[len(crabPositions)/2] + crabPositions[len(crabPositions)/2+1]) / 2
-	}
-
+	n := len(crabPositions)
+	median := crabPositions[n/2]
 	sum := 0
+
 	for _, position := range crabPositions {
 		sum += abs(position - median)
 	}
