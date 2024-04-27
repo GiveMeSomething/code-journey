@@ -7,6 +7,9 @@ const executeOne = async () => {
 
   const incresingDepth = countIncreasingDepth(depths);
   console.log("Increasing depth", incresingDepth);
+
+  const increasingDepthWindow =countIncreasingDepthWindow(depths);
+  console.log("Increasing depth window", increasingDepthWindow);
 }
 
 const readDepthFromFile = async (): Promise<number[]> => {
@@ -46,6 +49,16 @@ const countIncreasingDepth = (depths: number[]): number => {
   for(let i = 1; i < depths.length; i++) {
     if(depths[i] > depths[i-1]) {
       count++;
+    }
+  }
+  return count;
+}
+
+const countIncreasingDepthWindow = (depths: number[]): number => {
+  let count = 0;
+  for(let i = 3; i < depths.length; i++) {
+    if(depths[i-3] < depths[i]) {
+      count++
     }
   }
   return count;
