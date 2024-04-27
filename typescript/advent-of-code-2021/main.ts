@@ -1,8 +1,10 @@
-import { executeOne } from "./src/one"
+import { executeOne } from "./src/one";
+import { executeTwo } from "./src/two";
 
 const main = () => {
   // TODO: Execute solution here
-  executeOne();
-}
+  // executeOne();
+  executeTwo();
+};
 
 main();
