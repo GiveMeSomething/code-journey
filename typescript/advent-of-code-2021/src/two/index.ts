@@ -63,23 +63,38 @@ const extractCommandFromFile = async (): Promise<Command[]> => {
 };
 
 const simulateCommands = (commands: Command[]): [number, number] => {
-  let horizontal = 0;
-  let vertical = 0;
-  for (const command of commands) {
-    switch (command.direction) {
-      case "forward":
-        horizontal += command.move;
-        break;
-      case "down":
-        vertical += command.move;
-        break;
-      case "up":
-        vertical -= command.move;
-        break;
-    }
-  }
+  // for (const command of commands) {
+  //   switch (command.direction) {
+  //     case "forward":
+  //       horizontal += command.move;
+  //       break;
+  //     case "down":
+  //       vertical += command.move;
+  //       break;
+  //     case "up":
+  //       vertical -= command.move;
+  //       break;
+  //   }
+  // }
 
-  return [horizontal, vertical];
+  // return [horizontal, vertical];
+
+  return commands.reduce(
+    (result, currentCommand) => {
+      switch (currentCommand.direction) {
+        case "forward":
+          result[0] += currentCommand.move;
+          return result;
+        case "down":
+          result[1] += currentCommand.move;
+          return result;
+        case "up":
+          result[1] -= currentCommand.move;
+          return result;
+      }
+    },
+    [0, 0],
+  );
 };
 
 const isDirection = (input: string): input is Direction => {
