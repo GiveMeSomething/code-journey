@@ -19,6 +19,9 @@ export const executeTwo = async () => {
 
   const [horizontal, vertical] = simulateCommands(commands);
   console.log(`Result part 1: ${horizontal * vertical}`);
+
+  const [aimHorizontal, aimVertical] = simulateAimCommand(commands);
+  console.log(`Result part 2: ${aimHorizontal * aimVertical}`);
 };
 
 const extractCommandFromFile = async (): Promise<Command[]> => {
@@ -80,21 +83,44 @@ const simulateCommands = (commands: Command[]): [number, number] => {
   // return [horizontal, vertical];
 
   return commands.reduce(
-    (result, currentCommand) => {
-      switch (currentCommand.direction) {
+    (result, command) => {
+      switch (command.direction) {
         case "forward":
-          result[0] += currentCommand.move;
+          result[0] += command.move;
           return result;
         case "down":
-          result[1] += currentCommand.move;
+          result[1] += command.move;
           return result;
         case "up":
-          result[1] -= currentCommand.move;
+          result[1] -= command.move;
           return result;
       }
     },
     [0, 0],
   );
+};
+
+const simulateAimCommand = (commands: Command[]): [number, number] => {
+  let aim = 0;
+  let horizontal = 0;
+  let vertical = 0;
+
+  for (const command of commands) {
+    switch (command.direction) {
+      case "forward":
+        horizontal += command.move;
+        vertical += command.move * aim;
+        break;
+      case "down":
+        aim += command.move;
+        break;
+      case "up":
+        aim -= command.move;
+        break;
+    }
+  }
+
+  return [horizontal, vertical];
 };
 
 const isDirection = (input: string): input is Direction => {
