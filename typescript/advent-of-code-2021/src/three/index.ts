@@ -7,6 +7,9 @@ export const executeThree = async () => {
 
   const powerConsumption = calculatePowerConsumption(bits);
   console.log(`Power consumption: ${powerConsumption}`);
+
+  const lifeSupportRating = calculateLifeSupportRating(bits);
+  console.log(`Life support rating: ${lifeSupportRating}`);
 };
 
 const readBitsFromFile = async (): Promise<string[]> => {
@@ -74,4 +77,54 @@ const calculatePowerConsumption = (bits: string[]): number => {
   }
 
   return gamma * epsilon;
+};
+
+const calculateLifeSupportRating = (bits: string[]): number => {
+  const oxygenRating = calculateLifeRating([...bits], "oxygen");
+  const co2Rating = calculateLifeRating([...bits], "co2");
+
+  console.log(oxygenRating, co2Rating);
+  if (oxygenRating === -1 || co2Rating === -1) {
+    return 0;
+  }
+
+  return oxygenRating * co2Rating;
+};
+
+const calculateLifeRating = (
+  bits: string[],
+  rating: "oxygen" | "co2",
+): number => {
+  let currentBit = 0;
+  while (bits.length > 1) {
+    let counter = 0;
+    for (const bit of bits) {
+      if (bit[currentBit] === "0") {
+        counter--;
+        continue;
+      }
+      counter++;
+    }
+
+    if (counter >= 0) {
+      bits = bits.filter(
+        (bit) => bit[currentBit] === (rating === "oxygen" ? "1" : "0"),
+      );
+    }
+
+    if (counter < 0) {
+      bits = bits.filter(
+        (bit) => bit[currentBit] === (rating === "oxygen" ? "0" : "1"),
+      );
+    }
+
+    currentBit++;
+  }
+
+  const value = Number.parseInt(bits[0], 2);
+  if (Number.isNaN(value)) {
+    return -1;
+  }
+
+  return value;
 };
