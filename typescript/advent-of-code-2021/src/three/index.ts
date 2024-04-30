@@ -4,7 +4,9 @@ import { Interface, createInterface } from "readline";
 
 export const executeThree = async () => {
   const bits = await readBitsFromFile();
-  console.log(bits);
+
+  const powerConsumption = calculatePowerConsumption(bits);
+  console.log(`Power consumption: ${powerConsumption}`);
 };
 
 const readBitsFromFile = async (): Promise<string[]> => {
@@ -33,4 +35,43 @@ const readBitsFromFile = async (): Promise<string[]> => {
   await once(reader, "close");
 
   return result;
+};
+
+const calculatePowerConsumption = (bits: string[]): number => {
+  if (!bits.length) {
+    return 0;
+  }
+
+  let gammaRate = "";
+  let epsilonRate = "";
+
+  const counter: number[] = Array(bits[0].length).fill(0);
+  for (const bit of bits) {
+    for (let i = 0; i < bit.length; i++) {
+      if (bit.charAt(i) === "0") {
+        counter[i]--;
+        continue;
+      }
+      counter[i]++;
+    }
+  }
+
+  for (let number of counter) {
+    if (number > 0) {
+      gammaRate += "1";
+      epsilonRate += "0";
+      continue;
+    }
+    gammaRate += "0";
+    epsilonRate += "1";
+  }
+
+  const gamma = Number.parseInt(gammaRate, 2);
+  const epsilon = Number.parseInt(epsilonRate, 2);
+
+  if (Number.isNaN(gamma) || Number.isNaN(epsilon)) {
+    return 0;
+  }
+
+  return gamma * epsilon;
 };
