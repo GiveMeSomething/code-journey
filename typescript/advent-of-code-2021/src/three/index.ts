@@ -83,7 +83,6 @@ const calculateLifeSupportRating = (bits: string[]): number => {
   const oxygenRating = calculateLifeRating([...bits], "oxygen");
   const co2Rating = calculateLifeRating([...bits], "co2");
 
-  console.log(oxygenRating, co2Rating);
   if (oxygenRating === -1 || co2Rating === -1) {
     return 0;
   }
