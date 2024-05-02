@@ -1,49 +1,13 @@
 import { getReader } from "../utils/file";
 import { once } from "events";
+import Bingo from "./bingo";
 
 export const executeFour = async () => {
   const { numbers, bingos } = await readBingoFromFile();
-  console.log(numbers);
-  console.log(bingos.map((bingo) => bingo.toString()));
+
+  const firstWin = getFirstWin(bingos, numbers);
+  console.log(firstWin);
 };
-
-class Bingo {
-  numbers: number[][];
-
-  constructor(inputLines: string[]) {
-    const numbers: number[][] = [];
-    for (const line of inputLines) {
-      // Extract all number in a line using regex
-      // const values: number[] = [];
-      // for(const match of line.matchAll(/(\d+)/g)) {
-      //   const value = Number(match[0]);
-      //   if(Number.isNaN(value)) {
-      //     throw new Error(`Invalid input. Failed at ${line}`);
-      //   }
-      //   values.push(value);
-      // }
-
-      // Extract all number in a line using normal operations
-      const values = line
-        .split(" ")
-        // Ignore empty parts (caused by spliting double space)
-        .filter((part) => part !== "")
-        .map((value) => Number(value.trim()))
-        .filter((value) => !Number.isNaN(value));
-
-      if (!values || values.length !== 5) {
-        throw new Error(`Invalid input. Failed at ${line}`);
-      }
-      numbers.push(values);
-    }
-
-    this.numbers = numbers;
-  }
-
-  toString() {
-    return this.numbers.toString();
-  }
-}
 
 const readBingoFromFile = async () => {
   const reader = getReader("src/four/input.txt");
@@ -89,4 +53,13 @@ const readBingoFromFile = async () => {
     numbers: bingoNumbers,
     bingos,
   };
+};
+
+const getFirstWin = (bingos: Bingo[], bingoNumbers: number[]) => {
+  const result = bingos
+    .map((bingo) => bingo.winScore(bingoNumbers))
+    .filter((result) => result.winAt !== -1);
+
+  result.sort((a, b) => a.winAt - b.winAt);
+  return result[0];
 };
