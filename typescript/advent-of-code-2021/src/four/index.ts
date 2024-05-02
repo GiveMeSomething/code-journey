@@ -7,6 +7,9 @@ export const executeFour = async () => {
 
   const firstWin = getFirstWin(bingos, numbers);
   console.log(firstWin);
+
+  const lastWin = getLastWin(bingos, numbers);
+  console.log(lastWin);
 };
 
 const readBingoFromFile = async () => {
@@ -61,5 +64,14 @@ const getFirstWin = (bingos: Bingo[], bingoNumbers: number[]) => {
     .filter((result) => result.winAt !== -1);
 
   result.sort((a, b) => a.winAt - b.winAt);
+  return result[0];
+};
+
+const getLastWin = (bingos: Bingo[], bingoNumbers: number[]) => {
+  const result = bingos
+    .map((bingo) => bingo.winScore(bingoNumbers))
+    .filter((result) => result.winAt !== -1);
+
+  result.sort((a, b) => b.winAt - a.winAt);
   return result[0];
 };
