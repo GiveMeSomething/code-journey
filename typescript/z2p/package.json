@@ -3,5 +3,23 @@
   "version": "1.0.0",
   "description": "Zero to production with TypeScript",
   "author": "Minh Hoang Tien",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.8",
+    "eslint": "^9.1.1",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
 }
