@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "format": "prettier --write \"**/*.{ts,js,json}\"",
+    "lint": "eslint --fix \"**/*.{ts,js,json}\""
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -16,7 +18,12 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.8",
-    "eslint": "^9.1.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
