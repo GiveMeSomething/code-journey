@@ -37,7 +37,7 @@ export default class Bingo {
 
   winScore(bingoNumbers: number[]): { winAt: number; score: number } {
     const checked: boolean[][] = [];
-    for(let i = 0; i < this.numbers.length; i++) {
+    for (let i = 0; i < this.numbers.length; i++) {
       checked.push(Array(this.numbers.length).fill(false));
     }
 
@@ -64,9 +64,9 @@ export default class Bingo {
                   (checked[currentRowIndex][currentIndex]
                     ? 0
                     : this.numbers[currentRowIndex][currentIndex]),
-                0,
+                0
               ),
-            0,
+            0
           );
           return {
             winAt: a,

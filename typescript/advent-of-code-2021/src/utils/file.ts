@@ -4,10 +4,10 @@ import { Interface, createInterface } from "readline";
 export const getReader = (filePath: string): Interface | null => {
   try {
     return createInterface({
-      input: createReadStream(filePath, "utf-8")
+      input: createReadStream(filePath, "utf-8"),
     });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     return null;
   }
-}
+};

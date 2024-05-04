@@ -96,7 +96,7 @@ const simulateCommands = (commands: Command[]): [number, number] => {
           return result;
       }
     },
-    [0, 0],
+    [0, 0]
   );
 };
 
