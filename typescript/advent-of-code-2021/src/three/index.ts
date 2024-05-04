@@ -59,7 +59,7 @@ const calculatePowerConsumption = (bits: string[]): number => {
     }
   }
 
-  for (let number of counter) {
+  for (const number of counter) {
     if (number > 0) {
       gammaRate += "1";
       epsilonRate += "0";
@@ -92,7 +92,7 @@ const calculateLifeSupportRating = (bits: string[]): number => {
 
 const calculateLifeRating = (
   bits: string[],
-  rating: "oxygen" | "co2",
+  rating: "oxygen" | "co2"
 ): number => {
   let currentBit = 0;
   while (bits.length > 1) {
@@ -107,13 +107,13 @@ const calculateLifeRating = (
 
     if (counter >= 0) {
       bits = bits.filter(
-        (bit) => bit[currentBit] === (rating === "oxygen" ? "1" : "0"),
+        (bit) => bit[currentBit] === (rating === "oxygen" ? "1" : "0")
       );
     }
 
     if (counter < 0) {
       bits = bits.filter(
-        (bit) => bit[currentBit] === (rating === "oxygen" ? "0" : "1"),
+        (bit) => bit[currentBit] === (rating === "oxygen" ? "0" : "1")
       );
     }
 

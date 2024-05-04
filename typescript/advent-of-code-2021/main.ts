@@ -1,3 +1,4 @@
+import { executeFive } from "./src/five";
 import { executeFour } from "./src/four";
 import { executeOne } from "./src/one";
 import { executeThree } from "./src/three";
@@ -8,7 +9,8 @@ const main = () => {
   // executeOne();
   // executeTwo();
   // executeThree();
-  executeFour();
+  // executeFour();
+  executeFive();
 };
 
 main();
