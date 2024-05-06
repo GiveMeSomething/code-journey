@@ -8,7 +8,7 @@ import CustomLogger from "./logger";
 declare module "express-serve-static-core" {
   interface Request {
     span?: Span;
-    logger?: CustomLogger;
+    logger: CustomLogger;
   }
 }
 
@@ -47,20 +47,25 @@ app.use((request, _, next) => {
 });
 
 app.get("/", (request: Request, response: Response) => {
-  console.log(request.span?.spanContext());
+  const logger = request.logger;
+
+  logger.log("Custom route - Returning hello world");
   response.json({
     message: "Hello World",
   });
 });
 
 app.get("/:name", (request: Request, response: Response) => {
-  console.log(request.span?.spanContext());
+  const logger = request.logger;
+
   const name = request.params["name"];
   if (!name) {
+    logger.error("Bad request - Name not provided by user");
     response.status(400).json({ message: "Invalid name" });
     return;
   }
 
+  logger.log("Receive name from user:", name);
   response.json({
     message: `Hello ${name}`,
   });

@@ -28,13 +28,13 @@ export default class CustomLogger {
     if (!this.route || !this.span) {
       return;
     }
-    console.log(this.getPrefix(), "\t\t", message, ...optionalParams);
+    console.log(this.getPrefix(), "\t", message, ...optionalParams);
   }
 
   error(message?: any, ...optionalParams: any[]): void {
     if (!this.route || !this.span) {
       return;
     }
-    console.error(this.getPrefix(), "\t\t", message, ...optionalParams);
+    console.error(this.getPrefix(), "\t", message, ...optionalParams);
   }
 }
