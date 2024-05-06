@@ -2,11 +2,13 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { Span, trace } from "@opentelemetry/api";
 import { NodeSDK } from "@opentelemetry/sdk-node";
+import CustomLogger from "./logger";
 
 // Extend default Request to hold request span
 declare module "express-serve-static-core" {
   interface Request {
     span?: Span;
+    logger?: CustomLogger;
   }
 }
 
@@ -33,6 +35,15 @@ app.use((request, _, next) => {
       span.end();
     }
   });
+});
+
+app.use((request, _, next) => {
+  // Inject logger into request if a span is available
+  if (request.span) {
+    request.logger = new CustomLogger(request, request.span);
+  }
+
+  next();
 });
 
 app.get("/", (request: Request, response: Response) => {
