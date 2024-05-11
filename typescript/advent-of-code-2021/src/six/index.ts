@@ -7,6 +7,9 @@ export const executeSix = async () => {
 
   const illegalPoint = calculateIllegalPoint(code);
   console.log("Illegal point", illegalPoint);
+
+  const autocompletePoint = calculateAutocompletePoint(code);
+  console.log("Autocomplete point", autocompletePoint);
 };
 
 const tokenMap: Record<string, number> = {
@@ -15,6 +18,13 @@ const tokenMap: Record<string, number> = {
   "}": 1197,
   ">": 25137,
 };
+const tokenMap2: Record<string, number> = {
+  "(": 1,
+  "[": 2,
+  "{": 3,
+  "<": 4,
+};
+
 const openTokenList = ["(", "[", "{", "<"];
 
 const readCodeFromFile = async (): Promise<string[]> => {
@@ -51,7 +61,7 @@ const calculateIllegalPoint = (lines: string[]) => {
   return points;
 };
 
-const calculateLineIllegalPoint = (line: string): number => {
+export const calculateLineIllegalPoint = (line: string): number => {
   const queue: string[] = [];
   for (const token of line.split("")) {
     if (openTokenList.includes(token)) {
@@ -75,4 +85,44 @@ const calculateLineIllegalPoint = (line: string): number => {
     }
   }
   return 0;
+};
+
+export const calculateAutocompletePoint = (lines: string[]): number => {
+  // Filter out all invalid lines
+  const validLines = lines.filter(
+    (line) => calculateLineIllegalPoint(line) === 0
+  );
+
+  let points = [];
+  for (const line of validLines) {
+    points.push(calculateLineAutocompletePoint(line));
+  }
+
+  // Find median
+  points.sort((a, b) => a - b);
+  const half = Math.floor(points.length / 2);
+  return points[half];
+};
+
+export const calculateLineAutocompletePoint = (line: string): number => {
+  const queue: string[] = [];
+  for (const token of line.split("")) {
+    if (openTokenList.includes(token)) {
+      queue.push(token);
+      continue;
+    }
+
+    // This is sure to be correct for valid line
+    queue.pop();
+  }
+
+  let point = 0;
+  while (queue.length > 0) {
+    const token = queue.pop();
+    if (!token) {
+      continue;
+    }
+    point = point * 5 + tokenMap2[token];
+  }
+  return point;
 };
