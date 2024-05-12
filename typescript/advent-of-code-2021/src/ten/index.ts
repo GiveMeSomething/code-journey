@@ -2,7 +2,7 @@ import { once } from "events";
 import { createReadStream } from "fs";
 import { Interface, createInterface } from "readline";
 
-export const executeSix = async () => {
+export const executeTen = async () => {
   const code = await readCodeFromFile();
 
   const illegalPoint = calculateIllegalPoint(code);
