@@ -5,6 +5,9 @@ export const executeSeven = async () => {
 
   const minFuel = minCrabFuel(crabs);
   console.log("Min fuel", minFuel);
+
+  const minFuel2 = minExponentialFuel(crabs);
+  console.log("Min exponential fuel", minFuel2);
 };
 
 const readCrabFromFile = async (): Promise<number[]> => {
@@ -52,4 +55,31 @@ const minCrabFuel = (crabs: number[]): number => {
     calculateFuel(crabs, tempCrabs[Math.floor(crabs.length / 2)]),
     calculateFuel(crabs, tempCrabs[Math.floor(crabs.length / 2) - 1])
   );
+};
+
+const minExponentialFuel = (crabs: number[]): number => {
+  const meanValue = mean(crabs);
+
+  const nearest = Math.min(
+    ...crabs.map((value) => Math.abs(value - meanValue))
+  );
+  const nearestElement = crabs.find(
+    (value) => Math.abs(value - meanValue) === nearest
+  );
+  if (!nearestElement) {
+    return 0;
+  }
+
+  const stepSum = (value: number): number => {
+    return (value * (value + 1)) / 2;
+  };
+
+  return crabs.reduce(
+    (sum, value) => sum + stepSum(Math.abs(value - nearestElement)),
+    0
+  );
+};
+
+const mean = (values: number[]): number => {
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
 };
