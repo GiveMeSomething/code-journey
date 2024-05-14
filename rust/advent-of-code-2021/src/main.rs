@@ -131,4 +131,7 @@ fn exec_ten() {
 
     let illegal_point = ten::sum_illegal_point(&lines);
     println!("Illegal point: {}", illegal_point);
+
+    let autocomplete_point = ten::sum_autocomplete_point(&lines);
+    println!("Autocomplete point: {}", autocomplete_point);
 }
