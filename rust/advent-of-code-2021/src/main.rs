@@ -1,4 +1,4 @@
-use solutions::{eight, five, four, nine, one, seven, six, three, two};
+use solutions::{eight, five, four, nine, one, seven, six, ten, three, two};
 
 mod solutions;
 
@@ -11,7 +11,8 @@ fn main() {
     // exec_six();
     // exec_seven();
     // exec_eight();
-    exec_nine();
+    // exec_nine();
+    exec_ten();
 }
 
 #[allow(dead_code)]
@@ -122,4 +123,15 @@ fn exec_nine() {
 
     let mul_basin = nine::mul_top_three_basins(&locations);
     println!("Multiple of top 3 basins {}", mul_basin);
+}
+
+#[allow(dead_code)]
+fn exec_ten() {
+    let lines = ten::read_code_from_file();
+
+    let illegal_point = ten::sum_illegal_point(&lines);
+    println!("Illegal point: {}", illegal_point);
+
+    let autocomplete_point = ten::sum_autocomplete_point(&lines);
+    println!("Autocomplete point: {}", autocomplete_point);
 }
