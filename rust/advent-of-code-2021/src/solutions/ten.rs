@@ -25,8 +25,8 @@ pub fn sum_illegal_point(lines: &Vec<String>) -> isize {
 }
 
 pub fn sum_autocomplete_point(lines: &Vec<String>) -> isize {
-    let mut points: Vec<isize> = lines
-        .into_iter()
+    let mut points: Vec<isize> = (*lines)
+        .iter()
         .filter(|line| get_line_illegal_point(line.as_str()) == 0)
         .map(|line| get_line_autocomplete_point(line.as_str()))
         .collect();
