@@ -1,4 +1,8 @@
-use solutions::{eight, five, four, nine, one, seven, six, ten, three, two};
+use solutions::{
+    eight,
+    eleven::{read_octopus_from_file, simulate_flash},
+    five, four, nine, one, seven, six, ten, three, two,
+};
 
 mod solutions;
 
@@ -12,7 +16,8 @@ fn main() {
     // exec_seven();
     // exec_eight();
     // exec_nine();
-    exec_ten();
+    // exec_ten();
+    exec_eleven();
 }
 
 #[allow(dead_code)]
@@ -134,4 +139,13 @@ fn exec_ten() {
 
     let autocomplete_point = ten::sum_autocomplete_point(&lines);
     println!("Autocomplete point: {}", autocomplete_point);
+}
+
+#[allow(dead_code)]
+fn exec_eleven() {
+    let mut octopus_matrix = read_octopus_from_file();
+
+    let flash_count = simulate_flash(&mut octopus_matrix, 100);
+
+    println!("{:?}", flash_count);
 }
