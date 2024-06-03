@@ -29,9 +29,20 @@ pub fn simulate_flash(octopus: &mut [[usize; 10]; 10], step: usize) -> usize {
     for _ in 0..step {
         simulate_step(octopus);
         flash_count += count_and_finalize_step(octopus);
-        println!("{:#?}", octopus);
     }
     return flash_count;
+}
+
+pub fn sync_flash(octopus: &mut [[usize; 10]; 10]) -> usize {
+    let mut step = 0;
+    loop {
+        simulate_step(octopus);
+        let step_count = count_and_finalize_step(octopus);
+        if step_count == 100 {
+            return step;
+        }
+        step += 1;
+    }
 }
 
 fn simulate_step(octopus: &mut [[usize; 10]; 10]) {
