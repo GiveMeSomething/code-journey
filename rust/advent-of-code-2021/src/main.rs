@@ -1,6 +1,6 @@
 use solutions::{
     eight,
-    eleven::{read_octopus_from_file, simulate_flash},
+    eleven::{read_octopus_from_file, simulate_flash, sync_flash},
     five, four, nine, one, seven, six, ten, three, two,
 };
 
@@ -143,9 +143,13 @@ fn exec_ten() {
 
 #[allow(dead_code)]
 fn exec_eleven() {
-    let mut octopus_matrix = read_octopus_from_file();
+    let octopus_matrix = read_octopus_from_file();
 
-    let flash_count = simulate_flash(&mut octopus_matrix, 100);
+    // Clone to avoid mutating each other input
+    let flash_count = simulate_flash(&mut octopus_matrix.clone(), 100);
+    println!("Flash count after 100 steps: {:?}", flash_count);
 
-    println!("{:?}", flash_count);
+    // Clone to avoid mutating each other input
+    let sync_step = sync_flash(&mut octopus_matrix.clone());
+    println!("Octopus sync at {}", sync_step);
 }
