@@ -27,8 +27,27 @@ pub fn find_entries_by_sum(expenses: &Vec<usize>, sum: usize) -> usize {
         }
 
         // Add current key
+        if sum < *expense {
+            continue;
+        }
+
         let key = sum - expense;
         sum_map.insert(key, true);
+    }
+
+    0
+}
+
+pub fn find_triplet_by_sum(expenses: &Vec<usize>, sum: usize) -> usize {
+    for expense in expenses {
+        let target = sum - expense;
+
+        let point = find_entries_by_sum(expenses, target);
+        if point == 0 {
+            continue;
+        }
+
+        return point * expense;
     }
 
     0
