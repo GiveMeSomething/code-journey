@@ -1,4 +1,5 @@
 use std::{
+    collections::HashMap,
     fs::File,
     io::{BufRead, BufReader},
 };
@@ -14,4 +15,21 @@ pub fn read_expense_from_file() -> Vec<usize> {
     }
 
     expenses
+}
+
+pub fn find_entries_by_sum(expenses: &Vec<usize>, sum: usize) -> usize {
+    let mut sum_map: HashMap<usize, bool> = HashMap::new();
+
+    for expense in expenses {
+        // Return point if sum add up to target
+        if sum_map.contains_key(expense) {
+            return expense * (sum - expense);
+        }
+
+        // Add current key
+        let key = sum - expense;
+        sum_map.insert(key, true);
+    }
+
+    0
 }

@@ -1,4 +1,4 @@
-use solutions::one::read_expense_from_file;
+use solutions::one;
 
 mod solutions;
 
@@ -8,7 +8,9 @@ fn main() {
 
 #[allow(dead_code)]
 fn exec_one() {
-    let expenses = read_expense_from_file();
-
+    let expenses = one::read_expense_from_file();
     println!("{:?}", expenses);
+
+    let point1 = one::find_entries_by_sum(&expenses, 2020);
+    println!("Point day 1 part 1: {}", point1);
 }
