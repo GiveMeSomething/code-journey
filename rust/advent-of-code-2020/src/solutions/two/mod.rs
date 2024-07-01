@@ -30,3 +30,13 @@ pub fn count_valid_password(inputs: &Vec<Policy>) -> usize {
     }
     count
 }
+
+pub fn count_valid_corp_password(inputs: &Vec<Policy>) -> usize {
+    let mut count = 0;
+    for input in inputs {
+        if input.is_corporate_valid() {
+            count += 1;
+        }
+    }
+    count
+}
