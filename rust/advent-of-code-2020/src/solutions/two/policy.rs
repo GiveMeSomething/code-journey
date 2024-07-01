@@ -65,4 +65,26 @@ impl Policy {
 
         count >= self.min && count <= self.max
     }
+
+    pub fn is_corporate_valid(&self) -> bool {
+        let min_pos_char = match self.password.chars().nth(self.min - 1) {
+            Some(char) => char,
+            None => {
+                return false;
+            }
+        };
+
+        let max_pos_char = match self.password.chars().nth(self.max - 1) {
+            Some(char) => char,
+            None => {
+                return false;
+            }
+        };
+
+        if min_pos_char == self.character && max_pos_char == self.character {
+            return false;
+        }
+
+        return min_pos_char == self.character || max_pos_char == self.character;
+    }
 }
