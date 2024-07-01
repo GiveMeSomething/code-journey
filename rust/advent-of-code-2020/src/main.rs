@@ -1,6 +1,6 @@
 use solutions::{
     one,
-    two::{self, count_valid_password},
+    two::{self, count_valid_corp_password, count_valid_password},
 };
 
 mod solutions;
@@ -27,4 +27,7 @@ fn exec_two() {
 
     let valid_password_count = count_valid_password(&inputs);
     println!("# valid password: {}", valid_password_count);
+
+    let valid_corp_password_count = count_valid_corp_password(&inputs);
+    println!("# valid corp password: {}", valid_corp_password_count);
 }
