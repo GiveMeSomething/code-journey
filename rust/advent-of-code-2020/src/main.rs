@@ -36,5 +36,7 @@ fn exec_two() {
 #[allow(dead_code)]
 fn exec_three() {
     let inputs = three::read_tree_from_file();
-    println!("{:?}", inputs);
+
+    let tree_count = three::count_slope_tree(&inputs, 3, 1);
+    println!("Tree count: {}", tree_count);
 }

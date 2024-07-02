@@ -14,3 +14,23 @@ pub fn read_tree_from_file() -> Vec<Vec<char>> {
     }
     result
 }
+
+pub fn count_slope_tree(trees: &Vec<Vec<char>>, right: usize, down: usize) -> usize {
+    let row = trees.len();
+    let col = trees[0].len();
+
+    let mut current_row = down;
+    let mut current_col = right;
+    let mut tree_count = 0;
+
+    while current_row < row {
+        if trees[current_row][current_col % col] == '#' {
+            tree_count += 1;
+        }
+
+        current_row += down;
+        current_col += right;
+    }
+
+    tree_count
+}
