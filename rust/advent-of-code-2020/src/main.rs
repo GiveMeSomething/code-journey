@@ -39,4 +39,14 @@ fn exec_three() {
 
     let tree_count = three::count_slope_tree(&inputs, 3, 1);
     println!("Tree count: {}", tree_count);
+
+    let slope1_tree = three::count_slope_tree(&inputs, 1, 1);
+    let slope2_tree = three::count_slope_tree(&inputs, 3, 1);
+    let slope3_tree = three::count_slope_tree(&inputs, 5, 1);
+    let slope4_tree = three::count_slope_tree(&inputs, 7, 1);
+    let slope5_tree = three::count_slope_tree(&inputs, 1, 2);
+    println!(
+        "Tree count multiple slope: {}",
+        slope1_tree * slope2_tree * slope3_tree * slope4_tree * slope5_tree
+    );
 }
