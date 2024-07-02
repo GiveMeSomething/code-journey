@@ -1,5 +1,5 @@
 use solutions::{
-    one,
+    one, three,
     two::{self, count_valid_corp_password, count_valid_password},
 };
 
@@ -7,7 +7,8 @@ mod solutions;
 
 fn main() {
     // exec_one();
-    exec_two();
+    // exec_two();
+    exec_three();
 }
 
 #[allow(dead_code)]
@@ -30,4 +31,10 @@ fn exec_two() {
 
     let valid_corp_password_count = count_valid_corp_password(&inputs);
     println!("# valid corp password: {}", valid_corp_password_count);
+}
+
+#[allow(dead_code)]
+fn exec_three() {
+    let inputs = three::read_tree_from_file();
+    println!("{:?}", inputs);
 }
