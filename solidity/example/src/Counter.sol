@@ -10,6 +10,11 @@ contract Counter {
         OWNER = msg.sender;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == OWNER);
+        _;
+    }
+
     function getOwner() public view returns (address) {
         return OWNER;
     }
