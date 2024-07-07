@@ -4,6 +4,7 @@ pragma solidity ^0.8.26;
 contract Counter {
     address public owner;
     uint256 public count;
+    bool public locked;
 
     constructor(uint256 _initCount) {
         count = _initCount;
@@ -18,6 +19,14 @@ contract Counter {
     modifier validAddress(address _address) {
         require(_address != address(0), "Not a valid address");
         _;
+    }
+
+    modifier noReentrancy() {
+        require(!locked, "No reentrancy");
+
+        locked = true;
+        _;
+        locked = false;
     }
 
     function changeOwner(
