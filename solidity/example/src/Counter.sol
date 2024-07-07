@@ -2,21 +2,32 @@
 pragma solidity ^0.8.26;
 
 contract Counter {
-    address public immutable OWNER;
+    address public owner;
     uint256 public count;
 
     constructor(uint256 _initCount) {
         count = _initCount;
-        OWNER = msg.sender;
+        owner = msg.sender;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == OWNER);
+        require(msg.sender == owner);
         _;
     }
 
+    modifier validAddress(address _address) {
+        require(_address != address(0), "Not a valid address");
+        _;
+    }
+
+    function changeOwner(
+        address _newOwner
+    ) public onlyOwner validAddress(_newOwner) {
+        owner = _newOwner;
+    }
+
     function getOwner() public view returns (address) {
-        return OWNER;
+        return owner;
     }
 
     function getCount() public view returns (uint256) {
