@@ -5,7 +5,8 @@ contract Counter {
     address public immutable OWNER;
     uint256 public count;
 
-    constructor() {
+    constructor(uint256 _initCount) {
+        count = _initCount;
         OWNER = msg.sender;
     }
 
@@ -13,8 +14,12 @@ contract Counter {
         return OWNER;
     }
 
-    function get() public view returns (uint256) {
+    function getCount() public view returns (uint256) {
         return count;
+    }
+
+    function setCount(uint256 _count) public {
+        count = _count;
     }
 
     function inc() public {
