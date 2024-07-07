@@ -1,0 +1,3 @@
+[submodule "solidity/advent-of-code-2020/lib/forge-std"]
+	path = solidity/advent-of-code-2020/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
