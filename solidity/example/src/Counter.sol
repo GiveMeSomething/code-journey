@@ -1,8 +1,17 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.26;
 
 contract Counter {
+    address public immutable OWNER;
     uint256 public count;
+
+    constructor() {
+        OWNER = msg.sender;
+    }
+
+    function getOwner() public view returns (address) {
+        return OWNER;
+    }
 
     function get() public view returns (uint256) {
         return count;
@@ -13,6 +22,10 @@ contract Counter {
     }
 
     function desc() public {
+        if (count == 0) {
+            return;
+        }
+
         // This function will fail if count = 0, as count is an unsigned integer
         count -= 1;
     }
