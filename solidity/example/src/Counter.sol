@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.26;
 
+event TransferOwnership(address indexed from, address indexed to);
+
 contract Counter {
     address public owner;
     uint256 public count;
@@ -32,6 +34,7 @@ contract Counter {
     function changeOwner(
         address _newOwner
     ) public onlyOwner validAddress(_newOwner) {
+        emit TransferOwnership(msg.sender, _newOwner);
         owner = _newOwner;
     }
 
