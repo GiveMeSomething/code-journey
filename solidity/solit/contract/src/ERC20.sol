@@ -32,7 +32,10 @@ contract ERC20 {
         owner = msg.sender;
     }
 
-    function transfer(address to, uint256 amount) public returns (bool) {
+    function transfer(
+        address to,
+        uint256 amount
+    ) public validAddress(msg.sender) returns (bool) {
         balanceOf[msg.sender] -= amount;
 
         unchecked {
@@ -62,7 +65,10 @@ contract ERC20 {
         owner = _newOwner;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(
+        address to,
+        uint256 amount
+    ) public onlyOwner validAddress(to) {
         totalSupply += amount;
 
         unchecked {
