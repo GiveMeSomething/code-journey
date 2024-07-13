@@ -1,29 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.26;
 
+import {IERC721} from "./interfaces/IERC721.sol";
+import {IERC165} from "./interfaces/IERC165.sol";
 import {ERC721TokenReceiver} from "./ERC721TokenReceiver.sol";
 
-contract ERC721 {
-    // EVENTS
-
-    event Transfer(
-        address indexed from,
-        address indexed to,
-        uint256 indexed tokenId
-    );
-
-    event Approval(
-        address indexed from,
-        address indexed to,
-        uint256 indexed tokenId
-    );
-
-    event ApprovalForAll(
-        address indexed owner,
-        address indexed operator,
-        bool approved
-    );
-
+contract ERC721 is IERC721 {
     // METADATA STORAGE
     string public name;
 
@@ -88,9 +70,22 @@ contract ERC721 {
     }
 
     // ERC721 APPROVAL STORAGE
-    mapping(uint256 => address) public getApproved;
+    mapping(uint256 => address) public _getApproved;
 
-    mapping(address => mapping(address => bool)) public isApprovedForAll;
+    mapping(address => mapping(address => bool)) public _isApprovedForAll;
+
+    function getApproved(
+        uint256 tokenId
+    ) external view override returns (address operator) {
+        return _getApproved[tokenId];
+    }
+
+    function isApprovedForAll(
+        address tokenOwner,
+        address operator
+    ) external view override returns (bool) {
+        return _isApprovedForAll[tokenOwner][operator];
+    }
 
     constructor(string memory _name, string memory _symbol) {
         name = _name;
@@ -103,18 +98,18 @@ contract ERC721 {
     function approve(address spender, uint256 tokenId) public {
         address tokenOwner = _ownerOf[tokenId];
         require(
-            msg.sender == tokenOwner || isApprovedForAll[owner][msg.sender],
+            msg.sender == tokenOwner || _isApprovedForAll[owner][msg.sender],
             "NOT_AUTHORIZED"
         );
 
-        getApproved[tokenId] = spender;
+        _getApproved[tokenId] = spender;
 
         emit Approval(tokenOwner, spender, tokenId);
     }
 
     // Authorize another address to use all of one's tokens
     function setApprovalForAll(address operator, bool approved) public {
-        isApprovedForAll[msg.sender][operator] = approved;
+        _isApprovedForAll[msg.sender][operator] = approved;
 
         emit ApprovalForAll(msg.sender, operator, approved);
     }
@@ -132,8 +127,8 @@ contract ERC721 {
         // Is authorized by the "from" to use all of their tokens
         require(
             msg.sender == from ||
-                msg.sender == getApproved[tokenId] ||
-                isApprovedForAll[from][msg.sender]
+                msg.sender == _getApproved[tokenId] ||
+                _isApprovedForAll[from][msg.sender]
         );
 
         unchecked {
@@ -145,7 +140,7 @@ contract ERC721 {
         _ownerOf[tokenId] = to;
 
         // Revoke approval of the current token
-        delete getApproved[tokenId];
+        delete _getApproved[tokenId];
 
         emit Transfer(from, to, tokenId);
     }
@@ -165,5 +160,13 @@ contract ERC721 {
         bytes memory data
     ) public mustBeSafe(to, tokenId, data) {
         transferFrom(from, to, tokenId);
+    }
+
+    function supportsInterface(
+        bytes4 interfaceId
+    ) external pure override returns (bool) {
+        return
+            interfaceId == type(IERC721).interfaceId ||
+            interfaceId == type(IERC165).interfaceId;
     }
 }
