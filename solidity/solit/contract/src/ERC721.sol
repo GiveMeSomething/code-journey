@@ -1,11 +1,29 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.26;
 
-import {IERC721} from "./interfaces/IERC721.sol";
-import {IERC165} from "./interfaces/IERC165.sol";
 import {ERC721TokenReceiver} from "./ERC721TokenReceiver.sol";
 
-abstract contract ERC721 is IERC721 {
+contract ERC721 {
+    // EVENTS
+
+    event Transfer(
+        address indexed from,
+        address indexed to,
+        uint256 indexed tokenId
+    );
+
+    event Approval(
+        address indexed from,
+        address indexed to,
+        uint256 indexed tokenId
+    );
+
+    event ApprovalForAll(
+        address indexed owner,
+        address indexed operator,
+        bool approved
+    );
+
     // METADATA STORAGE
     string public name;
 
