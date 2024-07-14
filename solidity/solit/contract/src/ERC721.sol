@@ -169,4 +169,49 @@ contract ERC721 is IERC721 {
             interfaceId == type(IERC721).interfaceId ||
             interfaceId == type(IERC165).interfaceId;
     }
+
+    // INTERNAL MINT/BURN LOGIC
+    function _mint(address to, uint256 tokenId) internal validAddress(to) {
+        require(_ownerOf[tokenId] == address(0), "MINTED");
+
+        // Counter overflow is increadibly unrealistic
+        unchecked {
+            _balanceOf[to]++;
+        }
+
+        _ownerOf[tokenId] = to;
+
+        emit Transfer(address(0), to, tokenId);
+    }
+
+    // Only owner can burn their token
+    function _burn(uint256 tokenId) internal {
+        address tokenOwner = _ownerOf[tokenId];
+        require(tokenOwner == msg.sender, "NOT OWNED");
+
+        unchecked {
+            _balanceOf[tokenOwner]--;
+        }
+
+        delete _ownerOf[tokenId];
+        delete _getApproved[tokenId];
+
+        emit Transfer(owner, address(0), tokenId);
+    }
+
+    // SAFE MINT LOGIC
+    function _safeMint(
+        address to,
+        uint256 tokenId
+    ) public virtual mustBeSafe(to, tokenId, "") {
+        _mint(to, tokenId);
+    }
+
+    function _safeMint(
+        address to,
+        uint256 tokenId,
+        bytes memory data
+    ) public virtual mustBeSafe(to, tokenId, data) {
+        _mint(to, tokenId);
+    }
 }
