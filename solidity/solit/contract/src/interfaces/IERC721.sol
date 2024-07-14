@@ -24,7 +24,9 @@ interface IERC721 is IERC165 {
 
     function balanceOf(address owner) external view returns (uint256 balance);
 
-    function ownerOf(uint256 tokenId) external view returns (address owner);
+    function ownerOf(
+        uint256 tokenId
+    ) external view returns (address tokenOwner);
 
     /**
      * @dev Safely transfers `tokenId` token from `from` to `to`.
@@ -112,7 +114,7 @@ interface IERC721 is IERC165 {
      *
      * See {setApprovalForAll}
      */
-    function tokenOwner(
+    function isApprovedForAll(
         address owner,
         address operator
     ) external view returns (bool);

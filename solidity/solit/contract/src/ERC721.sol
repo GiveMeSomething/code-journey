@@ -65,7 +65,7 @@ contract ERC721 is IERC721 {
 
     function balanceOf(
         address tokenOwner
-    ) public view validAddress(tokenOwner) returns (uint256) {
+    ) external view validAddress(tokenOwner) returns (uint256 balance) {
         return _balanceOf[tokenOwner];
     }
 
