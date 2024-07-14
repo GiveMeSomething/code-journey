@@ -58,12 +58,38 @@ contract ERC20721Test is Test {
     function testApprove() public {
         vm.prank(alice);
 
-        token.approve(address(bob), type(uint256).max);
+        token.approve(bob, type(uint256).max);
 
-        assertEq(
-            token.allowance(address(alice), address(bob)),
-            type(uint256).max
-        );
+        assertEq(token.allowance(alice, bob), type(uint256).max);
+    }
+
+    function testTransferFrom() public {
+        // Init fund for Alice
+        token.mint(alice, 10e18);
+
+        assertEq(token.balanceOf(alice), 10e18);
+        assertEq(token.totalSupply(), 10e18);
+
+        // Alice approve Bob to use all tokens
+        vm.prank(alice);
+
+        token.approve(bob, 10e18);
+
+        assertEq(token.allowance(alice, bob), 10e18);
+
+        // Try transferFrom Alice
+        vm.prank(bob);
+
+        assertTrue(token.transferFrom(alice, address(this), 3e18));
+        assertEq(token.balanceOf(alice), 7e18);
+        assertEq(token.balanceOf(address(this)), 3e18);
+        assertEq(token.allowance(alice, bob), 7e18);
+
+        vm.prank(bob);
+        assertTrue(token.transferFrom(alice, bob, 7e18));
+        assertEq(token.balanceOf(alice), 0);
+        assertEq(token.balanceOf(bob), 7e18);
+        assertEq(token.allowance(alice, bob), 0);
     }
 
     function testFailMintToZero() external {

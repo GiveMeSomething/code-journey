@@ -57,9 +57,6 @@ contract ERC20 {
         uint256 amount
     ) public validAddress(to) returns (bool) {
         uint256 allowedAmount = allowance[from][msg.sender];
-
-        require(allowedAmount >= amount, "INSUFFICIENT FUND");
-
         if (allowedAmount != type(uint256).max) {
             allowance[from][msg.sender] = allowedAmount - amount;
         }
