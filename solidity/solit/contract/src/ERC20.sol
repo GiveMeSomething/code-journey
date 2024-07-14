@@ -13,13 +13,17 @@ contract ERC20 {
 
     // METADATA STORAGE
     string public name;
+
     string public symbol;
+
     uint8 public immutable decimals;
 
     // ERC20 STORAGE
     uint256 public totalSupply;
 
     mapping(address => uint256) public balanceOf;
+
+    mapping(address => mapping(address => uint256)) public allowance;
 
     // CUSTOM
     address private owner;
@@ -35,7 +39,7 @@ contract ERC20 {
     function transfer(
         address to,
         uint256 amount
-    ) public validAddress(msg.sender) returns (bool) {
+    ) public validAddress(msg.sender) validAddress(to) returns (bool) {
         balanceOf[msg.sender] -= amount;
 
         unchecked {
@@ -43,6 +47,41 @@ contract ERC20 {
         }
 
         emit Transfer(msg.sender, to, amount);
+
+        return true;
+    }
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) public validAddress(to) returns (bool) {
+        uint256 allowedAmount = allowance[from][msg.sender];
+
+        require(allowedAmount >= amount, "INSUFFICIENT FUND");
+
+        if (allowedAmount != type(uint256).max) {
+            allowance[from][msg.sender] = allowedAmount - amount;
+        }
+
+        balanceOf[from] -= amount;
+
+        unchecked {
+            balanceOf[to] += amount;
+        }
+
+        emit Transfer(from, to, amount);
+
+        return true;
+    }
+
+    function approve(
+        address spender,
+        uint256 amount
+    ) public validAddress(spender) returns (bool) {
+        allowance[msg.sender][spender] = amount;
+
+        emit Approval(msg.sender, spender, amount);
 
         return true;
     }
@@ -64,6 +103,8 @@ contract ERC20 {
     ) public onlyOwner validAddress(_newOwner) {
         owner = _newOwner;
     }
+
+    // MINT/BURN LOGIC
 
     function mint(
         address to,
