@@ -55,6 +55,17 @@ contract ERC20721Test is Test {
         assertEq(token.balanceOf(bob), 5e18);
     }
 
+    function testApprove() public {
+        vm.prank(alice);
+
+        token.approve(address(bob), type(uint256).max);
+
+        assertEq(
+            token.allowance(address(alice), address(bob)),
+            type(uint256).max
+        );
+    }
+
     function testFailMintToZero() external {
         token.mint(address(0), 10e18);
     }
@@ -97,6 +108,12 @@ contract ERC20721Test is Test {
         token.transfer(bob, 3e18);
     }
 
+    function testFailApproveWithZeroAllowance() external {
+        vm.prank(alice);
+
+        token.approve(address(bob), 0);
+    }
+
     function testFuzzMint(address to, uint256 amount) external {
         vm.assume(to != address(0));
         token.mint(to, amount);
@@ -135,5 +152,23 @@ contract ERC20721Test is Test {
         assertEq(token.balanceOf(address(this)), 0);
         assertEq(token.balanceOf(to), amount);
         assertEq(token.totalSupply(), amount);
+    }
+
+    function testFuzzApprove(
+        address from,
+        address to,
+        uint256 amount
+    ) external {
+        // Setup
+        vm.assume(from != address(0));
+        vm.assume(to != address(0));
+        vm.assume(from != to);
+        vm.assume(amount > 0);
+
+        vm.prank(from);
+
+        token.approve(to, amount);
+
+        assertEq(token.allowance(from, to), amount);
     }
 }
