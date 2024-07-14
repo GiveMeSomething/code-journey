@@ -140,6 +140,19 @@ contract ERC20721Test is Test {
         token.approve(address(bob), 0);
     }
 
+    function testFailTransferFromNotApproved() external {
+        token.mint(address(this), 10e18);
+        token.transferFrom(address(this), alice, 10e18);
+    }
+
+    function testFailTransferFromInsufficientFund() external {
+        token.mint(address(this), 10e18);
+        token.approve(alice, 10e18);
+
+        vm.prank(alice);
+        token.transferFrom(address(this), bob, 20e18);
+    }
+
     function testFuzzMint(address to, uint256 amount) external {
         vm.assume(to != address(0));
         token.mint(to, amount);
@@ -196,5 +209,39 @@ contract ERC20721Test is Test {
         token.approve(to, amount);
 
         assertEq(token.allowance(from, to), amount);
+    }
+
+    function testFuzzTransferFrom(
+        address owner,
+        address spender,
+        address receiver,
+        uint256 amount
+    ) external {
+        vm.assume(
+            owner != address(0) &&
+                spender != address(0) &&
+                receiver != address(0)
+        );
+        vm.assume(amount > 0 && amount != type(uint256).max);
+
+        token.mint(owner, amount);
+
+        assertEq(token.balanceOf(owner), amount);
+        assertEq(token.totalSupply(), amount);
+
+        // Alice approve Bob to use all tokens
+        vm.prank(owner);
+
+        token.approve(spender, amount);
+
+        assertEq(token.allowance(owner, spender), amount);
+
+        // Try transferFrom Alice
+        vm.prank(spender);
+
+        assertTrue(token.transferFrom(owner, receiver, amount));
+        assertEq(token.balanceOf(owner), 0);
+        assertEq(token.balanceOf(receiver), amount);
+        assertEq(token.allowance(owner, spender), 0);
     }
 }
