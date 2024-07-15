@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 import {Test, console} from "forge-std/Test.sol";
 import {ERC20} from "../src/ERC20.sol";
 
-contract ERC20721Test is Test {
+contract ERC20Test is Test {
     ERC20 public token;
 
     address alice = vm.addr(0x1);
@@ -222,6 +222,7 @@ contract ERC20721Test is Test {
                 spender != address(0) &&
                 receiver != address(0)
         );
+        vm.assume(owner != spender && owner != receiver && spender != receiver);
         vm.assume(amount > 0 && amount != type(uint256).max);
 
         token.mint(owner, amount);
