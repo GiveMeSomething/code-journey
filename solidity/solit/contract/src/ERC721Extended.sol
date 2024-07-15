@@ -11,14 +11,7 @@ contract ERC721Extended is ERC721 {
 
     // EXTENDED ERC-721 STORAGE
 
-    // This struct will support payment in decimals
-    // ERC20 price = price * (10 ** (ERC20 decimals - decimals))
-    struct Payment {
-        uint256 price;
-        uint8 decimals;
-    }
-
-    mapping(address => Payment) paymentMethods;
+    mapping(address => uint256) paymentMethods;
 
     constructor(
         string memory _name,
@@ -26,20 +19,10 @@ contract ERC721Extended is ERC721 {
     ) ERC721(_name, _symbol) {}
 
     // ERC-20 PAYMENT LOGIC
-    function addPayment(
-        address erc20Contract,
-        uint256 price,
-        uint8 decimals
-    ) public onlyOwner {
+    function addPayment(address erc20Contract, uint256 price) public onlyOwner {
         require(price > 0, "NO FREE TOKEN");
 
-        ERC20 tokenContract = ERC20(erc20Contract);
-        require(decimals <= tokenContract.decimals());
-
-        paymentMethods[erc20Contract] = Payment({
-            price: price,
-            decimals: decimals
-        });
+        paymentMethods[erc20Contract] = price;
     }
 
     function removePayment(address erc20Contract) public onlyOwner {
@@ -69,7 +52,7 @@ contract ERC721Extended is ERC721 {
     // CUSTOM MINT LOGIC
 
     function mint(address payment) public returns (bool) {
-        require(paymentMethods[payment].price > 0, "Invalid payment method");
+        require(paymentMethods[payment] > 0, "Invalid payment method");
 
         ERC20 erc20Contract = ERC20(payment);
 
@@ -77,13 +60,11 @@ contract ERC721Extended is ERC721 {
         checkAllowance(erc20Contract);
 
         // Safe transfer to this contract
-        uint256 price = paymentMethods[payment].price;
-        uint8 priceDecimals = paymentMethods[payment].decimals;
-        uint8 tokenDecimals = erc20Contract.decimals();
+        uint256 price = paymentMethods[payment];
         bool result = erc20Contract.transferFrom(
             msg.sender,
             address(this),
-            _tokenPrice(price, priceDecimals, tokenDecimals)
+            price
         );
 
         require(result == true, "Transfer failed");
@@ -97,23 +78,11 @@ contract ERC721Extended is ERC721 {
 
     // Check allowance against NFT price
     function checkAllowance(ERC20 tokenContract) public view returns (bool) {
-        Payment memory paymentMethod = paymentMethods[address(tokenContract)];
-        uint256 price = paymentMethod.price;
-        uint8 priceDecimals = paymentMethod.decimals;
-
+        uint256 price = paymentMethods[address(tokenContract)];
         uint256 allowed = tokenContract.allowance(msg.sender, address(this));
-        uint8 tokenDecimals = tokenContract.decimals();
 
-        require(allowed >= _tokenPrice(price, priceDecimals, tokenDecimals));
+        require(allowed >= price);
 
         return true;
-    }
-
-    function _tokenPrice(
-        uint256 price,
-        uint8 priceDecimals,
-        uint8 decimals
-    ) internal pure returns (uint256) {
-        return price * (10 ** (decimals - priceDecimals));
     }
 }
