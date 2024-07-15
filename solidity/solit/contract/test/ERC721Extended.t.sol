@@ -30,8 +30,7 @@ contract ERC721ExtendedTest is Test {
         assertEq("TastyNFT", erc721Token.symbol());
     }
 
-    function testCheckAllowance() external {
-        // Mint for alice
+    function testCheckAllowance() public {
         erc20Token.mint(address(this), 1e18);
 
         assertEq(erc20Token.balanceOf(address(this)), 1e18);
@@ -42,5 +41,28 @@ contract ERC721ExtendedTest is Test {
 
         // Check allowance
         assertTrue(erc721Token.checkAllowance(erc20Token));
+    }
+
+    function testMint() public {
+        erc20Token.mint(alice, 1e18);
+
+        assertEq(erc20Token.balanceOf(alice), 1e18);
+        assertEq(erc20Token.totalSupply(), 1e18);
+
+        // Approve fund for erc721
+        vm.prank(alice);
+        assertTrue(erc20Token.approve(address(erc721Token), 1e18));
+
+        // Mint
+        vm.prank(alice);
+        assertTrue(erc721Token.mint(address(erc20Token)));
+
+        // Allowance + balance should be empty by now
+        assertEq(erc20Token.balanceOf(alice), 0);
+        assertEq(erc20Token.allowance(alice, address(erc721Token)), 0);
+
+        // Check balance and owner
+        assertEq(erc721Token.balanceOf(alice), 1);
+        assertEq(erc721Token.ownerOf(1), alice);
     }
 }
