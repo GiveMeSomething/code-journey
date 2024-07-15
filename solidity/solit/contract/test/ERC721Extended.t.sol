@@ -65,4 +65,15 @@ contract ERC721ExtendedTest is Test {
         assertEq(erc721Token.balanceOf(alice), 1);
         assertEq(erc721Token.ownerOf(1), alice);
     }
+
+    function testBurn() public {
+        testMint();
+
+        // Burn alice's NFT
+        vm.prank(alice);
+        erc721Token.burn(1);
+
+        // Check balance and owner
+        assertEq(erc721Token.balanceOf(alice), 0);
+    }
 }
