@@ -11,7 +11,14 @@ contract ERC721Extended is ERC721 {
 
     // EXTENDED ERC-721 STORAGE
 
-    mapping(address => uint256) paymentMethods;
+    // This struct will support payment in decimals
+    // ERC20 price = price * (10 ** (ERC20 decimals - decimals))
+    struct Payment {
+        uint256 price;
+        uint8 decimals;
+    }
+
+    mapping(address => Payment) paymentMethods;
 
     constructor(
         string memory _name,
@@ -19,9 +26,20 @@ contract ERC721Extended is ERC721 {
     ) ERC721(_name, _symbol) {}
 
     // ERC-20 PAYMENT LOGIC
-    function addPayment(address erc20Contract, uint256 price) public onlyOwner {
+    function addPayment(
+        address erc20Contract,
+        uint256 price,
+        uint8 decimals
+    ) public onlyOwner {
         require(price > 0, "NO FREE TOKEN");
-        paymentMethods[erc20Contract] = price;
+
+        ERC20 tokenContract = ERC20(erc20Contract);
+        require(decimals <= tokenContract.decimals());
+
+        paymentMethods[erc20Contract] = Payment({
+            price: price,
+            decimals: decimals
+        });
     }
 
     function removePayment(address erc20Contract) public onlyOwner {
@@ -51,7 +69,7 @@ contract ERC721Extended is ERC721 {
     // CUSTOM MINT LOGIC
 
     function mint(address payment) public returns (bool) {
-        require(paymentMethods[payment] > 0, "Invalid payment method");
+        require(paymentMethods[payment].price > 0, "Invalid payment method");
 
         ERC20 erc20Contract = ERC20(payment);
 
