@@ -76,6 +76,7 @@ contract ERC20 {
         address spender,
         uint256 amount
     ) public validAddress(spender) returns (bool) {
+        require(msg.sender != spender, "no need to approve yourself");
         require(amount > 0, "zero allowance not allowed");
 
         allowance[msg.sender][spender] = amount;
