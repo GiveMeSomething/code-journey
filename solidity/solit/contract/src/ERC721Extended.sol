@@ -76,6 +76,11 @@ contract ERC721Extended is ERC721 {
         return true;
     }
 
+    function burn(uint256 tokenId) public returns (bool) {
+        super._burn(tokenId);
+        return true;
+    }
+
     // Check allowance against NFT price
     function checkAllowance(ERC20 tokenContract) public view returns (bool) {
         uint256 price = paymentMethods[address(tokenContract)];
