@@ -10,7 +10,7 @@ const ConnectWallet = () => {
 
   return (
     <button
-      className="px-4 py-2 rounded-lg border border-white bg-blue-500 hover:bg-blue-600 disabled:to-blue-300"
+      className="px-4 py-2 rounded-lg border border-white bg-blue-500 hover:bg-blue-600 disabled:to-blue-300 transition-all"
       onClick={handleConnect}
       disabled={isPending}
     >
