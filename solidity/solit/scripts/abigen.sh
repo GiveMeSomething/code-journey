@@ -48,9 +48,20 @@ echo "Contract path: ${CONTRACT_PATH}"
 echo "Output path: ${OUTPUT_PATH}"
 echo
 
-# Generation
-mkdir --parents "${OUTPUT_PATH}"
-forge inspect "${CONTRACT_PATH}" abi > "${OUTPUT_PATH}"
+read -p "Are you on Mac? (Y/N)" -n 1 -r
+echo
+
+forge inspect "${CONTRACT_PATH}" abi > "./abi.json"
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+	# Generation
+	ditto ./abi.json "${OUTPUT_PATH}/abi.json"
+else
+	cp --parents ./abi.json "${OUTPUT_PATH}/abi.json"
+fi
+
+echo "ABI written to ${OUTPUT_PATH}/abi.json"
+
 
 
 
