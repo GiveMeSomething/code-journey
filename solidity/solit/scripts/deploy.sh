@@ -9,7 +9,7 @@ then
 	exit 1
 else
 	echo "forge found"
-	echo ""
+	echo
 fi
 
 POSITIONAL_ARGS=()
