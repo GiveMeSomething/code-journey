@@ -80,6 +80,7 @@ forge create \
 	--rpc-url "${RPC_URL}" \
 	--private-key ${PRIVATE_KEY} \
 	--root "${CONTRACT_PATH_PATHNAME}" \
+	--use 0.8.26 \
 	"${CONTRACT_PATH_FILENAME}" \
 	--constructor-args $REPLY
 
