@@ -62,15 +62,13 @@ fi
 echo "Contract path: ${CONTRACT_PATH}"
 echo
 
-# Confirmation
+# Con
 read -p "Deploy? (Y/N)" -n 1 -r
-echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 	echo "Contract deployment denied. Aborting..."
 	exit 1
 fi
 
-# Deploy
 forge create --rpc-url "${RPC_URL}" --private-key "${PRIVATE_KEY}" "${CONTRACT_PATH}"
 
 
