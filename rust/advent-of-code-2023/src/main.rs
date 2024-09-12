@@ -1,3 +1,4 @@
+use solutions::five;
 use solutions::{four, one, six, three, two};
 
 mod solutions;
@@ -7,8 +8,8 @@ fn main() {
     // exec_two();
     // exec_three();
     // exec_four();
-
-    exec_six();
+    exec_five();
+    // exec_six();
 }
 
 #[allow(dead_code)]
@@ -56,6 +57,20 @@ fn exec_four() {
 
     println!("The point sum of all cards: {}", cards_point_sum);
     println!("Total card after scratching is: {}", card_count);
+}
+
+#[allow(dead_code)]
+fn exec_five() {
+    let (seeds, maps) = five::solution::read_maps_from_file();
+
+    let min_location_seed = five::solution::min_location_seed(&seeds, &maps);
+    let min_location_seed_range = five::solution::min_location_seeds_range(&seeds, &maps);
+
+    println!("Minimum location of a seed is {}", min_location_seed);
+    println!(
+        "Minimum location of all seed ranges is {}",
+        min_location_seed_range
+    );
 }
 
 #[allow(dead_code)]
