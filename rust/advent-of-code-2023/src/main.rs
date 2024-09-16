@@ -1,4 +1,4 @@
-use solutions::{four, one, six, three, two};
+use solutions::{four, one, seven, six, three, two};
 
 mod solutions;
 
@@ -8,7 +8,8 @@ fn main() {
     // exec_three();
     // exec_four();
 
-    exec_six();
+    // exec_six();
+    exec_seven();
 }
 
 #[allow(dead_code)]
@@ -67,4 +68,8 @@ fn exec_six() {
 
     println!("Winning way count: {}", win_ways);
     println!("Winning way of a single race is {}", win_way_single);
+}
+
+fn exec_seven() {
+    seven::read_hands_from_file();
 }
