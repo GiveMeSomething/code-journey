@@ -4,7 +4,7 @@ use std::fmt::Debug;
 
 use super::btree::BTree;
 
-struct MinHeap {
+pub struct MinHeap {
     pub array: Vec<isize>,
 }
 
@@ -34,6 +34,31 @@ impl MinHeap {
         let left = BTree::left(root);
         let right = BTree::right(root);
         let limit = self.array.len();
+
+        // Skip running out-of-bound indes
+        if root >= limit {
+            return;
+        }
+
+        let mut min_index = root;
+        if left < limit && self.array[root] > self.array[min_index] {
+            min_index = left;
+        }
+        if right < limit && self.array[root] > self.array[min_index] {
+            min_index = right;
+        }
+
+        // Swap root with min_index
+        if min_index != root {
+            (self.array[root], self.array[min_index]) = (self.array[min_index], self.array[root]);
+            self.heapify(min_index);
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn limit_heapify(&mut self, root: usize, limit: usize) {
+        let left = BTree::left(root);
+        let right = BTree::right(root);
 
         // Skip running out-of-bound indes
         if root >= limit {
