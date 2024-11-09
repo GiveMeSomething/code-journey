@@ -1,2 +1,3 @@
 pub mod btree;
-pub mod heap;
+pub mod max_heap;
+pub mod min_heap;
