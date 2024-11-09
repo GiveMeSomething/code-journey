@@ -1,7 +1,7 @@
 use super::max_heap::MaxHeap;
 
 // This will sort ascendingly
-pub fn heap_sort(input: &mut Vec<isize>) {
+pub fn heap_sort(input: &Vec<isize>) -> Vec<isize> {
     let mut max_heap = MaxHeap::new(input);
     println!("Max heap: {:?}", max_heap);
 
@@ -13,6 +13,8 @@ pub fn heap_sort(input: &mut Vec<isize>) {
 
         max_heap.limit_heapify(0, limit - i);
     }
+
+    return max_heap.array;
 }
 
 #[cfg(test)]
@@ -31,11 +33,11 @@ mod test {
 
         for i in 0..test_cases.len() {
             let test_case = test_cases.get_mut(i).expect("invalid index");
-            heap_sort(test_case);
+            let result = heap_sort(test_case);
 
             // Check
-            for j in 1..test_case.len() {
-                assert!(test_case[j] >= test_case[j - 1]);
+            for j in 1..result.len() {
+                assert!(result[j] > result[j - 1]);
             }
         }
     }
