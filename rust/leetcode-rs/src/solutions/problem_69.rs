@@ -4,7 +4,6 @@ pub fn my_sqrt(x: i32) -> i32 {
 }
 
 pub fn recursive_my_sqrt(x: i32, start: usize, end: usize) -> i32 {
-    println!("start = {}, end = {}, value = {}", start, end, end - start);
     // Resolve 2 elements case
     if end - start == 1 {
         if end * end <= x as usize {
