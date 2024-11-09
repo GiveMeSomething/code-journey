@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use super::btree::BTree;
 
-struct MaxHeap {
+pub struct MaxHeap {
     pub array: Vec<isize>,
 }
 
@@ -43,6 +43,30 @@ impl MaxHeap {
 
         let mut max = root;
         let limit = self.array.len() - 1;
+        if left < limit && self.array[left] > self.array[max] {
+            max = left;
+        }
+        if right < limit && self.array[right] > self.array[max] {
+            max = right;
+        }
+
+        if max != root {
+            (self.array[max], self.array[root]) = (self.array[root], self.array[max]);
+            self.heapify(max);
+        }
+    }
+
+    #[allow(dead_code)]
+    pub fn limit_heapify(&mut self, root: usize, limit: usize) {
+        let left = BTree::left(root);
+        let right = BTree::right(root);
+
+        // Skip running out-of-bound indes
+        if root >= limit {
+            return;
+        }
+
+        let mut max = root;
         if left < limit && self.array[left] > self.array[max] {
             max = left;
         }
