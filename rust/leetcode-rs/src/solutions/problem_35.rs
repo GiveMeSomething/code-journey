@@ -15,8 +15,6 @@ pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
         }
     }
 
-    println!("{} {}", start, end);
-
     if target <= nums[end] {
         return end as i32;
     }
@@ -44,7 +42,6 @@ mod tests {
 
         let mut i = 0;
         for (input, target, expected) in test_cases {
-            println!("Test case {:?} {} {}", input, target, expected);
             i = i + 1;
             let actual = search_insert(input, target);
             assert_eq!(actual, expected);

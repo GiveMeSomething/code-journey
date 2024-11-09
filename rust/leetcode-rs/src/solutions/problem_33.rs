@@ -4,8 +4,6 @@ pub fn search(nums: Vec<i32>, target: i32) -> i32 {
 }
 
 fn recursive_search(nums: &Vec<i32>, target: i32, start: usize, end: usize) -> i32 {
-    println!("start = {}, end = {}", start, end);
-
     // Resolve two element problem
     if end - start == 1 {
         if nums[start] == target {
