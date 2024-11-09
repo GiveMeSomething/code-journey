@@ -1,5 +1,55 @@
+use crate::dsa::btree::BTree;
+
 pub fn find_relative_ranks(score: Vec<i32>) -> Vec<String> {
-    vec![]
+    // Build heap from input array
+    let mut input: Vec<(i32, usize)> = vec![];
+    for i in 0..score.len() {
+        input.push((score[i], i));
+    }
+
+    heap_sort(&mut input);
+
+    let mut result: Vec<String> = vec![String::from(""); score.len()];
+    for i in 0..score.len() {
+        let (_, index) = input[i];
+        match i {
+            0 => result[index] = "Gold Medal".to_string(),
+            1 => result[index] = "Silver Medal".to_string(),
+            2 => result[index] = "Bronze Medal".to_string(),
+            value => result[index] = format!("{}", value + 1),
+        };
+    }
+    result
+}
+
+pub fn heapify(input: &mut Vec<(i32, usize)>, root: usize, limit: usize) {
+    let left = BTree::left(root);
+    let right = BTree::right(root);
+
+    let mut max = root;
+    if left < limit && input[left].0 < input[max].0 {
+        max = left;
+    }
+    if right < limit && input[right].0 < input[max].0 {
+        max = right;
+    }
+
+    if max != root {
+        (input[max], input[root]) = (input[root], input[max]);
+        heapify(input, max, limit);
+    }
+}
+
+pub fn heap_sort(input: &mut Vec<(i32, usize)>) {
+    let limit = input.len();
+    for i in 0..limit {
+        heapify(input, limit - i - 1, limit);
+    }
+
+    for i in 0..limit {
+        (input[0], input[limit - i - 1]) = (input[limit - i - 1], input[0]);
+        heapify(input, 0, limit - i - 1);
+    }
 }
 
 #[cfg(test)]
