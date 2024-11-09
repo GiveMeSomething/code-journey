@@ -76,7 +76,7 @@ impl MaxHeap {
 
         if max != root {
             (self.array[max], self.array[root]) = (self.array[root], self.array[max]);
-            self.heapify(max);
+            self.limit_heapify(max, limit);
         }
     }
 }
