@@ -29,7 +29,7 @@ impl MaxHeap {
 
         // Move the node up until parent no longer > value
         // This ensure that the root at any index always greater than their child
-        while i > 0 && self.array[i] < self.array[BTree::parent(i)] {
+        while i > 0 && self.array[i] > self.array[BTree::parent(i)] {
             (self.array[i], self.array[BTree::parent(i)]) =
                 (self.array[BTree::parent(i)], self.array[i]);
             i = BTree::parent(i);
@@ -53,6 +53,35 @@ impl MaxHeap {
         if max != root {
             (self.array[max], self.array[root]) = (self.array[root], self.array[max]);
             self.heapify(max);
+        }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::dsa::btree::BTree;
+
+    use super::MaxHeap;
+
+    #[test]
+    fn test_max_heap_property() {
+        let test_cases: Vec<Vec<isize>> = vec![
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            vec![10, 2, 3, 4, 5, 6, 7, 8, 9, 1],
+            vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 10],
+            vec![1, 2, 3, 9, 5, 6, 7, 8, 10, 4],
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 10, 9],
+        ];
+
+        for test_case in test_cases {
+            let max_heap = MaxHeap::new(&test_case);
+            for i in 0..max_heap.array.len() {
+                if i == 0 {
+                    continue;
+                }
+
+                assert!(max_heap.array[i] < max_heap.array[BTree::parent(i)]);
+            }
         }
     }
 }
