@@ -35,27 +35,19 @@ pub fn heapify(input: &mut Vec<isize>, root: usize, limit: usize) {
 }
 
 pub fn inplace_heap_sort(input: &mut Vec<isize>) {
-    println!("Input {:?}", input);
-
     // Build max_heap: Take O(n)
     let limit = input.len() - 1;
     for i in 0..=limit {
         heapify(input, limit - i, limit + 1);
     }
 
-    println!("Max heap {:?}", input);
-
     // Normal heap_sort
     // Traverse through all elements: O(n)
     for i in 0..=limit {
         (input[0], input[limit - i]) = (input[limit - i], input[0]);
 
-        println!("{:?}", input);
-
         // This take O(logn)
         heapify(input, 0, limit - i);
-        println!("{:?}", input);
-        println!();
     }
 }
 
