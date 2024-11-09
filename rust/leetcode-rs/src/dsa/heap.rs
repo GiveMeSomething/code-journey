@@ -20,13 +20,9 @@ impl MinHeap {
     }
 
     pub fn insert(&mut self, value: isize) {
+        self.array.push(value);
         let mut i = self.array.len() - 1;
         while i > 0 && self.array[BTree::parent(i)] > self.array[i] {
-            println!(
-                "Parent {}, Current {}",
-                self.array[BTree::parent(i)],
-                self.array[i]
-            );
             (self.array[BTree::parent(i)], self.array[i]) =
                 (self.array[i], self.array[BTree::parent(i)]);
             i = BTree::parent(i);
