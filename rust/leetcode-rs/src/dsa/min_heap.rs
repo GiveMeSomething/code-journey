@@ -76,7 +76,7 @@ impl MinHeap {
         // Swap root with min_index
         if min_index != root {
             (self.array[root], self.array[min_index]) = (self.array[min_index], self.array[root]);
-            self.heapify(min_index);
+            self.limit_heapify(min_index, limit);
         }
     }
 }
