@@ -1,3 +1,5 @@
+use std::collections::BinaryHeap;
+
 use crate::dsa::max_heap::MaxHeap;
 
 pub fn last_stone_weight(stones: Vec<i32>) -> i32 {
@@ -28,6 +30,32 @@ pub fn last_stone_weight(stones: Vec<i32>) -> i32 {
     }
 
     return 0;
+}
+
+pub fn last_stone_weight_collection(stones: Vec<i32>) -> i32 {
+    if stones.len() == 1 {
+        return stones[0];
+    }
+
+    if stones.len() == 2 {
+        return (stones[0] - stones[1]).abs();
+    }
+
+    let mut max_heap = BinaryHeap::from(stones);
+    while max_heap.len() > 1 {
+        let new_stone = (max_heap.pop().expect("invalid heap len")
+            - max_heap.pop().expect("invalid heap len"))
+        .abs();
+        if new_stone == 0 {
+            continue;
+        }
+        max_heap.push(new_stone);
+    }
+    if max_heap.len() == 0 {
+        return 0;
+    }
+
+    return max_heap.pop().unwrap();
 }
 
 #[cfg(test)]
