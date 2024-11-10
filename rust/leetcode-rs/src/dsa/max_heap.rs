@@ -39,7 +39,7 @@ where
     pub fn insert(&mut self, value: T) {
         self.array.push(value);
 
-        let mut i = self.array.len();
+        let mut i = self.array.len() - 1;
         while i > 0 && self.array[BTree::parent(i)] < self.array[i] {
             let parent = BTree::parent(i);
             (self.array[parent], self.array[i]) = (self.array[i], self.array[parent]);
@@ -59,10 +59,10 @@ where
         let left = BTree::left(root);
         let right = BTree::right(root);
         let mut max = root;
-        if left < limit && self.array[root] < self.array[left] {
+        if left < limit && self.array[max] < self.array[left] {
             max = left;
         }
-        if right < limit && self.array[root] < self.array[right] {
+        if right < limit && self.array[max] < self.array[right] {
             max = right;
         }
         if max != root {
