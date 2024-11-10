@@ -51,7 +51,7 @@ where
         let last = self.array.len() - 1;
         (self.array[0], self.array[last]) = (self.array[last], self.array[0]);
         let max = self.array.pop().expect("array is empty");
-        self.heapify(0, last + 1);
+        self.heapify(0, last);
         return max;
     }
 
