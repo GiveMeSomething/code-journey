@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use super::btree::BTree;
 
 pub struct MaxHeap {
-    pub array: Vec<isize>,
+    pub array: Vec<i32>,
 }
 
 impl Debug for MaxHeap {
@@ -12,71 +12,53 @@ impl Debug for MaxHeap {
     }
 }
 
-impl MaxHeap {
-    pub fn new(input: &Vec<isize>) -> MaxHeap {
-        let mut max_heap = MaxHeap { array: vec![] };
-
-        for value in input {
-            max_heap.insert(*value);
+impl From<Vec<i32>> for MaxHeap {
+    fn from(values: Vec<i32>) -> Self {
+        let mut max_heap = MaxHeap::new();
+        for value in values {
+            max_heap.insert(value);
         }
         return max_heap;
     }
+}
 
-    pub fn insert(&mut self, value: isize) {
+impl MaxHeap {
+    pub fn new() -> MaxHeap {
+        MaxHeap { array: vec![] }
+    }
+
+    pub fn insert(&mut self, value: i32) {
         self.array.push(value);
 
-        let mut i = self.array.len() - 1;
-
-        // Move the node up until parent no longer > value
-        // This ensure that the root at any index always greater than their child
-        while i > 0 && self.array[i] > self.array[BTree::parent(i)] {
-            (self.array[i], self.array[BTree::parent(i)]) =
-                (self.array[BTree::parent(i)], self.array[i]);
-            i = BTree::parent(i);
+        let mut i = self.array.len();
+        while i > 0 && self.array[BTree::parent(i)] < self.array[i] {
+            let parent = BTree::parent(i);
+            (self.array[parent], self.array[i]) = (self.array[i], self.array[parent]);
+            i = parent;
         }
     }
 
-    #[allow(dead_code)]
-    pub fn heapify(&mut self, root: usize) {
-        let left = BTree::left(root);
-        let right = BTree::right(root);
-
-        let mut max = root;
-        let limit = self.array.len() - 1;
-        if left < limit && self.array[left] > self.array[max] {
-            max = left;
-        }
-        if right < limit && self.array[right] > self.array[max] {
-            max = right;
-        }
-
-        if max != root {
-            (self.array[max], self.array[root]) = (self.array[root], self.array[max]);
-            self.heapify(max);
-        }
+    pub fn pop_max(&mut self) -> i32 {
+        let last = self.array.len() - 1;
+        (self.array[0], self.array[last]) = (self.array[last], self.array[0]);
+        let max = self.array.pop().expect("array is empty");
+        self.heapify(0, last + 1);
+        return max;
     }
 
-    #[allow(dead_code)]
-    pub fn limit_heapify(&mut self, root: usize, limit: usize) {
+    pub fn heapify(&mut self, root: usize, limit: usize) {
         let left = BTree::left(root);
         let right = BTree::right(root);
-
-        // Skip running out-of-bound indes
-        if root >= limit {
-            return;
-        }
-
         let mut max = root;
-        if left < limit && self.array[left] > self.array[max] {
+        if left < limit && self.array[root] < self.array[left] {
             max = left;
         }
-        if right < limit && self.array[right] > self.array[max] {
+        if right < limit && self.array[root] < self.array[right] {
             max = right;
         }
-
         if max != root {
-            (self.array[max], self.array[root]) = (self.array[root], self.array[max]);
-            self.limit_heapify(max, limit);
+            (self.array[root], self.array[max]) = (self.array[max], self.array[root]);
+            self.heapify(max, limit);
         }
     }
 }
