@@ -60,6 +60,8 @@ pub fn last_stone_weight_collection(stones: Vec<i32>) -> i32 {
 
 #[cfg(test)]
 mod test {
+    use crate::solutions::problem_1046::last_stone_weight_collection;
+
     use super::last_stone_weight;
 
     #[test]
@@ -68,10 +70,26 @@ mod test {
             (vec![2, 7, 4, 1, 8, 1], 1),
             (vec![1], 1),
             (vec![1, 100], 99),
+            (vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 999], 954),
         ];
 
         for (input, expected) in test_cases {
             let actual = last_stone_weight(input);
+            assert_eq!(actual, expected);
+        }
+    }
+
+    #[test]
+    fn test_last_stone_weight_collection() {
+        let test_cases: Vec<(Vec<i32>, i32)> = vec![
+            (vec![2, 7, 4, 1, 8, 1], 1),
+            (vec![1], 1),
+            (vec![1, 100], 99),
+            (vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 999], 954),
+        ];
+
+        for (input, expected) in test_cases {
+            let actual = last_stone_weight_collection(input);
             assert_eq!(actual, expected);
         }
     }
