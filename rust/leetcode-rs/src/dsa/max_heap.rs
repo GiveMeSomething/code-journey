@@ -2,19 +2,25 @@ use std::fmt::Debug;
 
 use super::btree::BTree;
 
-pub struct MaxHeap {
-    pub array: Vec<i32>,
+pub struct MaxHeap<T: PartialOrd + Clone> {
+    pub array: Vec<T>,
 }
 
-impl Debug for MaxHeap {
+impl<T> Debug for MaxHeap<T>
+where
+    T: PartialOrd + Debug + Copy,
+{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}", self.array)
     }
 }
 
-impl From<Vec<i32>> for MaxHeap {
-    fn from(values: Vec<i32>) -> Self {
-        let mut max_heap = MaxHeap::new();
+impl<T> From<Vec<T>> for MaxHeap<T>
+where
+    T: PartialOrd + Copy,
+{
+    fn from(values: Vec<T>) -> Self {
+        let mut max_heap: MaxHeap<T> = MaxHeap::new();
         for value in values {
             max_heap.insert(value);
         }
@@ -22,12 +28,15 @@ impl From<Vec<i32>> for MaxHeap {
     }
 }
 
-impl MaxHeap {
-    pub fn new() -> MaxHeap {
+impl<T> MaxHeap<T>
+where
+    T: PartialOrd + Copy,
+{
+    pub fn new() -> MaxHeap<T> {
         MaxHeap { array: vec![] }
     }
 
-    pub fn insert(&mut self, value: i32) {
+    pub fn insert(&mut self, value: T) {
         self.array.push(value);
 
         let mut i = self.array.len();
@@ -38,7 +47,7 @@ impl MaxHeap {
         }
     }
 
-    pub fn pop_max(&mut self) -> i32 {
+    pub fn pop_max(&mut self) -> T {
         let last = self.array.len() - 1;
         (self.array[0], self.array[last]) = (self.array[last], self.array[0]);
         let max = self.array.pop().expect("array is empty");
@@ -80,7 +89,7 @@ mod test {
         ];
 
         for test_case in test_cases {
-            let max_heap = MaxHeap::new(&test_case);
+            let max_heap = MaxHeap::from(test_case);
             for i in 0..max_heap.array.len() {
                 if i == 0 {
                     continue;
