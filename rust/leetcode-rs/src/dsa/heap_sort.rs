@@ -2,7 +2,7 @@ use super::{btree::BTree, max_heap::MaxHeap};
 
 // This will sort ascendingly
 pub fn heap_sort(input: &Vec<isize>) -> Vec<isize> {
-    let mut max_heap = MaxHeap::new(input);
+    let mut max_heap = MaxHeap::from(input.to_owned());
 
     let limit = max_heap.array.len() - 1;
     for i in 0..=limit {
@@ -10,7 +10,7 @@ pub fn heap_sort(input: &Vec<isize>) -> Vec<isize> {
         (max_heap.array[0], max_heap.array[limit - i]) =
             (max_heap.array[limit - i], max_heap.array[0]);
 
-        max_heap.limit_heapify(0, limit - i);
+        max_heap.heapify(0, limit - i);
     }
 
     return max_heap.array;
