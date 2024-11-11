@@ -1,6 +1,7 @@
-use std::cmp::min;
-
-use crate::dsa::btree::BTree;
+use std::{
+    cmp::{min, Reverse},
+    collections::{BinaryHeap, HashSet},
+};
 
 pub fn nth_ugly_number(n: i32) -> i32 {
     // Init simple heap with enough value to avoid index-out-of-bound
@@ -30,19 +31,38 @@ pub fn nth_ugly_number(n: i32) -> i32 {
     return *result.last().unwrap();
 }
 
-pub fn insert(nums: &mut Vec<i32>, value: i32) {
-    nums.push(value);
+pub fn nth_ugly_number_heap(n: i32) -> i32 {
+    let primes: Vec<i32> = vec![2, 3, 5];
 
-    let mut i = nums.len() - 1;
-    while i > 0 && nums[i] > nums[BTree::parent(i)] {
-        (nums[i], nums[BTree::parent(i)]) = (nums[BTree::parent(i)], nums[i]);
-        i = BTree::parent(i);
+    // Simple min_heap
+    let mut min_heap: BinaryHeap<Reverse<i32>> = BinaryHeap::new();
+    let mut visited: HashSet<i32> = HashSet::new();
+    min_heap.push(Reverse(1));
+
+    let mut current = 0;
+    for _ in 0..n {
+        current = min_heap.pop().unwrap().0;
+        for j in 0..primes.len() {
+            let value = match current.checked_mul(primes[j]) {
+                Some(value) => value,
+                None => continue,
+            };
+            if !visited.contains(&value) {
+                min_heap.push(Reverse(value));
+            }
+
+            visited.insert(value);
+        }
     }
+
+    return current;
 }
 
 #[cfg(test)]
 mod test {
     use std::vec;
+
+    use crate::solutions::problem_264::nth_ugly_number_heap;
 
     use super::nth_ugly_number;
 
@@ -52,6 +72,16 @@ mod test {
 
         for (n, expected) in test_cases {
             let actual = nth_ugly_number(n);
+            assert_eq!(actual, expected);
+        }
+    }
+
+    #[test]
+    fn test_nth_ugly_number_heap() {
+        let test_cases: Vec<(i32, i32)> = vec![(10, 12), (1, 1), (1690, 2123366400)];
+
+        for (n, expected) in test_cases {
+            let actual = nth_ugly_number_heap(n);
             assert_eq!(actual, expected);
         }
     }
