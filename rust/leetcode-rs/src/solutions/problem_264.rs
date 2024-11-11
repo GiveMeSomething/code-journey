@@ -3,6 +3,7 @@ use std::{
     collections::{BinaryHeap, HashSet},
 };
 
+// DP
 pub fn nth_ugly_number(n: i32) -> i32 {
     // Init simple heap with enough value to avoid index-out-of-bound
     let mut result: Vec<i32> = vec![1];
@@ -31,6 +32,7 @@ pub fn nth_ugly_number(n: i32) -> i32 {
     return *result.last().unwrap();
 }
 
+// Using collections, this solution run with huge overhead of creating a min_heap + a hash set
 pub fn nth_ugly_number_heap(n: i32) -> i32 {
     let primes: Vec<i32> = vec![2, 3, 5];
 
