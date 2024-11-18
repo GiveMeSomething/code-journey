@@ -3,7 +3,7 @@ use std::{
     vec,
 };
 
-use crate::dsa::btree::BTree;
+use crate::dsa::binary_tree::btree::BTree;
 
 pub fn find_relative_ranks(score: Vec<i32>) -> Vec<String> {
     // Build heap from input array

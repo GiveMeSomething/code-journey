@@ -1,4 +1,6 @@
-use super::{btree::BTree, max_heap::MaxHeap};
+use crate::dsa::binary_tree::btree::BTree;
+
+use super::max_heap::MaxHeap;
 
 // This will sort ascendingly
 pub fn heap_sort(input: &Vec<isize>) -> Vec<isize> {

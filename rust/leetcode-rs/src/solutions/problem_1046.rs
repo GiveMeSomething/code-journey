@@ -1,6 +1,6 @@
 use std::collections::BinaryHeap;
 
-use crate::dsa::max_heap::MaxHeap;
+use crate::dsa::heap::max_heap::MaxHeap;
 
 pub fn last_stone_weight(stones: Vec<i32>) -> i32 {
     if stones.len() == 1 {

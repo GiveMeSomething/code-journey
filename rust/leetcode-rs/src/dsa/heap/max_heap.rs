@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 
-use super::btree::BTree;
+use crate::dsa::binary_tree::btree::BTree;
 
 pub struct MaxHeap<T: PartialOrd + Clone> {
     pub array: Vec<T>,
@@ -74,7 +74,7 @@ where
 
 #[cfg(test)]
 mod test {
-    use crate::dsa::btree::BTree;
+    use crate::dsa::binary_tree::btree::BTree;
 
     use super::MaxHeap;
 
