@@ -1,14 +1,36 @@
 use std::{
+    collections::HashMap,
     fs::File,
     io::{BufRead, BufReader},
 };
 
 #[allow(dead_code)]
 pub fn part_1() {
-    let (list_1, list_2) = read_id_list_from_file();
+    let (mut list_1, mut list_2) = read_id_list_from_file();
+
+    list_1.sort();
+    list_2.sort();
 
     let result_part_1 = sum_list_distance(&list_1, &list_2);
     println!("Day 1 Part 1: {}", result_part_1);
+}
+
+#[allow(dead_code)]
+pub fn part_2() {
+    let (list_1, list_2) = read_id_list_from_file();
+
+    let mut occurence_map: HashMap<i32, i32> = HashMap::new();
+    for value in list_2 {
+        let count = occurence_map.entry(value).or_insert(0);
+        *count += 1;
+    }
+
+    let mut sum = 0;
+    for value in list_1 {
+        sum += value * *occurence_map.entry(value).or_default();
+    }
+
+    println!("Day 1 Part 2: {}", sum);
 }
 
 fn sum_list_distance(list_1: &Vec<i32>, list_2: &Vec<i32>) -> i32 {
@@ -42,9 +64,6 @@ fn read_id_list_from_file() -> (Vec<i32>, Vec<i32>) {
         line_1.push(first_id);
         line_2.push(second_id);
     }
-
-    line_1.sort();
-    line_2.sort();
 
     (line_1, line_2)
 }
