@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 pub fn least_interval(tasks: Vec<char>, n: i32) -> i32 {
     let mut task_map: HashMap<char, i32> = HashMap::new();
     for task in tasks {
