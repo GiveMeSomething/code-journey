@@ -26,6 +26,33 @@ pub fn find_repeated_dna_sequences(s: String) -> Vec<String> {
         .collect::<Vec<String>>()
 }
 
+pub fn find_repeated_dna_sequences_v2(s: String) -> Vec<String> {
+    if s.len() < 10 {
+        return vec![];
+    }
+
+    let mut seq_counter: HashMap<String, i32> = HashMap::new();
+
+    let mut result: Vec<String> = vec![];
+    let mut start = 0;
+    let mut end = 9;
+
+    while end < s.len() {
+        let current_seq = String::from(&s[start..end + 1]);
+        let count = seq_counter.entry(current_seq).or_insert(0);
+        *count += 1;
+
+        if *count == 2 {
+            result.push(String::from(&s[start..end + 1]));
+        }
+
+        start += 1;
+        end += 1;
+    }
+
+    result
+}
+
 #[cfg(test)]
 mod test {
     use std::collections::HashSet;
