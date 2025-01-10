@@ -10,6 +10,7 @@ pub mod problem_209;
 pub mod problem_215;
 pub mod problem_228;
 pub mod problem_229;
+pub mod problem_242;
 pub mod problem_26;
 pub mod problem_263;
 pub mod problem_264;
