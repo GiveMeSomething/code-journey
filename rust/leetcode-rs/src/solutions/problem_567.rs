@@ -9,14 +9,12 @@ pub fn check_inclusion(s1: String, s2: String) -> bool {
 
     let mut start = 0;
     while start + target_len <= s2.len() {
-        current_char_map[(s2.chars().nth(start + target_len - 1).unwrap() as usize) - 97] += 1;
-        println!("{:?}", current_char_map);
-
+        current_char_map[char_at(s2.to_string(), start + target_len - 1) as usize - 97] += 1;
         if is_permutation_v2(&current_char_map, &char_map) {
             return true;
         }
 
-        current_char_map[(s2.chars().nth(start).unwrap() as usize) - 97] -= 1;
+        current_char_map[char_at(s2.to_string(), start) as usize - 97] -= 1;
         start += 1;
     }
     false
@@ -53,6 +51,10 @@ pub fn to_char_map(s1: String) -> [i32; 26] {
         char_map[(character as usize) - 97] += 1;
     }
     char_map
+}
+
+pub fn char_at(input: String, index: usize) -> char {
+    return input[index..index + 1].chars().nth(0).unwrap();
 }
 
 #[cfg(test)]
