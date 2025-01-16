@@ -56,7 +56,7 @@ mod test {
 
     #[test]
     fn test_count_substrings() {
-        let test_cases: Vec<(&str, i32)> = vec![("abc", 3), ("aaa", 6), ("aaaaa",)];
+        let test_cases: Vec<(&str, i32)> = vec![("abc", 3), ("aaa", 6)];
         for (s, expected) in test_cases {
             let result = count_substrings(String::from(s));
             assert_eq!(result, expected);
