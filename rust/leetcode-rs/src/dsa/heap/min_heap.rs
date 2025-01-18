@@ -2,7 +2,7 @@
 
 use std::fmt::Debug;
 
-use super::btree::BTree;
+use crate::dsa::binary_tree::btree::BTree;
 
 pub struct MinHeap {
     pub array: Vec<isize>,
@@ -89,7 +89,7 @@ impl Debug for MinHeap {
 
 #[cfg(test)]
 mod test {
-    use crate::dsa::btree::BTree;
+    use crate::dsa::binary_tree::btree::BTree;
 
     use super::MinHeap;
 
