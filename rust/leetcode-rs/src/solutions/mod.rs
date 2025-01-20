@@ -43,5 +43,6 @@ pub mod problem_567;
 pub mod problem_6;
 pub mod problem_621;
 pub mod problem_647;
+pub mod problem_658;
 pub mod problem_69;
 pub mod problem_867;
