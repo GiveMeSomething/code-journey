@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 // Base solution
 // pub fn find_anagrams(s: String, p: String) -> Vec<i32> {
 //     if p.len() > s.len() {
@@ -47,6 +45,18 @@ use std::collections::HashMap;
 //     result
 // }
 
+// fn is_anagram(m1: &HashMap<String, i32>, m2: &HashMap<String, i32>) -> bool {
+//     for (key, value) in m2 {
+//         if !m1.contains_key(key) {
+//             return false;
+//         }
+//         if *m1.get(key).unwrap() != *value {
+//             return false;
+//         }
+//     }
+//     true
+// }
+
 // Faster way, we use an array of length 26 to count character instead of HashMap to avoid computation overhead
 pub fn find_anagrams(s: String, p: String) -> Vec<i32> {
     if p.len() > s.len() {
@@ -87,18 +97,6 @@ pub fn find_anagrams(s: String, p: String) -> Vec<i32> {
 fn is_anagram_chars(m1: &[i32; 26], m2: &[i32; 26]) -> bool {
     for i in 0..m1.len() {
         if m1[i] != m2[i] {
-            return false;
-        }
-    }
-    true
-}
-
-fn is_anagram(m1: &HashMap<String, i32>, m2: &HashMap<String, i32>) -> bool {
-    for (key, value) in m2 {
-        if !m1.contains_key(key) {
-            return false;
-        }
-        if *m1.get(key).unwrap() != *value {
             return false;
         }
     }
