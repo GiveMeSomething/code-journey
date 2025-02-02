@@ -1,0 +1,63 @@
+__pycache__/
+*.pyc
+*.pyd
+*.egg
+dist/
+build/
+.mypy_cache/
+.dmypy.json
+venv/
+.venv/
+env/
+.env
+*.swp
+*~
+# Byte-compiled Python files
+__pycache__/*
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg
+
+# PyInstaller
+*.spec
+
+# Testing
+.coverage
+.pytest_cache
+
+# IDE specific
+.idea/
+.project
+*.DS_Store
+__pycache__
+Thumbs.db
+
+# General
+logs/
+*.log
+*.tmp
+*.bak
+*.gz
+*.tar
+*.tar.gz
+*.zip
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Environment variables files
+.env
+
+# Sensitive data - NEVER commit these!
+config.ini
+credentials.json
+my_secret_key.txt
+
+# Add any other files or directories you want to ignore here.
