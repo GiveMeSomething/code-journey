@@ -26,9 +26,6 @@ pub fn part_2() -> i32 {
     for report in reports {
         if is_safe_threshold_report(&report, true) || is_safe_threshold_report(&report, false) {
             count += 1;
-        } else {
-            println!("UNSAFE REPORT {:?}", report);
-        }
     }
 
     count
