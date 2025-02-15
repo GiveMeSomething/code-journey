@@ -1,7 +1,9 @@
 from one import one
 
+
 def main():
-  print("Hello World")
-  one.calibration_value_number()
+    one.calibration_value_digit()
+    one.calibration_value_number_str()
+
 
 main()
