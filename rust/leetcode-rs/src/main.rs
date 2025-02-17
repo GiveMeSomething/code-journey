@@ -1,20 +1,15 @@
-use leetcode::solutions::problem_15::three_sum;
+use leetcode::solutions::problem_1438::longest_subarray;
 
 fn main() {
-    let test_cases: Vec<(Vec<i32>, Vec<Vec<i32>>)> = vec![(
-        vec![-1, 0, 1, 2, -1, -4],
-        vec![vec![-1, -1, 2], vec![-1, 0, 1]],
-    )];
+    let test_cases: Vec<(Vec<i32>, i32, i32)> = vec![
+        (vec![8, 2, 4, 7], 4, 2),
+        (vec![10, 1, 2, 4, 7, 2], 5, 4),
+        (vec![4, 2, 2, 2, 4, 4, 2, 2], 0, 3),
+    ];
 
-    for (nums, expected) in test_cases {
-        let result = three_sum(nums);
-
-        assert_eq!(result.len(), expected.len());
-
-        for i in 0..result.len() {
-            for j in 0..result[i].len() {
-                assert_eq!(result[i][j], expected[i][j]);
-            }
-        }
+    for (nums, limit, expected) in test_cases {
+        println!("TEST CASE {:?}", nums);
+        let result = longest_subarray(nums, limit);
+        assert_eq!(result, expected);
     }
 }
