@@ -1,0 +1,17 @@
+{
+    "name": "playground",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "npx ts-node index.ts"
+    },
+    "author": "Minh Hoang",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^20.5.7",
+        "ts-node": "^10.9.1",
+        "tslib": "^2.6.2",
+        "typescript": "^5.2.2"
+    }
+}
