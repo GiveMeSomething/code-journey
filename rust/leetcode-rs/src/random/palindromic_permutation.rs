@@ -26,7 +26,7 @@ fn recur_palindromize_permutation(
         return;
     }
 
-    let substrings = substring(String::from(&inputs[index]));
+    let substrings = substring(&inputs[index]);
     for substring in substrings {
         recur_palindromize_permutation(
             inputs,
@@ -37,7 +37,7 @@ fn recur_palindromize_permutation(
     }
 }
 
-fn substring(input: String) -> Vec<String> {
+fn substring(input: &str) -> Vec<String> {
     let mut result: HashSet<String> = HashSet::new();
     for i in 0..input.len() {
         for j in i..input.len() {
@@ -49,6 +49,10 @@ fn substring(input: String) -> Vec<String> {
 }
 
 fn is_palindrome(input: &str) -> bool {
+    if input.len() == 1 {
+        return true;
+    }
+
     let chars: Vec<char> = input.chars().collect();
     let mut start = 0;
     let mut end = input.len() - 1;
@@ -103,7 +107,7 @@ mod test {
         ];
 
         for (input, expected) in test_cases {
-            let result = substring(String::from(input));
+            let result = substring(input);
             let expected_set: HashSet<String> =
                 HashSet::from_iter(expected.iter().map(|v| String::from(*v)));
 
