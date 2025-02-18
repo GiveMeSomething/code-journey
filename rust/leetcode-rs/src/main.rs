@@ -1,14 +1,7 @@
-use leetcode::random::palindromic_permutation::palindromic_permutation;
+use leetcode::solutions::problem_394::decode_string;
 
 fn main() {
-    let test_cases: Vec<(Vec<&str>, usize)> = vec![
-        (vec!["cabc", "c", "ba"], 3),
-        // (vec!["aa", "b", "aa"], 2),
-        // (vec!["ab", "c"], 0),
-    ];
+    let result = decode_string(String::from("2[abc]3[cd]ef"));
 
-    for (inputs, expected) in test_cases {
-        let result = palindromic_permutation(inputs.iter().map(|v| String::from(*v)).collect());
-        assert_eq!(result, expected);
-    }
+    println!("result {}", result);
 }
