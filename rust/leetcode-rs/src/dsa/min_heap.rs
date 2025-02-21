@@ -87,11 +87,23 @@ impl Debug for MinHeap {
     }
 }
 
+pub fn min_heapify<T: Ord + Copy>(arr: &mut Vec<T>) {
+    for i in 1..arr.len() {
+        let mut current = i;
+
+        // This take at most log2(n) swaps so the current index reach the top, with n = current index
+        while current > 0 && arr[current] < arr[(current - 1) / 2] {
+            (arr[current], arr[(current - 1) / 2]) = (arr[(current - 1) / 2], arr[current]);
+            current = (current - 1) / 2;
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::dsa::btree::BTree;
 
-    use super::MinHeap;
+    use super::{min_heapify, MinHeap};
 
     #[test]
     fn test_min_heap_property() {
@@ -113,6 +125,29 @@ mod test {
                 }
 
                 assert!(min_heap.array[i] >= min_heap.array[BTree::parent(i)]);
+            }
+        }
+    }
+
+    #[test]
+    fn test_min_heapify() {
+        let test_cases: Vec<Vec<isize>> = vec![
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            vec![10, 2, 3, 4, 5, 6, 7, 8, 9, 1],
+            vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 10],
+            vec![1, 2, 3, 9, 5, 6, 7, 8, 10, 4],
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 10, 9],
+        ];
+
+        for test_case in test_cases {
+            let mut temp = test_case.clone();
+            min_heapify(&mut temp);
+
+            assert_eq!(temp.len(), test_case.len());
+
+            // Every element must be greater than their parent
+            for i in 1..temp.len() {
+                assert!(temp[i] > temp[(i - 1) / 2]);
             }
         }
     }
