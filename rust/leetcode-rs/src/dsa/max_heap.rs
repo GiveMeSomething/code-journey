@@ -72,11 +72,22 @@ where
     }
 }
 
+// In-place max heapify
+pub fn max_heapify<T: Ord + Copy>(arr: &mut Vec<T>) {
+    for i in 1..arr.len() {
+        let mut current = i;
+        while current > 0 && arr[current] > arr[(current - 1) / 2] {
+            (arr[current], arr[(current - 1) / 2]) = (arr[(current - 1) / 2], arr[current]);
+            current = (current - 1) / 2;
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::dsa::btree::BTree;
 
-    use super::MaxHeap;
+    use super::{max_heapify, MaxHeap};
 
     #[test]
     fn test_max_heap_property() {
@@ -96,6 +107,33 @@ mod test {
                 }
 
                 assert!(max_heap.array[i] < max_heap.array[BTree::parent(i)]);
+            }
+        }
+    }
+
+    #[test]
+    fn test_max_heapify() {
+        let test_cases: Vec<Vec<isize>> = vec![
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            vec![10, 2, 3, 4, 5, 6, 7, 8, 9, 1],
+            vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 10],
+            vec![1, 2, 3, 9, 5, 6, 7, 8, 10, 4],
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 10, 9],
+        ];
+
+        for test_case in test_cases {
+            let mut temp = test_case.clone();
+            max_heapify(&mut temp);
+
+            println!("{:?}", temp);
+
+            for i in 1..temp.len() {
+                if i == 0 {
+                    continue;
+                }
+
+                // Every element must be smaller than their parent
+                assert!(temp[i] < temp[(i - 1) / 2]);
             }
         }
     }
