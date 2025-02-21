@@ -36,6 +36,7 @@ mod test {
         let test_cases: Vec<(i32, Vec<&str>)> = vec![
             (3, vec!["((()))", "(()())", "(())()", "()(())", "()()()"]),
             (1, vec!["()"]),
+            (2, vec!["()()", "(())"]),
         ];
 
         for (n, expected) in test_cases {
