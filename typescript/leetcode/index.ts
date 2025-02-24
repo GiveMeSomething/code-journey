@@ -55,9 +55,10 @@ import { main_72 } from "./solutions/72";
 import { main_73 } from "./solutions/73";
 import { main_740 } from "./solutions/740";
 import { main_746 } from "./solutions/746";
+import { testMinWindow } from "./solutions/76";
 import { main_80 } from "./solutions/80";
 import { main_88 } from "./solutions/88";
 import { main_896 } from "./solutions/896";
 import { main_931 } from "./solutions/931";
 
-main_1035();
+testMinWindow();
