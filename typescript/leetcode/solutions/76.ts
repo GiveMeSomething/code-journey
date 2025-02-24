@@ -1,4 +1,4 @@
-function minWindow(s: string, t: string): string {
+export function minWindow(s: string, t: string): string {
   if (s === t) {
     return s;
   }
@@ -15,23 +15,36 @@ function minWindow(s: string, t: string): string {
   const tMap = new Map();
   for (let i = 0; i < t.length; i++) {
     const currentCount = tMap.get(t[i]) ?? 0;
-    if (currentCount > (sMap.get(t[i]) ?? 0)) {
+    if (currentCount + 1 > (sMap.get(t[i]) ?? 0)) {
       return "";
     }
-
     tMap.set(t[i], currentCount + 1);
-  }
-
-  for (const [character, count] of tMap) {
-    const sCount = sMap.get(character) ?? 0;
-    if (sCount < count) {
-      return "";
-    }
   }
 
   let start = 0;
   let end = s.length - 1;
   let minimum = s;
+
+  // console.log("sMap", sMap);
+  // console.log("tMap", tMap);
+
+  while (true) {
+    const currentChar = s[start];
+    const sCount = sMap.get(currentChar) ?? 0;
+    const tCount = tMap.get(currentChar) ?? 0;
+
+    if (sCount > tCount) {
+      start += 1;
+      sMap.set(currentChar, sCount - 1);
+
+      if (end - start + 1 < minimum.length) {
+        minimum = s.slice(start, end + 1);
+      }
+    } else {
+      // If we reduce further, the current substring will be invalid
+      break;
+    }
+  }
 
   while (start >= 0) {
     const currentChar = s[end];
@@ -71,22 +84,3 @@ function minWindow(s: string, t: string): string {
 
   return minimum;
 }
-
-export const testMinWindow = () => {
-  const testCases: Array<[string, string, string]> = [
-    // ["ADOBECODEBANC", "ABC", "BANC"],
-    // ["ADOBECODEBANC", "AABC", "ADOBECODEBA"],
-    // ["a", "a", "a"],
-    // ["a", "aa", ""],
-    ["a", "b", ""],
-  ];
-
-  for (const [s, t, expected] of testCases) {
-    const result = minWindow(s, t);
-    if (result != expected) {
-      throw new Error(
-        `Test case s = ${s}, t = ${t}. Expected ${expected}, received ${result}`,
-      );
-    }
-  }
-};
