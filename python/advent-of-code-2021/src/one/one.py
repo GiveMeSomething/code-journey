@@ -28,3 +28,17 @@ def count_increases():
         last = depth
     
     return increases
+
+def count_increases_window():
+    increases = 0
+
+    depths = read_depth_input()
+    last_window = depths[0] + depths[1] + depths[2]
+
+    for i in range(3, len(depths)):
+        current_window = last_window + depths[i] - depths[i - 3]
+        if current_window > last_window:
+            increases += 1
+        last_window = current_window
+    
+    return increases
