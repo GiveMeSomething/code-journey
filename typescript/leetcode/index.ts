@@ -59,3 +59,7 @@ import { main_80 } from "./solutions/80";
 import { main_88 } from "./solutions/88";
 import { main_896 } from "./solutions/896";
 import { main_931 } from "./solutions/931";
+
+import { test } from "./solutions/220";
+
+test();
