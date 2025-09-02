@@ -1,5 +1,4 @@
-from one import one
-
+from src.solutions import one
 
 if __name__ == "__main__":
     increases = one.count_increases()
