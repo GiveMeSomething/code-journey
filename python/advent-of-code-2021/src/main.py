@@ -1,6 +1,12 @@
 from solutions.one import one
+from solutions.two import two
+
 
 if __name__ == "__main__":
+    # Day 1
     one.run_part_1()
     one.run_part_2()
+
+    # Day 2
+    two.run_part_1()
     
