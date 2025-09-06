@@ -19,3 +19,12 @@ def run_part_1():
         position.move(current_step)
     
     print(f"Day 2 Part 1: {position.x * position.y}")
+
+def run_part_2():
+    inputs = read_command_logs()
+    position = Position()
+    for input in inputs:
+        current_step = Step.from_string(input)
+        position.move_with_aim(current_step)
+    
+    print(f"Day 2 Part 2: {position.x * position.y}")

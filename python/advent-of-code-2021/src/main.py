@@ -9,4 +9,5 @@ if __name__ == "__main__":
 
     # Day 2
     two.run_part_1()
+    two.run_part_2()
     
