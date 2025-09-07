@@ -1,4 +1,10 @@
-from solutions.three.three import bit_arr_to_epsilon, bit_arr_to_gamma, calculate_bits
+from solutions.three.three import (
+    bit_arr_to_epsilon,
+    bit_arr_to_gamma,
+    calculate_bits,
+    calculate_co2_rating,
+    calculate_oxygen_rating,
+)
 
 
 INPUTS = [
@@ -41,3 +47,17 @@ def test_calcualte_epsilon():
     epsilon = bit_arr_to_epsilon(bits)
 
     assert epsilon == expected
+
+
+def test_calculate_oxygen_rating():
+    expected = 23
+
+    oxygen_rating = calculate_oxygen_rating(INPUTS)
+    assert oxygen_rating == expected
+
+
+def test_calculate_co2_rating():
+    expected = 10
+
+    co2_rating = calculate_co2_rating(INPUTS)
+    assert co2_rating == expected

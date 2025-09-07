@@ -14,3 +14,4 @@ if __name__ == "__main__":
 
     # Day 3
     three.run_part_1()
+    three.run_part_2()

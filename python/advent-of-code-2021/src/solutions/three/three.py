@@ -41,6 +41,36 @@ def bit_arr_to_epsilon(inputs: List[int]) -> int:
     return int(result, 2)
 
 
+def calculate_oxygen_rating(inputs: List[str]):
+    current_list = inputs[:]
+    current_index = 0
+    while len(current_list) > 1:
+        bits = calculate_bits(current_list)
+        selected_bit = "1" if bits[current_index] >= 0 else "0"
+        current_list = [
+            selected
+            for selected in current_list
+            if selected[current_index] == selected_bit
+        ]
+        current_index += 1
+    return int(current_list[0], 2)
+
+
+def calculate_co2_rating(inputs: List[str]):
+    current_list = inputs[:]
+    current_index = 0
+    while len(current_list) > 1:
+        bits = calculate_bits(current_list)
+        selected_bit = "0" if bits[current_index] >= 0 else "1"
+        current_list = [
+            selected
+            for selected in current_list
+            if selected[current_index] == selected_bit
+        ]
+        current_index += 1
+    return int(current_list[0], 2)
+
+
 def run_part_1():
     inputs = read_diagnostic_report()
     bits = calculate_bits(inputs)
@@ -50,3 +80,13 @@ def run_part_1():
 
     result = gamma * epsilon
     print(f"Day 3 Part 1: {result}")
+
+
+def run_part_2():
+    inputs = read_diagnostic_report()
+
+    oxygen_rating = calculate_oxygen_rating(inputs)
+    co2_rating = calculate_co2_rating(inputs)
+
+    life_support_rating = oxygen_rating * co2_rating
+    print(f"Day 3 Part 2: {life_support_rating}")
