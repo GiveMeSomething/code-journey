@@ -4,10 +4,10 @@ from typing import List
 def read_diagnostic_report() -> List[str]:
     result = []
 
-    input_path = "src/solutions/three"
+    input_path = "src/solutions/three/input.txt"
     with open(input_path, "r") as input_file:
         for line in input_file:
-            result.append(line)
+            result.append(line.strip())
     return result
 
 
@@ -18,20 +18,18 @@ def calculate_bits(inputs: List[str]) -> List[int]:
 
     for input in inputs:
         for i, bit in enumerate(input):
-            bit_map[i] += 1 if bit == "1" else -1
-
+            if bit == "1":
+                bit_map[i] += 1
+            if bit == "0":
+                bit_map[i] -= 1
     return bit_map
-
-
-def bit_arr_to_i(inputs: List[int]) -> int:
-    string_value = "".join(inputs)
-    return int(string_value, 2)
 
 
 def bit_arr_to_gamma(inputs: List[int]) -> int:
     result = ""
     for input in inputs:
         result += "1" if input > 0 else "0"
+
     return int(result, 2)
 
 
