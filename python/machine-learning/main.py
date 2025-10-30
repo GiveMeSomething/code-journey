@@ -1,24 +1,31 @@
-def gradient_descent(dataset_x: list[int], dataset_y: list[int], limit: int):
-    theta_0 = 0
-    theta_1 = 0
-    learning_rate = 0.001
+import numpy as np
 
-    theta_0_history = []
-    theta_1_history = []
+from linear_regression.linear_regression import linear_regression
 
-    for i in range(limit):
-        theta_0 = theta_0 - learning_rate * sum(
-            map(lambda x, y: (theta_0 + theta_1 * x - y) * x, dataset_x, dataset_y)
+
+def gradient_descent(x_matrix, y_vector):
+    theta_vector = np.array([0, 0], np.float64)
+    for i in range(10):
+        theta_vector[0] = theta_vector[0] - 0.01 * sum(
+            map(
+                lambda y, x_vector: (x_vector @ theta_vector - y) * x_vector[0],
+                y_vector,
+                x_matrix,
+            )
         )
-        theta_1 = theta_1 - learning_rate * sum(
-            map(lambda x, y: (theta_0 + theta_1 * x - y) * x, dataset_x, dataset_y)
+        theta_vector[1] -= 0.01 * sum(
+            map(
+                lambda y, x_vector: (x_vector @ theta_vector - y) * x_vector[1],
+                y_vector,
+                x_matrix,
+            )
         )
-        theta_0_history.append(theta_0)
-        theta_1_history.append(theta_1)
-        print(f"iter {i}, theta_0 = {theta_0}, theta_1 = {theta_1}")
+        print(f"i = {i}, theta_0 = {theta_vector[0]}, theta_1 = {theta_vector[1]}")
 
 
 if __name__ == "__main__":
-    dataset_x = [1, 2, 3, 4, 5, 6, 7, 8]
-    dataset_y = [2, 3, 4, 5, 6, 7, 8, 9]
-    gradient_descent(dataset_x, dataset_y, 50)
+    x_matrix = np.array([[1, 1], [1, 2], [1, 3]])
+    y_vector = np.array([2, 3, 4])
+
+    result = linear_regression(x_matrix, y_vector)
+    print(f"Final result: {result}")
