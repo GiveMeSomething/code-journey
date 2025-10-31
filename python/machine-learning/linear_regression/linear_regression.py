@@ -5,7 +5,7 @@ from numpy.typing import NDArray
 ALPHA = 0.0001
 
 # To stop when the change between 2 iterations is insignificant
-DIFF_THRESHOLD = 0.000001
+DIFF_THRESHOLD = 0.00001
 
 
 def prepend_x0(x_vector):

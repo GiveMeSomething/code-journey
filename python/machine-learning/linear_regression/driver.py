@@ -30,13 +30,22 @@ def test_read_data():
 def test_model(model):
     dataset = CustomDataset(TESTING_DATA_PATH)
 
-    prediction = map(
-        lambda x_vector: predict_with_model(model, x_vector), dataset.x_matrix
+    prediction = list(
+        map(lambda x_vector: predict_with_model(model, x_vector), dataset.x_matrix)
     )
+
+    print(prediction)
+
+    for i in range(dataset.x_matrix.shape[0]):
+        accuracy = 1 - (abs(prediction[i] - dataset.y_vector[i]) / dataset.y_vector[i])
+        print(
+            f"Dataset {dataset.x_matrix[i]} Target {dataset.y_vector[i]} Prediction {prediction[i]} Accuracy {accuracy * 100}"
+        )
     accuracy = (
         sum(
             map(
-                lambda hypothesis, target: abs(hypothesis - target) / target,
+                lambda hypothesis, target: (1 - abs(hypothesis - target) / target)
+                * 100,
                 prediction,
                 dataset.y_vector,
             )
