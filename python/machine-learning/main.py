@@ -1,6 +1,6 @@
 import numpy as np
 
-from linear_regression.linear_regression import linear_regression
+from linear_regression.driver import start_linear_regression_driver
 
 
 def gradient_descent(x_matrix, y_vector):
@@ -24,8 +24,10 @@ def gradient_descent(x_matrix, y_vector):
 
 
 if __name__ == "__main__":
-    x_matrix = np.array([[1, 1], [1, 2], [1, 3]])
-    y_vector = np.array([2, 3, 4])
+    # x_matrix = np.array([[1, 1], [1, 2], [1, 3]])
+    # y_vector = np.array([2, 3, 4])
 
-    result = linear_regression(x_matrix, y_vector)
-    print(f"Final result: {result}")
+    # result = linear_regression(x_matrix, y_vector)
+    # print(f"Final result: {result}")
+
+    start_linear_regression_driver()
