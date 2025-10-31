@@ -2,17 +2,17 @@ import numpy as np
 from numpy.typing import NDArray
 
 # LEARNING RATE
-ALPHA = 0.01
+ALPHA = 0.0001
 
 # To stop when the change between 2 iterations is insignificant
-DIFF_THRESHOLD = 0.00001
+DIFF_THRESHOLD = 0.000001
 
 
 def prepend_x0(x_vector):
     return np.concatenate((np.array([1]), x_vector))
 
 
-def linear_regression(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32]):
+def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-1):
     features_count = x_matrix.shape[1]
 
     # Init all the theta to 0 at first
@@ -42,7 +42,14 @@ def linear_regression(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32]):
             theta_vector = new_theta_vector
             break
 
+        if iter_limit > 0 and iter == iter_limit:
+            break
+
         # Update theta, start new iteration
         theta_vector = new_theta_vector.copy()
 
     return theta_vector
+
+
+def predict_with_model(theta_vector, x_vector):
+    return theta_vector @ x_vector
