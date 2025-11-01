@@ -19,6 +19,7 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
     theta_vector = np.array([0] * features_count, np.float64)
 
     iter = 0
+    last_mse = 0
     while True:
         # for a in range(5):
         iter += 1
@@ -46,8 +47,9 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
             )
             / x_matrix.shape[0]
         )
-        if mse < THRESHOLD:
+        if abs(last_mse - mse) < THRESHOLD:
             break
+        last_mse = mse
 
         if iter_limit > 0 and iter == iter_limit:
             break
