@@ -26,33 +26,41 @@ def read_data():
     return (training_dataset, testing_dataset)
 
 
-def test_model(model, dataset: CustomDataset):
+def test_model(model, dataset: CustomDataset, denormalize_params):
     prediction = list(
         map(lambda x_vector: predict_with_model(model, x_vector), dataset.x_matrix)
     )
-    print(f"Prediction vector {list(map(dataset.denormalize_y, prediction))}")
+    prediction = list(
+        map(lambda i: dataset.denormalize_y(i, denormalize_params), prediction)
+    )
+    print(f"Prediction = {prediction}")
 
-    accuracy = (
+    y_vector = list(
+        map(lambda i: dataset.denormalize_y(i, denormalize_params), dataset.y_vector)
+    )
+    print(f"Target = {y_vector}")
+
+    mse = (
         sum(
             map(
                 lambda hypothesis, target: abs(hypothesis - target) ** 2,
                 prediction,
-                dataset.y_vector,
+                y_vector,
             )
         )
         / dataset.x_matrix.shape[0]
     )
 
-    print(f"Model mean square error: {accuracy}")
+    print(f"Model mean square error: {mse}")
 
 
 def start_linear_regression_driver():
     training_dataset, testing_dataset = read_data()
-    training_dataset.normalize_x()
-    training_dataset.normalize_y()
+    # training_dataset.normalize_x()
+    # training_dataset.normalize_y()
 
     model = train_model(training_dataset)
 
-    testing_dataset.normalize_x()
-    testing_dataset.normalize_y()
-    test_model(model, testing_dataset)
+    # testing_dataset.normalize_x()
+    # testing_dataset.normalize_y()
+    test_model(model, testing_dataset, training_dataset.denormalize_params_y)

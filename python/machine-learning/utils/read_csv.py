@@ -14,7 +14,7 @@ class CustomDataset:
     # Denormalize parameters for each columns
     # (min, max)[]
     denormalize_params_x = []
-    denormalize_params_y = (0, 0)
+    denormalize_params_y = (0, 1)
 
     def __init__(self, input_path):
         data = open_training_dataset(input_path)
@@ -25,7 +25,7 @@ class CustomDataset:
         ones = np.full((data.shape[0], 1), 1, dtype=np.float32)
         x_matrix = np.hstack((ones, x_matrix))
 
-        y_vector = data.iloc[:, -1].to_numpy()
+        y_vector = data.iloc[:, -1].to_numpy(dtype=np.float32)
 
         self.data = data
         self.x_matrix = x_matrix
@@ -51,12 +51,15 @@ class CustomDataset:
                 self.x_matrix[j][i] = (self.x_matrix[j][i] - col_min) / min_max_diff
 
     def normalize_y(self):
+        print(f"original y {self.y_vector}")
         y_min = np.min(self.y_vector)
-        y_max = np.max(self.x_matrix)
+        y_max = np.max(self.y_vector)
         min_max_diff = y_max - y_min
         self.denormalize_params_y = (y_min, y_max)
         for i in range(len(self.y_vector)):
             self.y_vector[i] = (self.y_vector[i] - y_min) / min_max_diff
+
+        print(f"normalize y {self.y_vector}")
 
     # Denormalize a row of x values
     def denormalize_x(self, x_vector):
@@ -66,6 +69,8 @@ class CustomDataset:
             result[i] = x_vector[i] * (max - min) + min
         return result
 
-    def denormalize_y(self, y):
-        min, max = self.denormalize_params_y
+    def denormalize_y(self, y, custom_param=None):
+        min, max = (
+            custom_param if custom_param is not None else self.denormalize_params_y
+        )
         return y * (max - min) + min
