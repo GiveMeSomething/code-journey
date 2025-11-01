@@ -2,10 +2,10 @@ import numpy as np
 from numpy.typing import NDArray
 
 # LEARNING RATE
-ALPHA = 0.0001
+ALPHA = 1 * 10**-3
 
 # To stop when the change between 2 iterations is insignificant
-DIFF_THRESHOLD = 0.00001
+THRESHOLD = 0.01
 
 
 def prepend_x0(x_vector):
@@ -34,12 +34,19 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
             )
 
         print(iter, new_theta_vector)
-        # We break the cycle when the different accross all theta is below DIFF_THRESHOLD
-        if (
-            np.array(list(map(lambda x: abs(x), new_theta_vector - theta_vector)))
-            < DIFF_THRESHOLD
-        ).all():
-            theta_vector = new_theta_vector
+
+        # We break the cycle when the Mean Square Error (MSE) is below a certain threshold
+        mse = (
+            sum(
+                map(
+                    lambda x_vector, y: (y - x_vector @ new_theta_vector) ** 2,
+                    x_matrix,
+                    y_vector,
+                )
+            )
+            / x_matrix.shape[0]
+        )
+        if mse < THRESHOLD:
             break
 
         if iter_limit > 0 and iter == iter_limit:
