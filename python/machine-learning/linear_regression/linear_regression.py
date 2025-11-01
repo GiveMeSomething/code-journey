@@ -2,10 +2,10 @@ import numpy as np
 from numpy.typing import NDArray
 
 # LEARNING RATE
-ALPHA = 1 * 10**-3
+ALPHA = 1 * 10**-4
 
 # To stop when the change between 2 iterations is insignificant
-THRESHOLD = 0.01
+THRESHOLD = 1 * 10**-4
 
 
 def prepend_x0(x_vector):
@@ -19,7 +19,7 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
     theta_vector = np.array([0] * features_count, np.float64)
 
     iter = 0
-    last_mse = 0
+    last_mse = None
     while True:
         # for a in range(5):
         iter += 1
@@ -47,7 +47,7 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
             )
             / x_matrix.shape[0]
         )
-        if abs(last_mse - mse) < THRESHOLD:
+        if last_mse is not None and abs(last_mse - mse) < THRESHOLD:
             break
         last_mse = mse
 
