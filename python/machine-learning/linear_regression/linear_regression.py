@@ -1,18 +1,14 @@
 import numpy as np
 from numpy.typing import NDArray
 
-# LEARNING RATE
-ALPHA = 1 * 10**-4
 
-# To stop when the change between 2 iterations is insignificant
-THRESHOLD = 1 * 10**-4
-
-
-def prepend_x0(x_vector):
-    return np.concatenate((np.array([1]), x_vector))
-
-
-def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-1):
+def train(
+    x_matrix: NDArray[np.int32],
+    y_vector: NDArray[np.int32],
+    iter_limit=-1,
+    learning_rate=1 * 10**-7,
+    stop_threshold=1 * 10**-4,
+):
     features_count = x_matrix.shape[1]
 
     # Init all the theta to 0 at first
@@ -26,7 +22,7 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
         new_theta_vector = np.array(theta_vector, np.float64)
 
         for i in range(features_count):
-            new_theta_vector[i] = new_theta_vector[i] - ALPHA * sum(
+            new_theta_vector[i] = new_theta_vector[i] - learning_rate * sum(
                 map(
                     lambda y, x_vector: (x_vector @ new_theta_vector - y) * x_vector[i],
                     y_vector,
@@ -47,7 +43,7 @@ def train(x_matrix: NDArray[np.int32], y_vector: NDArray[np.int32], iter_limit=-
             )
             / x_matrix.shape[0]
         )
-        if last_mse is not None and abs(last_mse - mse) < THRESHOLD:
+        if last_mse is not None and abs(last_mse - mse) < stop_threshold:
             break
         last_mse = mse
 
