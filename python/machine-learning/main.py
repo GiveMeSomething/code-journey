@@ -1,4 +1,4 @@
-from predict_function.main import start_predict_function
+from predict_function.driver import start_predict_function
 
 
 if __name__ == "__main__":
