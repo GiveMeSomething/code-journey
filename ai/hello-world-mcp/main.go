@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -19,18 +20,18 @@ type PointResponse struct {
 	} `json:"properties"`
 }
 
-type ForecasePeriod struct {
+type ForecastPeriod struct {
 	Name             string `json:"name"`
 	Temperature      int    `json:"temperature"`
-	TemparetureUnit  string `json:"temparatureUnit"`
+	TemperatureUnit  string `json:"temperatureUnit"`
 	WindSpeed        string `json:"windSpeed"`
 	WindDirection    string `json:"windDirection"`
-	DetailedForecase string `json:"detailedForecast"`
+	DetailedForecast string `json:"detailedForecast"`
 }
 
 type ForecastResponse struct {
 	Properties struct {
-		Periods []ForecasePeriod `json:"periods"`
+		Periods []ForecastPeriod `json:"periods"`
 	} `json:"properties"`
 }
 
@@ -86,4 +87,31 @@ func makeNWSRequest[T any](ctx context.Context, url string) (*T, error) {
 	}
 
 	return &result, nil
+}
+
+func formatAlert(alert AlertFeature) string {
+	props := alert.Properties
+	event := cmp.Or(props.Event, "Unknown")
+	areaDesc := cmp.Or(props.AreaDesc, "Unknown")
+	severity := cmp.Or(props.Severity, "Unknown")
+	description := cmp.Or(props.Description, "No description available")
+	instruction := cmp.Or(props.Instruction, "No specific instructions provided")
+
+	return fmt.Sprintf(`
+Event: %s
+Area: %s
+Severity: %s
+Description: %s
+Instructions: %s
+`, event, areaDesc, severity, description, instruction)
+}
+
+func formatPeriod(period ForecastPeriod) string {
+	return fmt.Sprintf(`
+%s:
+Temperature: %d°%s
+Wind: %s %s
+Forecast: %s
+`, period.Name, period.Temperature, period.TemperatureUnit,
+		period.WindSpeed, period.WindDirection, period.DetailedForecast)
 }
