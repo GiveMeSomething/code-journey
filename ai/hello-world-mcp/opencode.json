@@ -4,7 +4,7 @@
     "weather": {
       "type": "local",
       "enabled": true,
-      "command": ["/Users/mint/code/code-journey/ai/hello-world-mcp/weather"]
+      "command": ["/Users/mint/code/code-journey/ai/hello-world-mcp/calculator"]
     }
   }
 }

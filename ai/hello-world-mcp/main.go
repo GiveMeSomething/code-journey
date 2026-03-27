@@ -214,24 +214,32 @@ func getAlerts(ctx context.Context, req *mcp.CallToolRequest, input AlertsInput)
 	}, nil, nil
 }
 
+type AdditionInput struct {
+	A int
+	B int
+}
+
+func getAddition(ctx context.Context, req *mcp.CallToolRequest, input AdditionInput) (*mcp.CallToolResult, any, error) {
+	result := input.A + input.B
+	return &mcp.CallToolResult{
+		Content: []mcp.Content{
+			&mcp.TextContent{Text: fmt.Sprintf("%d", result)},
+		},
+	}, nil, nil
+}
+
 func main() {
 	// Create MCP server
 	server := mcp.NewServer(&mcp.Implementation{
-		Name:    "weather",
+		Name:    "calculator",
 		Version: "1.0.0",
 	}, nil)
 
-	// Add get_forecast tool
+	// Add addition
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "get_forecast",
-		Description: "Get weather forecast for a location",
-	}, getForecast)
-
-	// Add get_alerts tool
-	mcp.AddTool(server, &mcp.Tool{
-		Name:        "get_alerts",
-		Description: "Get weather alerts for a US state",
-	}, getAlerts)
+		Name:        "get_addition",
+		Description: "Get addition of two integer",
+	}, getAddition)
 
 	// Run server on stdio transport
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
