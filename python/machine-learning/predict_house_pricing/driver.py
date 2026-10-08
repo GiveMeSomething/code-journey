@@ -60,6 +60,6 @@ def test_model(model):
 
 
 def start_predict_house_pricing():
-    # model = train_model()
-    model = np.array([11342.18997688, 1149.02664596, 29338.20368426, 15967.78216034])
+    model = train_model()
+    # model = np.array([11342.18997688, 1149.02664596, 29338.20368426, 15967.78216034])
     test_model(model)
